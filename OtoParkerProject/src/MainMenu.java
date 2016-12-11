@@ -18,7 +18,9 @@ public class MainMenu extends Menu {
     JButton creditsButton;
     JButton soundButton;
 
-    public MainMenu() {
+    public MainMenu(MenuManager manager) {
+
+        super(manager);
 
         buttonListener = new ButtonListener();
 
@@ -66,12 +68,22 @@ public class MainMenu extends Menu {
     class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed (ActionEvent e) {
-
-
-            if (e.getSource() == playButton)
-                ((JButton)e.getSource()).setBackground(Color.red);
-            else if (e.getSource() == upgradeCarButton)
-                System.out.println("Show upgrade car screen!!");
+            if (e.getSource() == playButton) {
+                //TODO opens levels screen
+                ((JButton) e.getSource()).setBackground(Color.red);
+            }
+            else if (e.getSource() == upgradeCarButton) {
+                manager.showUpgradeCar();
+            }
+            else if (e.getSource() == instructionsButton) {
+                //TODO opens instructions screen
+            }
+            else if (e.getSource() == creditsButton) {
+                //TODO opens credits screen
+            }
+            else if (e.getSource() == soundButton) {
+                //TODO enable disable sound
+            }
 
         }
     }
