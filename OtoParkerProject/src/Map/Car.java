@@ -30,8 +30,7 @@ public class Car extends Sprite{
         x = a;
         y = b;
         vis =true;
-        System.out.println("Car working Directory = " +
-                System.getProperty("user.dir"));
+        System.out.println("Car working Directory = " + System.getProperty("user.dir"));
 
         cnn = new ArrayList<>();
         dx=0;

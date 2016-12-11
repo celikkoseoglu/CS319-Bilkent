@@ -21,11 +21,11 @@ public class MainMenu extends Menu {
 
         ButtonListener buttonListener = new ButtonListener();
 
-        playButton = new JButton("Play");
-        upgradeCarButton = new JButton("Upgrade Car");
-        instructionsButton = new JButton("Instructions");
-        creditsButton = new JButton("Credits");
-        soundButton = new JButton("Sound");
+        playButton = new OtoParkerJButton("Play");
+        upgradeCarButton = new OtoParkerJButton("Upgrade Car");
+        instructionsButton = new OtoParkerJButton("Instructions");
+        creditsButton = new OtoParkerJButton("Credits");
+        soundButton = new OtoParkerJButton("Sound");
 
         //mnemonics are not working.
         playButton.setMnemonic(KeyEvent.VK_P);
@@ -40,11 +40,11 @@ public class MainMenu extends Menu {
         creditsButton.addActionListener(buttonListener);
         soundButton.addActionListener(buttonListener);
 
-        playButton.setBounds(50, 150, 150, 23);
-        upgradeCarButton.setBounds(50, 200, 150, 23);
-        instructionsButton.setBounds(50, 250, 150, 23);
-        creditsButton.setBounds(50, 300, 150, 23);
-        soundButton.setBounds(50, 350, 150, 23);
+        playButton.setBounds(70, 150, 150, 40);
+        upgradeCarButton.setBounds(70, 220, 150, 40);
+        instructionsButton.setBounds(70, 290, 150, 40);
+        creditsButton.setBounds(70, 360, 150, 40);
+        soundButton.setBounds(70, 430, 150, 40);
 
         add(playButton);
         add(upgradeCarButton);
@@ -60,15 +60,21 @@ public class MainMenu extends Menu {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         AttributedString upgradesString = new AttributedString("OtoParker");
-        upgradesString.addAttribute(TextAttribute.FONT, new Font("Arial", Font.BOLD, 30));
+        upgradesString.addAttribute(TextAttribute.FONT, new Font("Arial", Font.BOLD, 40));
         upgradesString.addAttribute(TextAttribute.FOREGROUND, new Color(201, 103, 32));
 
         FontMetrics fm = g2d.getFontMetrics();
         LineMetrics lm = fm.getLineMetrics(upgradesString.getIterator(), 0, upgradesString.getIterator().getEndIndex(), g);
 
-        g2d.drawString(upgradesString.getIterator(), 40, 40);
+        g2d.drawString(upgradesString.getIterator(), 50, 70);
 
-        g2d.drawRect(350, 50, 350, 500);
+        g2d.drawRect(350, 35, 400, 420);
+
+        Image img1 = Toolkit.getDefaultToolkit().getImage("images/star.png");
+
+        g2d.drawImage(img1, 405, 470, 10, 10, this);
+
+        g2d.drawString("5   's available", 395, 480);
     }
 
     class ButtonListener implements ActionListener {

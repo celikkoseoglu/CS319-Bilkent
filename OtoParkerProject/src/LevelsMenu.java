@@ -16,13 +16,18 @@ public class LevelsMenu extends Menu {
         backToMainMenuButton.setBounds(10, 10, 150, 30);
         add(backToMainMenuButton);
 
-        for (int i = 1; i < 2; i++) {
-            for (int j = 1; j < 6; j++) {
-                JButton button = new JButton(Integer.toString(i));
-                button.addActionListener(buttonListener);
-                button.setBounds(i * 30, j * 100 + 50, 30, 30);
-                add(button);
-            }
+        for (int i = 1; i < 6; i++) {
+            JButton button = new OtoParkerJButton(Integer.toString(i));
+            button.addActionListener(buttonListener);
+            button.setBounds(100 + (i - 1) * 128,160, 88, 88);
+            add(button);
+        }
+
+        for (int i = 1; i < 6; i++) {
+            JButton button = new OtoParkerJButton(Integer.toString(i + 5));
+            button.addActionListener(buttonListener);
+            button.setBounds(100 + (i - 1) * 128,  360, 88, 88);
+            add(button);
         }
     }
 
@@ -32,8 +37,9 @@ public class LevelsMenu extends Menu {
             if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();
             }
-            else
-                System.out.println(e.getSource().toString());
+            else {
+                System.out.println("Open Level: " + ((JButton)e.getSource()).getText());
+            }
         }
     }
 }
