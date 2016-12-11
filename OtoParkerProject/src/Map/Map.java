@@ -56,9 +56,17 @@ public class Map extends JPanel implements ActionListener {
 
         Graphics2D g2d = (Graphics2D) g;
         if(car.isVisible()) {
+            if(car.dy != 0)
+                g2d.rotate(Math.atan((double)car.dx/car.dy),(double) (car.getX()+car.getImage().getWidth(null)+100)%600,
+                        (double) 300);
+
             g2d.drawImage(car.getImage(), car.getX(), car.getY(), this);
-            System.out.println(car.dx);
-            System.out.println(car.dy);
+            System.out.println(car.getX());
+            System.out.println(car.getY());
+
+            if(car.dy != 0)
+                g2d.rotate(-Math.atan((double)car.dx/car.dy));
+
         }
 
         if (obs.isVisible() )
