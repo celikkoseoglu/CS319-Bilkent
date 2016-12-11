@@ -9,10 +9,5 @@ public class MainWindow {
         myFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         MenuManager menuManager = new MenuManager(myFrame);
         myFrame.setVisible(true);
-
-        /*while (true) {
-            menu.repaint();
-            Thread.sleep(10);
-        }*/
     }
 }

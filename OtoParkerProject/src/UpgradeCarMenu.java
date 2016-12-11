@@ -1,27 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.font.LineMetrics;
 import java.awt.font.TextAttribute;
-import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 
-/**
- * Created by celikkoseoglu on 11/12/2016.
- */
 public class UpgradeCarMenu extends Menu {
 
-    JButton colorLeftButton, colorRightButton;
-    JButton weaponLeftButton, weaponRightButton;
-    JButton turningRadiusLeftButton, turningRadiusRightButton;
-    JButton upgradeCarButton;
+    private JButton colorLeftButton, colorRightButton;
+    private JButton weaponLeftButton, weaponRightButton;
+    private JButton turningRadiusLeftButton, turningRadiusRightButton;
+    private JButton upgradeCarButton;
+    private JButton backToMainMenuButton;
 
-    private final int colorLineY = 350;
-    private final int weaponLineY = 400;
-    private final int turningRadiusLineY = 450;
+    private final int colorLineY = 150;
+    private final int weaponLineY = 250;
+    private final int turningRadiusLineY = 350;
 
     public UpgradeCarMenu(MenuManager manager) {
 
         super(manager);
+
+        ButtonListener buttonListener = new ButtonListener();
 
         colorLeftButton = new JButton("<");
         colorRightButton = new JButton(">");
@@ -30,6 +31,16 @@ public class UpgradeCarMenu extends Menu {
         turningRadiusLeftButton = new JButton("<");
         turningRadiusRightButton = new JButton(">");
         upgradeCarButton = new JButton("Upgrade!");
+        backToMainMenuButton = new JButton("<- Main Menu");
+
+        colorLeftButton.addActionListener(buttonListener);
+        colorRightButton.addActionListener(buttonListener);
+        weaponLeftButton.addActionListener(buttonListener);
+        weaponRightButton.addActionListener(buttonListener);
+        turningRadiusLeftButton.addActionListener(buttonListener);
+        turningRadiusRightButton.addActionListener(buttonListener);
+        upgradeCarButton.addActionListener(buttonListener);
+        backToMainMenuButton.addActionListener(buttonListener);
 
         colorLeftButton.setBounds(700, colorLineY, 30, 30);
         colorRightButton.setBounds(740, colorLineY, 30, 30);
@@ -37,7 +48,8 @@ public class UpgradeCarMenu extends Menu {
         weaponRightButton.setBounds(740, weaponLineY, 30, 30);
         turningRadiusLeftButton.setBounds(700, turningRadiusLineY, 30, 30);
         turningRadiusRightButton.setBounds(740, turningRadiusLineY, 30, 30);
-        upgradeCarButton.setBounds(650, 520, 30, 30);
+        upgradeCarButton.setBounds(560, 520, 150, 30);
+        backToMainMenuButton.setBounds(10, 10, 150, 30);
 
         add(colorLeftButton);
         add(colorRightButton);
@@ -46,6 +58,7 @@ public class UpgradeCarMenu extends Menu {
         add(turningRadiusLeftButton);
         add(turningRadiusRightButton);
         add(upgradeCarButton);
+        add(backToMainMenuButton);
     }
 
     @Override
@@ -83,5 +96,38 @@ public class UpgradeCarMenu extends Menu {
         g2d.drawString("Color", 320, colorLineY);
         g2d.drawString("Weapon", 320, weaponLineY);
         g2d.drawString("Turning Radius", 320, turningRadiusLineY);
+    }
+
+
+    class ButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed (ActionEvent e) {
+            if (e.getSource() == colorLeftButton) {
+                //TODO change color of the car and update the small square's color
+                ((JButton) e.getSource()).setBackground(Color.red);
+            }
+            else if (e.getSource() == colorRightButton) {
+
+            }
+            else if (e.getSource() == weaponLeftButton) {
+
+            }
+            else if (e.getSource() == weaponRightButton) {
+
+            }
+            else if (e.getSource() == turningRadiusLeftButton) {
+
+            }
+            else if (e.getSource() == turningRadiusRightButton) {
+
+            }
+            else if (e.getSource() == upgradeCarButton) {
+
+            }
+            else if (e.getSource() == backToMainMenuButton) {
+                manager.showMainMenu();
+            }
+
+        }
     }
 }

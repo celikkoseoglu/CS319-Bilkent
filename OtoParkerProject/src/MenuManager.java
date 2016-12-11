@@ -1,14 +1,14 @@
 import javax.swing.*;
 
-/**
- * Created by celikkoseoglu on 11/12/2016.
- */
 public class MenuManager {
 
     private JFrame mainFrame;
 
     private Menu mainMenu;
     private Menu upgradeCar;
+    private Menu credits;
+    private Menu instructions;
+    private Menu levels;
 
     public MenuManager(JFrame mainFrame) {
 
@@ -16,35 +16,38 @@ public class MenuManager {
 
         mainMenu = new MainMenu(this);
         upgradeCar = new UpgradeCarMenu(this);
+        credits = new CreditsMenu(this);
+        instructions = new InstructionsMenu(this);
+        levels = new LevelsMenu(this);
 
         showMainMenu();
     }
 
     public void showMainMenu() {
-        mainFrame.getContentPane().removeAll();
-        mainFrame.add(mainMenu);
-        mainFrame.getContentPane().revalidate();
-        mainFrame.getContentPane().repaint();
+        showMenu(mainMenu);
     }
 
     public void showUpgradeCar() {
-        mainFrame.getContentPane().removeAll();
-        mainFrame.add(upgradeCar);
-        mainFrame.getContentPane().revalidate();
-        mainFrame.getContentPane().repaint();
+        showMenu(upgradeCar);
     }
 
     public void showCredits() {
-
+        showMenu(credits);
     }
 
     public void showInstructions() {
-
+        showMenu(instructions);
     }
 
     public void showLevelScreen() {
-
+        showMenu(levels);
     }
 
+    private void showMenu(Menu m) {
+        mainFrame.getContentPane().removeAll();
+        mainFrame.add(m);
+        mainFrame.getContentPane().revalidate();
+        mainFrame.getContentPane().repaint();
+    }
 
 }

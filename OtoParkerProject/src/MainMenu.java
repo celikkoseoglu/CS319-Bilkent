@@ -3,26 +3,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
-/**
- * Created by celikkoseoglu on 11/12/2016.
- */
+import java.awt.font.LineMetrics;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 
 public class MainMenu extends Menu {
 
-    ButtonListener buttonListener;
-
-    JButton playButton;
-    JButton upgradeCarButton;
-    JButton instructionsButton;
-    JButton creditsButton;
-    JButton soundButton;
+    private JButton playButton;
+    private JButton upgradeCarButton;
+    private JButton instructionsButton;
+    private JButton creditsButton;
+    private JButton soundButton;
 
     public MainMenu(MenuManager manager) {
 
         super(manager);
 
-        buttonListener = new ButtonListener();
+        ButtonListener buttonListener = new ButtonListener();
 
         playButton = new JButton("Play");
         upgradeCarButton = new JButton("Upgrade Car");
@@ -61,7 +58,16 @@ public class MainMenu extends Menu {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.drawString("OtoParker", 40, 40);
+
+        AttributedString upgradesString = new AttributedString("OtoParker");
+        upgradesString.addAttribute(TextAttribute.FONT, new Font("Arial", Font.BOLD, 30));
+        upgradesString.addAttribute(TextAttribute.FOREGROUND, new Color(201, 103, 32));
+
+        FontMetrics fm = g2d.getFontMetrics();
+        LineMetrics lm = fm.getLineMetrics(upgradesString.getIterator(), 0, upgradesString.getIterator().getEndIndex(), g);
+
+        g2d.drawString(upgradesString.getIterator(), 40, 40);
+
         g2d.drawRect(350, 50, 350, 500);
     }
 
@@ -69,17 +75,16 @@ public class MainMenu extends Menu {
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource() == playButton) {
-                //TODO opens levels screen
-                ((JButton) e.getSource()).setBackground(Color.red);
+                manager.showLevelScreen();
             }
             else if (e.getSource() == upgradeCarButton) {
                 manager.showUpgradeCar();
             }
             else if (e.getSource() == instructionsButton) {
-                //TODO opens instructions screen
+                manager.showInstructions();
             }
             else if (e.getSource() == creditsButton) {
-                //TODO opens credits screen
+                manager.showCredits();
             }
             else if (e.getSource() == soundButton) {
                 //TODO enable disable sound
