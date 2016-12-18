@@ -7,6 +7,10 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import java.awt.Rectangle;
 import java.util.*;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 
 public class Car extends Sprite{
@@ -18,6 +22,7 @@ public class Car extends Sprite{
     private boolean vis;
     public ArrayList<Cannonball> cnn;
     public BufferedImage buffered;
+    public double angle;
 
 
 
@@ -35,6 +40,7 @@ public class Car extends Sprite{
         cnn = new ArrayList<>();
         dx=0;
         dy=0;
+        angle=0;
     }
 
     public void move() {
@@ -79,6 +85,7 @@ public class Car extends Sprite{
                 dx--;
             else
                 dx=dx;
+            angle++;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
@@ -86,6 +93,7 @@ public class Car extends Sprite{
                 dx++;
             else
                 dx=dx;
+            angle--;
         }
 
         if (key == KeyEvent.VK_UP  ){
@@ -122,6 +130,14 @@ public class Car extends Sprite{
         if (key == KeyEvent.VK_DOWN) {
             dy = 0;
         }
+    }
+
+    public void draw(Graphics2D g, Graphics2D backg){
+        double angle = -Math.atan((double)dx/dy); // -Math.atan2(direction.x, direction.y);
+        g.rotate(angle, x, y );
+        g.setColor(Color.BLACK);
+        g.fillRect((int) (x-20), (int) (y-30), 40, 60);
+
     }
 
     public Rectangle getBounds() {

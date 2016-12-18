@@ -13,16 +13,37 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-import javax.swing.Timer;
 import java.util.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import java.io.File;
+
+
 
 
 public class Map extends JPanel implements ActionListener {
     private Timer timer;
-    private Car car;
     private Obstacle obs;
     private final int DELAY = 10;
+    private Graphics2D g1;
+    private Graphics2D g2;
+    private Graphics2D g3;
+    private BufferedImage back1;
+    private BufferedImage back2;
+    private BufferedImage back3;
+    private Vehicle vehicle = new Vehicle();
 
     public Map() {
 
@@ -31,16 +52,37 @@ public class Map extends JPanel implements ActionListener {
 
     private void initBoard() {
 
-        addKeyListener(new TAdapter());
         setFocusable(true);
-        setBackground(Color.WHITE);
-
-        car = new Car(50,50);
 
         obs=new Obstacle();
 
-        timer = new Timer(DELAY, this);
-        timer.start();
+        //try {
+        back1 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB); //ImageIO.read(new File("car.jpg"));
+        //} catch (IOException ex) {
+        //    Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
+        //}
+        back2 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+        back3 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+
+        g1 = (Graphics2D) back1.getGraphics();
+        g2 = (Graphics2D) back2.getGraphics();
+        g3 = (Graphics2D) back3.getGraphics();
+
+        g1.drawImage(back1, 0, 0, getWidth(), getHeight(), null);
+
+        //g1.setColor(Color.WHITE);
+        //g1.fillRect(0, 0, getWidth(), getHeight());
+        g1.translate(400, 300);
+        g1.scale(1, -1);
+
+        g2.setColor(Color.WHITE);
+        g2.fillRect(0, 0, 800, 600);
+        g2.translate(400, 300);
+        g2.scale(1, -1);
+
+
+        new Timer().schedule(new MainLoop(), 100, 30);
+
     }
 
 
@@ -55,31 +97,34 @@ public class Map extends JPanel implements ActionListener {
     private void doDrawing(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
-        if(car.isVisible()) {
-            if(car.dy != 0)
-                g2d.rotate(Math.atan((double)car.dx/car.dy),(double) (car.getX()+car.getImage().getWidth(null)+100)%600,
-                        (double) 300);
 
-            g2d.drawImage(car.getImage(), car.getX(), car.getY(), this);
-            System.out.println(car.getX());
-            System.out.println(car.getY());
+            g3.setColor(Color.WHITE);
+            g3.fillRect(0, 0, 800, 600);
 
-            if(car.dy != 0)
-                g2d.rotate(-Math.atan((double)car.dx/car.dy));
+            g2.setBackground(new Color(255, 255, 255, 0));
+            g2.clearRect(-800/2, -600/2, 800, 600);
 
-        }
+            AffineTransform at = g1.getTransform();
+            AffineTransform at2 = g2.getTransform();
+            vehicle.draw(g2, g1);
+            g1.setTransform(at);
+            g2.setTransform(at2);
+
+            g3.drawImage(back1, 0, 0, null);
+            g3.drawImage(back2, 0, 0, null);
+            //g2d.drawImage(back1, 0, 0, null);
+
+            g2d.drawImage(back3, 0, 0, null);
+
+
 
         if (obs.isVisible() )
             g2d.drawImage(obs.getImage(), obs.getX(), obs.getY(), this);
 
-        ArrayList<Cannonball> ms = car.cnn;
 
 
-        for (Cannonball m : ms) {
-            if (m.isVisible()) {
-                g.drawImage(m.getImage(), m.getX(), m.getY(), this);
-            }
-        }
+
+
 
 
     }
@@ -87,70 +132,25 @@ public class Map extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        updateCar();
-        updateCannonball();
-        checkCollisions();
 
         repaint();
     }
 
-    public void checkCollisions() {
-
-        Rectangle r3 = car.getBounds();
-        Rectangle r2 = obs.getBounds();
-
-        if (r3.intersects(r2) && obs.isVisible()) {
-            car.setVisible(false);
-            obs.setVisible(false);
+    @Override
+    protected void processKeyEvent(KeyEvent e) {
+        if (e.getID() == KeyEvent.KEY_PRESSED) {
+            Keyboard.keydown[e.getKeyCode()] = true;
         }
-
-        ArrayList<Cannonball> ms = car.cnn;
-
-        for (Cannonball m : ms) {
-
-            Rectangle r1 = m.getBounds();
-
-            if (r1.intersects(r2) && obs.isVisible()) {
-                m.setVisible(false);
-                obs.setVisible(false);
-            }
+        else if (e.getID() == KeyEvent.KEY_RELEASED) {
+            Keyboard.keydown[e.getKeyCode()] = false;
         }
     }
 
-    private void updateCar() {
-        if(car.isVisible())
-            car.move();
-    }
-
-    private void updateCannonball() {
-
-        ArrayList<Cannonball> ms = car.cnn;
-
-        for (int i = 0; i < ms.size(); i++) {
-
-            Cannonball m = ms.get(i);
-
-            if (m.isVisible()) {
-                m.move();
-            } else {
-                ms.remove(i);
-            }
-        }
-    }
-
-
-
-
-    private class TAdapter extends KeyAdapter {
-
+    private class MainLoop extends TimerTask {
         @Override
-        public void keyReleased(KeyEvent e) {
-            car.keyReleased(e);
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            car.keyPressed(e);
+        public void run() {
+            vehicle.update();
+            repaint();
         }
     }
 
