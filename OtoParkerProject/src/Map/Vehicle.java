@@ -108,11 +108,12 @@ public class Vehicle {
     private Point2D driftLastPoint2;
     
     public void draw(Graphics2D g, Graphics2D backg) {
+        backg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         double angle = -Math.atan2(direction.x, direction.y);
         g.rotate(angle, position.x, position.y + 0);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
-        ImageIcon ii = new ImageIcon("images.jpg");
+        ImageIcon ii = new ImageIcon("images/car.jpg");
         Image image = ii.getImage();
         g.drawImage(image, (int) (position.x-20), (int) (position.y-30), null);
 

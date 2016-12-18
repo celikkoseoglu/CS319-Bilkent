@@ -16,7 +16,7 @@ public class Obstacle {
     private boolean vis;
 
     public Obstacle() {
-        ImageIcon ii = new ImageIcon("images.jpg");
+        ImageIcon ii = new ImageIcon("images/images.jpg");
         image = ii.getImage();
         x = 400;
         y = 400;

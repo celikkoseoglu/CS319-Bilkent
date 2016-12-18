@@ -15,7 +15,7 @@ public class Cannonball extends Sprite {
 
     private void initCannonball() {
 
-        loadImage("shot.gif");
+        loadImage("images/shot.gif");
         getImageDimensions();
     }
 

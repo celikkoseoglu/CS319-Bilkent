@@ -1,14 +1,11 @@
 package Map; /**
  * Created by HÜSEYİN on 11.12.2016.
  */
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.*;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
-import java.awt.Rectangle;
 import java.util.*;
-import java.awt.Graphics2D;
-import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
@@ -28,7 +25,7 @@ public class Car extends Sprite{
 
     public Car(int a,int b) {
         super(a,b);
-        ImageIcon ii = new ImageIcon("images.jpg");
+        ImageIcon ii = new ImageIcon("images/images.jpg");
         image = ii.getImage();
         buffered = new BufferedImage(image.getWidth(null), image.getHeight(null),BufferedImage.TYPE_INT_RGB);
 
@@ -133,6 +130,8 @@ public class Car extends Sprite{
     }
 
     public void draw(Graphics2D g, Graphics2D backg){
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        backg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         double angle = -Math.atan((double)dx/dy); // -Math.atan2(direction.x, direction.y);
         g.rotate(angle, x, y );
         g.setColor(Color.BLACK);
