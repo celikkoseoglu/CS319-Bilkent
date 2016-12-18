@@ -112,7 +112,7 @@ public class Vehicle {
         g.rotate(angle, position.x, position.y + 0);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
-        ImageIcon ii = new ImageIcon("car.jpg");
+        ImageIcon ii = new ImageIcon("images.jpg");
         Image image = ii.getImage();
         g.drawImage(image, (int) (position.x-20), (int) (position.y-30), null);
 
