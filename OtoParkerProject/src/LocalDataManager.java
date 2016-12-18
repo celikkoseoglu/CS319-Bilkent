@@ -94,7 +94,7 @@ public class LocalDataManager
      * creates and returns a note object from the specified noteName
      *
      * @param textFile is the name of the note
-     * @return Note object or null if note file is not found
+     * @return String object or null if note file is not found
      */
     public String readText(String textFile, boolean internal) {
         try {
@@ -111,10 +111,24 @@ public class LocalDataManager
             textReader.close();
             fr.close();
             return strBuffer.toString();
+        } catch (FileNotFoundException fNEF) {
+            if (textFile == "progress.txt") {
+                return "0:220:1|\n" +
+                        "1:120:0|\n" +
+                        "2:220:0|\n" +
+                        "3:120:0|\n" +
+                        "4:220:0|\n" +
+                        "5:120:0|\n" +
+                        "6:220:0|\n" +
+                        "7:120:0|\n" +
+                        "8:220:0|\n" +
+                        "9:120:0";
+            }
+            else
+                return null;
         }
-
         catch (Exception e) {
-            System.out.println(e.toString() + ": Something is wrong with Litera's note files");
+            System.out.println(e.toString() + ": Something is wrong with OtoParker's note files");
             e.printStackTrace();
             return null;
         }
