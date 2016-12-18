@@ -4,6 +4,8 @@ package Map;
  * Created by HÜSEYİN on 11.12.2016.
  */
 
+import javafx.geometry.BoundingBox;
+
 import java.awt.Color;
 import java.awt.*;
 import java.awt.Graphics2D;
@@ -31,8 +33,6 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 
-
-
 public class Map extends JPanel implements ActionListener {
     private Timer timer;
     private Obstacle obs;
@@ -54,7 +54,7 @@ public class Map extends JPanel implements ActionListener {
 
         setFocusable(true);
 
-        obs=new Obstacle();
+        obs = new Obstacle();
 
         //try {
         back1 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB); //ImageIO.read(new File("car.jpg"));
@@ -99,28 +99,36 @@ public class Map extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            g3.setColor(Color.WHITE);
-            g3.fillRect(0, 0, 800, 600);
+        g3.setColor(Color.WHITE);
+        g3.fillRect(0, 0, 800, 600);
 
-            g2.setBackground(new Color(255, 255, 255, 0));
-            g2.clearRect(-800/2, -600/2, 800, 600);
+        g2.setBackground(new Color(255, 255, 255, 0));
+        g2.clearRect(-800 / 2, -600 / 2, 800, 600);
 
-            AffineTransform at = g1.getTransform();
-            AffineTransform at2 = g2.getTransform();
-            vehicle.draw(g2, g1);
-            g1.setTransform(at);
-            g2.setTransform(at2);
+        AffineTransform at = g1.getTransform();
+        AffineTransform at2 = g2.getTransform();
+        vehicle.draw(g2, g1);
+        g1.setTransform(at);
+        g2.setTransform(at2);
 
-            g3.drawImage(back1, 0, 0, null);
-            g3.drawImage(back2, 0, 0, null);
-            //g2d.drawImage(back1, 0, 0, null);
+        System.out.println(vehicle.getPosition().getX());
+        System.out.println(vehicle.getPosition().getY());
 
-            g2d.drawImage(back3, 0, 0, null);
+        System.out.println(-Math.atan2(vehicle.getDirection().x, vehicle.getDirection().y));
+
+        g3.drawImage(back1, 0, 0, null);
+        g3.drawImage(back2, 0, 0, null);
+        //g2d.drawImage(back1, 0, 0, null);
+
+        g2d.drawImage(back3, 0, 0, null);
 
 
-
-        if (obs.isVisible() )
+        if (obs.isVisible())
             g2d.drawImage(obs.getImage(), obs.getX(), obs.getY(), this);
+    }
+
+    public void asdf(double x, double y, double theta) {
+        
     }
 
 
@@ -134,8 +142,7 @@ public class Map extends JPanel implements ActionListener {
     protected void processKeyEvent(KeyEvent e) {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             Keyboard.keydown[e.getKeyCode()] = true;
-        }
-        else if (e.getID() == KeyEvent.KEY_RELEASED) {
+        } else if (e.getID() == KeyEvent.KEY_RELEASED) {
             Keyboard.keydown[e.getKeyCode()] = false;
         }
     }

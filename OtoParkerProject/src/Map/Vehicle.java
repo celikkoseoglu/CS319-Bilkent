@@ -1,5 +1,7 @@
 package Map;
 
+import javafx.geometry.BoundingBox;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -59,7 +61,7 @@ public class Vehicle {
         // quanto menor a velocidade, maior o alinhamento
         {
             double difAngle = velocity.getRelativeAngleBetween(direction);
-            System.out.println("dif="+dif);
+            //System.out.println("dif="+dif);
             if (!Double.isNaN(difAngle)) {
                 double r = Math.random() * 50;
                 velocity.rotateZ(difAngle/((50+r)*(5*dif)));
@@ -90,7 +92,6 @@ public class Vehicle {
         if (isDrifting) {
             engineForce = engineForce / 5;
         }
-        
 
         boolean isBraking = Keyboard.keydown[66];
         
@@ -110,17 +111,16 @@ public class Vehicle {
     public void draw(Graphics2D g, Graphics2D backg) {
         backg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         double angle = -Math.atan2(direction.x, direction.y);
-        g.rotate(angle, position.x, position.y + 0);
+        g.rotate(angle, position.x, position.y);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
         ImageIcon ii = new ImageIcon("images/car.jpg");
         Image image = ii.getImage();
-        g.drawImage(image, (int) (position.x-20), (int) (position.y-30), null);
-
+        g.drawImage(image, (int) (position.x-20), (int) (position.y-30),null);
         
         if (isDrifting) {
             AffineTransform transf = new AffineTransform();
-            transf.rotate(angle, position.x, position.y + 0);
+            transf.rotate(angle, position.x, position.y);
             
             backg.setColor(new Color(0, 0, 0, 16));
             BasicStroke basicStroke = new BasicStroke(10);
@@ -206,5 +206,11 @@ public class Vehicle {
         fBraking.normalize();
         fBraking.scale(-cBraking);
     }
-    
+
+    public Vec3 getPosition() {
+        return position;
+    }
+    public Vec3 getDirection() {
+        return direction;
+    }
 }

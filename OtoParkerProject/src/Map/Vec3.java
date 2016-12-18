@@ -117,5 +117,14 @@ public class Vec3 {
     public int getSign(Vec3 v) {
         return (y*v.x > x*v.y)?-1:1;
     }
-    
+
+    public double getX()
+    {
+        return x;
+    }
+
+    public double getY()
+    {
+        return y;
+    }
 }
