@@ -3,7 +3,7 @@ package Map;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.awt.image.*;
 
 /**
@@ -15,7 +15,7 @@ import java.awt.image.*;
  */
 public class Vehicle {
 
-    public double mass = 800; // em kilograma
+    public double mass = 1800; // em kilograma
     public Vec3 position = new Vec3();
     public Vec3 direction = new Vec3(0, 1, 0);
     public Vec3 velocity = new Vec3();
@@ -36,6 +36,7 @@ public class Vehicle {
     public Vec3 fLongtitudinal = new Vec3();
     
     public boolean isDrifting;
+    public boolean visible=true;
 
     public Vehicle() {
     }
@@ -63,10 +64,10 @@ public class Vehicle {
             if (!Double.isNaN(difAngle)) {
                 double r = Math.random() * 50;
                 velocity.rotateZ(difAngle/((50+r)*(5*dif)));
-                
+
                 isDrifting = Math.abs(Math.toDegrees(difAngle)) > 30;
             }
-            
+
             //Vec3 velTmp = new Vec3();
             //velTmp.set(velocity);
             //double difAngle2 = 2 * dif * velTmp.relativeAngleBetween(direction);
@@ -113,7 +114,7 @@ public class Vehicle {
         g.rotate(angle, position.x, position.y + 0);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
-        ImageIcon ii = new ImageIcon("images/car.jpg");
+        ImageIcon ii = new ImageIcon("OtoParkerProject/images/car.jpg");
         Image image = ii.getImage();
         g.drawImage(image, (int) (position.x-20), (int) (position.y-30), null);
 
@@ -206,5 +207,37 @@ public class Vehicle {
         fBraking.normalize();
         fBraking.scale(-cBraking);
     }
-    
+
+
+    public boolean checkCollision(Rectangle2D r){
+
+        double angle =Math.atan2(direction.x, direction.y);
+        System.out.println(angle);
+
+        Line2D[] lines = new Line2D[4];
+        Point2D leftup = new Point2D.Double( position.x+400, position.y+300);
+        Point2D rightup = new Point2D.Double( position.x +400+50*Math.sin(angle), position.y+300+70*Math.cos(angle));
+        Point2D leftdown = new Point2D.Double( position.x+400+50*Math.sin(angle), position.y+300+70*Math.cos(angle));
+        Point2D rightdown = new Point2D.Double( position.x+400+50*Math.sin(angle), position.y+300+70*Math.cos(angle));
+
+
+
+
+        System.out.println("lalala1");
+
+        lines[0]=new Line2D.Double(leftup,rightup);
+        lines[1]=new Line2D.Double(leftup,leftdown);
+        lines[2]=new Line2D.Double(rightup,rightdown);
+        lines[3]=new Line2D.Double(leftdown,rightdown);
+
+        boolean x= false;
+
+        for(int i=0; i < lines.length; i++)
+            if(lines[i].intersects(r)) {
+                x = true;
+                System.out.println("lalala2");
+            }
+        return x;
+    }
+
 }

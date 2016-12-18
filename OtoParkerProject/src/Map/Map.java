@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -44,7 +45,6 @@ public class Map extends JPanel implements ActionListener {
     private BufferedImage back2;
     private BufferedImage back3;
     private Vehicle vehicle = new Vehicle();
-
     public Map() {
 
         initBoard();
@@ -107,7 +107,9 @@ public class Map extends JPanel implements ActionListener {
 
             AffineTransform at = g1.getTransform();
             AffineTransform at2 = g2.getTransform();
-            vehicle.draw(g2, g1);
+            if(!vehicle.checkCollision(obs.getBounds()))
+                vehicle.draw(g2, g1);
+                vehicle.position.print();
             g1.setTransform(at);
             g2.setTransform(at2);
 
@@ -125,8 +127,6 @@ public class Map extends JPanel implements ActionListener {
 
 
     public void actionPerformed(ActionEvent e) {
-
-
         repaint();
     }
 
