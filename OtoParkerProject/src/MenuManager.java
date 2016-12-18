@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.Arrays;
 
 public class MenuManager {
 
@@ -10,7 +11,11 @@ public class MenuManager {
     private Menu instructions;
     private Menu levels;
 
+    private LocalDataManager mgr;
+
     public MenuManager(JFrame mainFrame) {
+
+        mgr = new LocalDataManager();
 
         this.mainFrame = mainFrame;
 
@@ -18,7 +23,7 @@ public class MenuManager {
         upgradeCar = new UpgradeCarMenu(this);
         credits = new CreditsMenu(this);
         instructions = new InstructionsMenu(this);
-        levels = new LevelsMenu(this);
+        levels = new LevelsMenu(this, mgr);
 
         showMainMenu();
     }

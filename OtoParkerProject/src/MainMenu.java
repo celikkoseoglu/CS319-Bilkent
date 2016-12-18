@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.font.LineMetrics;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
@@ -62,9 +61,6 @@ public class MainMenu extends Menu {
         AttributedString upgradesString = new AttributedString("OtoParker");
         upgradesString.addAttribute(TextAttribute.FONT, new Font("Arial", Font.BOLD, 40));
         upgradesString.addAttribute(TextAttribute.FOREGROUND, new Color(201, 103, 32));
-
-        FontMetrics fm = g2d.getFontMetrics();
-        LineMetrics lm = fm.getLineMetrics(upgradesString.getIterator(), 0, upgradesString.getIterator().getEndIndex(), g);
 
         g2d.drawString(upgradesString.getIterator(), 50, 70);
 
