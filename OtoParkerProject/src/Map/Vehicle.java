@@ -1,10 +1,10 @@
 package Map;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.image.*;
 
 /**
  * Referencia: http://www.asawicki.info/Mirror/Car%20Physics%20for%20Games/Car%20Physics%20for%20Games.html
@@ -36,7 +36,7 @@ public class Vehicle {
     public Vec3 fLongtitudinal = new Vec3();
     
     public boolean isDrifting;
-    
+
     public Vehicle() {
     }
     
@@ -110,8 +110,12 @@ public class Vehicle {
     public void draw(Graphics2D g, Graphics2D backg) {
         double angle = -Math.atan2(direction.x, direction.y);
         g.rotate(angle, position.x, position.y + 0);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
-        g.fillRect((int) (position.x-20), (int) (position.y-30), 40, 60);
+        ImageIcon ii = new ImageIcon("car.jpg");
+        Image image = ii.getImage();
+        g.drawImage(image, (int) (position.x-20), (int) (position.y-30), null);
+
         
         if (isDrifting) {
             AffineTransform transf = new AffineTransform();
