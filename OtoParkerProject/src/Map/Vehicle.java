@@ -116,7 +116,7 @@ public class Vehicle {
         g.setColor(Color.BLACK);
         ImageIcon ii = new ImageIcon("OtoParkerProject/images/car.jpg");
         Image image = ii.getImage();
-        g.drawImage(image, (int) (position.x-20), (int) (position.y-30), null);
+        g.drawImage(image, (int) (position.x-25), (int) (position.y-35), null);
 
         
         if (isDrifting) {
@@ -215,10 +215,10 @@ public class Vehicle {
         System.out.println(angle);
 
         Line2D[] lines = new Line2D[4];
-        Point2D leftup = new Point2D.Double( position.x+400, position.y+300);
-        Point2D rightup = new Point2D.Double( position.x +400+50*Math.sin(angle), position.y+300+70*Math.cos(angle));
-        Point2D leftdown = new Point2D.Double( position.x+400+50*Math.sin(angle), position.y+300+70*Math.cos(angle));
-        Point2D rightdown = new Point2D.Double( position.x+400+50*Math.sin(angle), position.y+300+70*Math.cos(angle));
+        Point2D leftup = new Point2D.Double( position.x+400+25*Math.cos(angle)-35*Math.sin(angle),-position.y+300+35*Math.cos(angle)+25*Math.sin(angle));
+        Point2D rightup = new Point2D.Double( position.x+400-25*Math.cos(angle)-35*Math.sin(angle),-position.y+300+35*Math.cos(angle)-25*Math.sin(angle));
+        Point2D leftdown = new Point2D.Double( position.x+400+25*Math.cos(angle)+35*Math.sin(angle),-position.y+300-35*Math.cos(angle)+25*Math.sin(angle));
+        Point2D rightdown = new Point2D.Double( position.x+400-25*Math.cos(angle)+35*Math.sin(angle),-position.y+300-35*Math.cos(angle)-25*Math.sin(angle));
 
 
 

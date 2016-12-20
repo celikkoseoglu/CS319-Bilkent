@@ -19,8 +19,8 @@ public class Obstacle {
     public Obstacle() {
         ImageIcon ii = new ImageIcon("OtoParkerProject/images/images.jpg");
         image = ii.getImage();
-        x = 50;
-        y = 50;
+        x = 200;
+        y = 200;
         System.out.println("Obstacle working Directory = " +
                 System.getProperty("user.dir"));
         vis=true;
