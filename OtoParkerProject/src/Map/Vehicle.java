@@ -216,7 +216,7 @@ public class Vehicle {
     public void fire() {
         double angle =Math.atan2(direction.x, direction.y);
 
-        weapons.add(new Cannonball((int)(position.x+400) , (int) (-position.y + 300),angle));
+        weapons.add(new Cannonball((int)(position.x+400+35*Math.sin(angle)) , (int) (-position.y + 300- 35*Math.cos(angle)),angle));
     }
 
     public ArrayList<Cannonball> getWeapons(){
