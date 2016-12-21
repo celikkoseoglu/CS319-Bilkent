@@ -107,9 +107,13 @@ public class Map extends JPanel implements ActionListener {
 
             AffineTransform at = g1.getTransform();
             AffineTransform at2 = g2.getTransform();
-            if(!vehicle.checkCollision(obs.getBounds()))
+            if(obs.isVisible()){
+                if(!vehicle.checkCollision(obs.getBounds()))
+                    vehicle.draw(g2, g1);
+            }
+            else
                 vehicle.draw(g2, g1);
-                vehicle.position.print();
+            vehicle.position.print();
             g1.setTransform(at);
             g2.setTransform(at2);
 
@@ -119,10 +123,35 @@ public class Map extends JPanel implements ActionListener {
 
             g2d.drawImage(back3, 0, 0, null);
 
-
-
         if (obs.isVisible() )
             g2d.drawImage(obs.getImage(), obs.getX(), obs.getY(), this);
+
+        ArrayList<Cannonball> cs = vehicle.getWeapons();
+
+
+        for (Cannonball c : cs) {
+            if (c.isVisible()) {
+                g2d.drawImage(c.getImage(), c.getX(), c.getY(), this);
+            }
+        }
+
+
+    }
+
+    public void checkExplosion(){
+        ArrayList<Cannonball> cs = vehicle.getWeapons();
+
+        for (Cannonball c : cs) {
+
+            Rectangle r1 = c.getBounds();
+            Rectangle2D r2 = obs.getBounds();
+
+            if (r1.intersects(r2) && obs.isVisible()) {
+                c.setVisible(false);
+                obs.setVisible(false);
+            }
+
+        }
     }
 
 
@@ -130,10 +159,14 @@ public class Map extends JPanel implements ActionListener {
         repaint();
     }
 
+
     @Override
     protected void processKeyEvent(KeyEvent e) {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             Keyboard.keydown[e.getKeyCode()] = true;
+        }
+        else if(e.getKeyCode()==KeyEvent.VK_SPACE){
+            vehicle.fire();
         }
         else if (e.getID() == KeyEvent.KEY_RELEASED) {
             Keyboard.keydown[e.getKeyCode()] = false;
@@ -144,6 +177,7 @@ public class Map extends JPanel implements ActionListener {
         @Override
         public void run() {
             vehicle.update();
+            checkExplosion();
             repaint();
         }
     }

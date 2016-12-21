@@ -6,22 +6,25 @@ package Map;
 public class Cannonball extends Sprite {
 
     private final int BOARD_WIDTH = 800;
+    double angle;
 
-    public Cannonball(int x, int y) {
+    public Cannonball(int x, int y,double an) {
         super(x, y);
+        angle=an;
 
         initCannonball();
     }
 
     private void initCannonball() {
 
-        loadImage("images/shot.gif");
+        loadImage("OtoParkerProject/images/shot.gif");
         getImageDimensions();
     }
 
     public void move() {
 
-        x += 5;
+        x += 5 * Math.sin(angle);
+        y += 5 * -Math.cos(angle);
 
         if (x > BOARD_WIDTH)
             vis = false;

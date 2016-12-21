@@ -62,7 +62,7 @@ public class Car extends Sprite{
     }
 
     public void fire() {
-        cnn.add(new Cannonball(x + image.getWidth(null), y + image.getHeight(null) / 2));
+        //cnn.add(new Cannonball(x + image.getWidth(null), y + image.getHeight(null) / 2));
     }
 
     public void setVisible(Boolean visible) {

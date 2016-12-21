@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.*;
 import java.awt.image.*;
+import java.util.ArrayList;
 
 /**
  * Referencia: http://www.asawicki.info/Mirror/Car%20Physics%20for%20Games/Car%20Physics%20for%20Games.html
@@ -34,6 +35,7 @@ public class Vehicle {
     public double cRolingResistence = 12.8;
     
     public Vec3 fLongtitudinal = new Vec3();
+    private ArrayList<Cannonball> weapons=new ArrayList<Cannonball>();
     
     public boolean isDrifting;
     public boolean visible=true;
@@ -91,7 +93,7 @@ public class Vehicle {
         if (isDrifting) {
             engineForce = engineForce / 5;
         }
-        
+
 
         boolean isBraking = Keyboard.keydown[66];
         
@@ -103,6 +105,9 @@ public class Vehicle {
         calculateAcceleration();
         calculateVelocity(1);
         calculatePosition(1);
+
+        updateWeapons();
+
     }
     
     private Point2D driftLastPoint1;
@@ -208,6 +213,33 @@ public class Vehicle {
         fBraking.scale(-cBraking);
     }
 
+    public void fire() {
+        double angle =Math.atan2(direction.x, direction.y);
+
+        weapons.add(new Cannonball((int)(position.x+400) , (int) (-position.y + 300),angle));
+    }
+
+    public ArrayList<Cannonball> getWeapons(){
+        return weapons;
+    }
+
+    private void updateWeapons(){
+        ArrayList<Cannonball> cs = getWeapons();
+
+        for (int i = 0; i < cs.size(); i++) {
+
+            Cannonball c = cs.get(i);
+
+            if (c.isVisible()) {
+                c.move();
+            } else {
+                cs.remove(i);
+            }
+        }
+    }
+
+
+
 
     public boolean checkCollision(Rectangle2D r){
 
@@ -221,10 +253,6 @@ public class Vehicle {
         Point2D rightdown = new Point2D.Double( position.x+400-25*Math.cos(angle)+35*Math.sin(angle),-position.y+300-35*Math.cos(angle)-25*Math.sin(angle));
 
 
-
-
-        System.out.println("lalala1");
-
         lines[0]=new Line2D.Double(leftup,rightup);
         lines[1]=new Line2D.Double(leftup,leftdown);
         lines[2]=new Line2D.Double(rightup,rightdown);
@@ -235,7 +263,6 @@ public class Vehicle {
         for(int i=0; i < lines.length; i++)
             if(lines[i].intersects(r)) {
                 x = true;
-                System.out.println("lalala2");
             }
         return x;
     }
