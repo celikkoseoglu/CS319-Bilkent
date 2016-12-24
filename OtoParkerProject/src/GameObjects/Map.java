@@ -32,7 +32,7 @@ public class Map extends JPanel implements ActionListener {
     private BufferedImage back1;
     private BufferedImage back2;
     private BufferedImage back3;
-    private Vehicle vehicle = new Vehicle();
+    private Car car = new Car();
     public Map() {
 
         initBoard();
@@ -99,12 +99,12 @@ public class Map extends JPanel implements ActionListener {
         AffineTransform at = g1.getTransform();
         AffineTransform at2 = g2.getTransform();
         if(obs.isVisible()){
-            if(!vehicle.checkCollision(obs.getBounds()))
-                vehicle.draw(g2, g1);
+            if(!car.checkCollision(obs.getBounds()))
+                car.draw(g2, g1);
         }
         else
-            vehicle.draw(g2, g1);
-        vehicle.position.print();
+            car.draw(g2, g1);
+        car.position.print();
         g1.setTransform(at);
         g2.setTransform(at2);
 
@@ -114,7 +114,7 @@ public class Map extends JPanel implements ActionListener {
 
         g2d.drawImage(back3, 0, 0, null);
 
-        if(vehicle.checkParking(target.getBounds()))
+        if(car.checkParking(target.getBounds()))
             System.exit(0);
 
 
@@ -123,7 +123,7 @@ public class Map extends JPanel implements ActionListener {
 
 
 
-        ArrayList<Cannonball> cs = vehicle.getWeapons();
+        ArrayList<Cannonball> cs = car.getWeapons();
         for (Cannonball c : cs) {
             if (c.isVisible()) {
                 g2d.drawImage(c.getImage(), c.getX(), c.getY(), this);
@@ -134,7 +134,7 @@ public class Map extends JPanel implements ActionListener {
     }
 
     public void checkExplosion(){
-        ArrayList<Cannonball> cs = vehicle.getWeapons();
+        ArrayList<Cannonball> cs = car.getWeapons();
 
         for (Cannonball c : cs) {
 
@@ -161,7 +161,7 @@ public class Map extends JPanel implements ActionListener {
             Keyboard.keydown[e.getKeyCode()] = true;
         }
         else if(e.getKeyCode()==KeyEvent.VK_SPACE){
-            vehicle.fire();
+            car.fire();
         }
         else if (e.getID() == KeyEvent.KEY_RELEASED) {
             Keyboard.keydown[e.getKeyCode()] = false;
@@ -171,7 +171,7 @@ public class Map extends JPanel implements ActionListener {
     private class MainLoop extends TimerTask {
         @Override
         public void run() {
-            vehicle.update();
+            car.update();
             checkExplosion();
             repaint();
         }

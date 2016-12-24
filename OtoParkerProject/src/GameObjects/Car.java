@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.*;
 import java.util.ArrayList;
 
-public class Vehicle {
+public class Car {
 
     public double mass = 1800; // em kilograma
     public Vec3 position = new Vec3();
@@ -18,7 +18,7 @@ public class Vehicle {
     private final double WIDTH =50;
 
     
-    public double cBraking = 500;
+    public double cBraking = 1500;
     public Vec3 fBraking = new Vec3();
     
     public double engineForce = 0;
@@ -37,7 +37,7 @@ public class Vehicle {
     public boolean visible=true;
     private boolean isBackward=false;
 
-    public Vehicle() {
+    public Car() {
     }
     
     public void update() {
@@ -82,8 +82,6 @@ public class Vehicle {
         }
         else if (Keyboard.keydown[40]) {
             engineForce = -300;
-            if(velocity.getSize() == 0)
-                direction.rotateZ(Math.toRadians(180));
         }
         else  {
             engineForce = 0;
