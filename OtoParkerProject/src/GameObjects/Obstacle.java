@@ -1,4 +1,4 @@
-package Map;
+package GameObjects;
 
 import javax.swing.*;
 import java.awt.*;

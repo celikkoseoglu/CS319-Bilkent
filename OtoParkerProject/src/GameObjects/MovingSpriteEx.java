@@ -1,4 +1,4 @@
-package Map;
+package GameObjects;
 
 /**
  * Created by HÜSEYİN on 11.12.2016.

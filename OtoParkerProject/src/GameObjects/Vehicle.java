@@ -1,19 +1,11 @@
-package Map;
+package GameObjects;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.*;
-import java.awt.image.*;
 import java.util.ArrayList;
 
-/**
- * Referencia: http://www.asawicki.info/Mirror/Car%20Physics%20for%20Games/Car%20Physics%20for%20Games.html
- * http://www.carrosinfoco.com.br/carros/2014/06/a-arte-de-dirirgir-gerenciando-a-carga-sobre-os-pneus/
- * http://engineeringdotnet.blogspot.com.br/2010/04/simple-2d-car-physics-in-games.html
- * 
- * @author leonardo
- */
 public class Vehicle {
 
     public double mass = 1800; // em kilograma
@@ -21,6 +13,10 @@ public class Vehicle {
     public Vec3 direction = new Vec3(0, 1, 0);
     public Vec3 velocity = new Vec3();
     public Vec3 acceleration = new Vec3();
+
+    private final double HEIGHT =70;
+    private final double WIDTH =50;
+
     
     public double cBraking = 500;
     public Vec3 fBraking = new Vec3();
@@ -39,6 +35,7 @@ public class Vehicle {
     
     public boolean isDrifting;
     public boolean visible=true;
+    private boolean isBackward=false;
 
     public Vehicle() {
     }
@@ -85,6 +82,8 @@ public class Vehicle {
         }
         else if (Keyboard.keydown[40]) {
             engineForce = -300;
+            if(velocity.getSize() == 0)
+                direction.rotateZ(Math.toRadians(180));
         }
         else  {
             engineForce = 0;
@@ -238,19 +237,15 @@ public class Vehicle {
         }
     }
 
-
-
-
     public boolean checkCollision(Rectangle2D r){
 
         double angle =Math.atan2(direction.x, direction.y);
-        System.out.println(angle);
 
         Line2D[] lines = new Line2D[4];
-        Point2D leftup = new Point2D.Double( position.x+400+25*Math.cos(angle)-35*Math.sin(angle),-position.y+300+35*Math.cos(angle)+25*Math.sin(angle));
-        Point2D rightup = new Point2D.Double( position.x+400-25*Math.cos(angle)-35*Math.sin(angle),-position.y+300+35*Math.cos(angle)-25*Math.sin(angle));
-        Point2D leftdown = new Point2D.Double( position.x+400+25*Math.cos(angle)+35*Math.sin(angle),-position.y+300-35*Math.cos(angle)+25*Math.sin(angle));
-        Point2D rightdown = new Point2D.Double( position.x+400-25*Math.cos(angle)+35*Math.sin(angle),-position.y+300-35*Math.cos(angle)-25*Math.sin(angle));
+        Point2D leftup = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
+        Point2D rightup = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
+        Point2D leftdown = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
+        Point2D rightdown = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
 
 
         lines[0]=new Line2D.Double(leftup,rightup);
@@ -265,6 +260,23 @@ public class Vehicle {
                 x = true;
             }
         return x;
+    }
+
+    public boolean checkParking(Rectangle2D r){
+
+        double angle =Math.atan2(direction.x, direction.y);
+
+        Point2D leftup = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
+        Point2D rightup = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
+        Point2D leftdown = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
+        Point2D rightdown = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
+
+        if(r.contains(leftup) && r.contains(rightdown) && r.contains(leftdown) && r.contains(rightup)) {
+            return true;
+        }
+
+
+        return false;
     }
 
 }
