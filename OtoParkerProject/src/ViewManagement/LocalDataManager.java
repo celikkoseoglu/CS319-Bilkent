@@ -1,6 +1,9 @@
 package ViewManagement;
 
+import GameObjects.Obstacle;
+
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -60,36 +63,6 @@ public class LocalDataManager
             System.err.println("IOException: " + ioe.getMessage());
             return false;
         }
-    }
-
-    /**
-     * gets note names as a String[]. Checks if the application directory exists before trying to retrieve note names
-     *
-     * @return the String[] which contains notes or if the note directory doesn't even exist, returns null
-     */
-    public String[] getNoteNames(String directoryName)
-    {
-        if ( directoryExists(directoryName) )
-        {
-            File folder = new File(directoryName);
-            FileFilter textFilter = new FileFilter()
-            {
-                public boolean accept(File folder)
-                {
-                    return folder.isDirectory();
-                }
-            };
-            File[] listOfFiles = folder.listFiles(textFilter);
-            String[] listOfFileNames = new String[listOfFiles.length];
-
-            for ( int i = 0; i < listOfFiles.length; i++ )
-                listOfFileNames[i] = listOfFiles[i].getName();
-
-            System.out.println(Arrays.toString(listOfFileNames));
-
-            return listOfFileNames;
-        }
-        return null;
     }
 
     /**
@@ -163,5 +136,18 @@ public class LocalDataManager
             }
             return false;
         }
+    }
+
+    public ArrayList<Obstacle> getObstacles(int level) {
+        String[] obstacles = readText("1/obstacles.txt" ,true).split("\\|");
+
+        ArrayList<Obstacle> obstacleList = new ArrayList<>();
+
+        for (String s : obstacles) {
+            String[] obstacle = s.split(":");
+            obstacleList.add(new Obstacle(Integer.parseInt(obstacle[2]), Integer.parseInt(obstacle[3]), obstacle[1]));
+        }
+
+        return obstacleList;
     }
 }
