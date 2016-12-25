@@ -102,33 +102,33 @@ public class UpgradeCarMenu extends Menu {
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource() == colorLeftButton) {
-//                if(Car.icon == System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png"){
-//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
-//                }
-//                else if(Car.icon == System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png"){
-//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
-//                }
-//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png"){
-//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";
-//                }
-//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";){
-//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
-//                }
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
+                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+               }
+               else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
+                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+               }
+               else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
+                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";
+               }
+               else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png")){
+                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+               }
             }
 
             else if (e.getSource() == colorRightButton) {
-//                if(Car.icon == System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png"){
-//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
-//                }
-//                else if(Car.icon == System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png"){
-//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
-//                }
-//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png"){
-//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";
-//                }
-//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";){
-//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
-//                }
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
+                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+                }
+                else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
+                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+                }
+                else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
+                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";
+                }
+                else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png")){
+                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+                }
             }
 
             else if (e.getSource() == weaponLeftButton) {

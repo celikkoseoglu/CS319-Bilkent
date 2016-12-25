@@ -37,7 +37,7 @@ public class Car {
     public boolean visible=true;
     private boolean isBackward=false;
 
-    public static ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png");
+    public static String carImageDir= System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
 
     public Car() {
     }
@@ -104,9 +104,11 @@ public class Car {
         g.rotate(angle, position.x, position.y + 0);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png");
+
+        ImageIcon icon = new ImageIcon(carImageDir);
+
         Image image = icon.getImage();
-        g.drawImage(image, (int) (position.x-WIDTH/2), (int) (position.y-HEIGHT/2), null);
+        g.drawImage(image, (int) (position.x-WIDTH/2), (int) (position.y-HEIGHT/2), (int)WIDTH, (int)HEIGHT, null);
 
 
         if (drifts) {
