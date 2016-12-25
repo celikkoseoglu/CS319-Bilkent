@@ -1,0 +1,5 @@
+0:tree.png:600:400|
+1:car.png:410:23|
+2:tree.png:300:460|
+3:car.png:18:235|
+4:car.png:250:25

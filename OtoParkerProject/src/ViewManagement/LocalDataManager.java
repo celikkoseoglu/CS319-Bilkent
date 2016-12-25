@@ -140,7 +140,7 @@ public class LocalDataManager
     }
 
     public ArrayList<Obstacle> getObstacles(int level) {
-        String[] obstacles = readText("1/obstacles.txt" ,true).split("\\|");
+        String[] obstacles = readText(level+"/obstacles.txt" ,true).split("\\|");
 
         ArrayList<Obstacle> obstacleList = new ArrayList<>();
 
@@ -153,7 +153,7 @@ public class LocalDataManager
     }
 
     public Target getTarget(int level) {
-        String[] target = readText("1/target.txt" ,true).split("\\|");
+        String[] target = readText(level+"/target.txt" ,true).split("\\|");
 
         return new Target(Integer.parseInt(target[0]), Integer.parseInt(target[1]), Integer.parseInt(target[2]), Integer.parseInt(target[3]));
     }

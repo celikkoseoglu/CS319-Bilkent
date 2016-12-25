@@ -41,6 +41,7 @@ public class Map extends JPanel implements ActionListener {
 
     private JLabel elapsedTimeLabel;
     private int elapsedTime;
+    private int level =2;
 
     private Image star;
 
@@ -69,9 +70,9 @@ public class Map extends JPanel implements ActionListener {
 
         setFocusable(true);
 
-        Obstacles = localDataManager.getObstacles(1);
+        Obstacles = localDataManager.getObstacles(level);
 
-        target = localDataManager.getTarget(1);
+        target = localDataManager.getTarget(level);
 
         try {
             backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt_lane.jpg" : "images/asphalt_lane.jpg"));
