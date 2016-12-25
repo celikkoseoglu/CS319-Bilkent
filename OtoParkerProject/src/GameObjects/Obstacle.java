@@ -16,7 +16,7 @@ public class Obstacle {
     private String loc = "images/images.jpg";
 
     public Obstacle() {
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? loc :loc );
+        ImageIcon icon = new ImageIcon(loc);
         image = icon.getImage();
         x = 200;
         y = 200;
@@ -24,7 +24,7 @@ public class Obstacle {
     }
 
     public Obstacle(int a, int b) {
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? loc : loc);
+        ImageIcon icon = new ImageIcon(loc);
         image = icon.getImage();
         x = a;
         y = b;
@@ -34,7 +34,7 @@ public class Obstacle {
 
     public Obstacle(String source) {
         loc = source;
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? loc :loc );
+        ImageIcon icon = new ImageIcon(loc);
         image = icon.getImage();
         x = 200;
         y = 200;
@@ -42,8 +42,8 @@ public class Obstacle {
     }
 
     public Obstacle(int a, int b, String source) {
-        loc = "images/"+source+".jpg";
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? loc : loc);
+        loc = "images/"+source;
+        ImageIcon icon = new ImageIcon(loc);
         image = icon.getImage();
         x = a;
         y = b;
