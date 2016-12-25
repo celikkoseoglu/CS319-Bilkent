@@ -141,7 +141,7 @@ public class Map extends JPanel implements ActionListener {
                 }
             }
 
-        if (draw) {
+        if (draw && !car.checkFrame()) {
             car.draw(carg, background);
         }
 

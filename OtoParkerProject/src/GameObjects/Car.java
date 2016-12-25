@@ -239,6 +239,24 @@ public class Car {
         lines[2]=new Line2D.Double(rightup,rightdown);
         lines[3]=new Line2D.Double(leftdown,rightdown);
 
+        boolean x= false;
+
+        for(int i=0; i < lines.length; i++)
+            if(lines[i].intersects(rand)) {
+                x = true;
+            }
+        return x;
+    }
+
+    public boolean checkFrame(){
+
+        double angle =Math.atan2(direction.x, direction.y);
+
+        Point2D leftup = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
+        Point2D rightup = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
+        Point2D leftdown = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
+        Point2D rightdown = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
+
         Line2D[] frames = new Line2D[4];
         frames[0]=new Line2D.Double(16,18,768,18);
         frames[1]=new Line2D.Double(16,18,16,522);
@@ -249,10 +267,9 @@ public class Car {
 
         boolean x= false;
 
-        for(int i=0; i < lines.length; i++)
-            if(lines[i].intersects(rand) || !frame.contains(leftup) || !frame.contains(rightup) || !frame.contains(rightdown) || !frame.contains(leftdown)) {
-                x = true;
-            }
+        if( !frame.contains(leftup) || !frame.contains(rightup) || !frame.contains(rightdown) || !frame.contains(leftdown)) {
+            x = true;
+        }
         return x;
     }
 

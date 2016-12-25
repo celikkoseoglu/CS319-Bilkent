@@ -25,6 +25,10 @@ public class PauseMenu extends OtoParkerMenu {
         exitGameButton = new OtoParkerJButton("Exit Game");
         resumeButton = new OtoParkerJButton("Resume");
 
+        upgradesButton.setBounds(350, 150, 150, 40);
+        mainMenuButton.setBounds(350, 220, 150, 40);
+        exitGameButton.setBounds(350, 290, 150, 40);
+        resumeButton.setBounds(350, 360, 150, 40);
         add(upgradesButton);
         add(mainMenuButton);
         add(exitGameButton);
