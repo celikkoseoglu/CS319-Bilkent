@@ -117,7 +117,7 @@ public class Map extends JPanel implements ActionListener {
     private void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
+
         if(!isPaused) {
             backup.setColor(Color.WHITE);
             backup.fillRect(0, 0, 800, 600);
@@ -171,6 +171,11 @@ public class Map extends JPanel implements ActionListener {
             g2d.drawImage(star, 710, 560, 10, 10, this);
             g2d.drawImage(star, 730, 560, 10, 10, this);
             g2d.drawImage(star, 750, 560, 10, 10, this);
+        }
+        else{
+            int alpha = 127; // 50% transparent
+            g2d.setColor(new Color(123,233,130,alpha));
+            g2d.fillRect(0,0,800,600);
         }
     }
 
