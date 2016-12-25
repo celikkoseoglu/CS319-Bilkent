@@ -5,6 +5,7 @@ package GameObjects;
  */
 
 import ViewManagement.LocalDataManager;
+import ViewManagement.OtoParkerMenu;
 import ViewManagement.SoundManager;
 
 import java.awt.Color;
@@ -41,14 +42,16 @@ public class Map extends JPanel implements ActionListener {
 
     private JLabel elapsedTimeLabel;
     private int elapsedTime;
-    private int level =2;
+    private int level;
 
     private Image star;
 
     private LocalDataManager localDataManager;
 
+    private OtoParkerMenu pauseMenu;
 
-    public Map(LocalDataManager mgr) {
+
+    public Map(LocalDataManager mgr, int level, OtoParkerMenu pauseMenu) {
 
         setLayout(null);
 
@@ -57,13 +60,15 @@ public class Map extends JPanel implements ActionListener {
         elapsedTimeLabel.setBounds(10, 550, 150, 30);
         add(elapsedTimeLabel);
 
-        this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "images/star.png");
+        this.star = Toolkit.getDefaultToolkit().getImage("images/star.png");
 
         this.localDataManager = mgr;
 
+        this.level = level;
+
+        this.pauseMenu = pauseMenu;
+
         initBoard();
-
-
     }
 
     private void initBoard() {
@@ -75,7 +80,7 @@ public class Map extends JPanel implements ActionListener {
         target = localDataManager.getTarget(level);
 
         try {
-            backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt_lane.jpg" : "images/asphalt_lane.jpg"));
+            backImage1 = ImageIO.read(new File("images/asphalt_lane.jpg"));
         } catch (Exception ex) {
 
         }
@@ -176,8 +181,11 @@ public class Map extends JPanel implements ActionListener {
 
         if(isPaused){
             int alpha = 127; // 50% transparent
-            g2d.setColor(new Color(0,0,0,alpha));
+            g2d.setColor(new Color(0,0,0, alpha));
             g2d.fillRect(0,0,800,600);
+
+            add(pauseMenu);
+
             timer.cancel();
             timer.purge();
         }

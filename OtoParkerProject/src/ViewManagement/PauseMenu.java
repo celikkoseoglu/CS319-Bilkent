@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by celikkoseoglu on 25/12/2016.
  */
-public class PauseMenu extends Menu {
+public class PauseMenu extends OtoParkerMenu {
 
     private JButton upgradesButton;
     private JButton mainMenuButton;
@@ -29,15 +29,6 @@ public class PauseMenu extends Menu {
         add(mainMenuButton);
         add(exitGameButton);
         add(resumeButton);
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        g2d.fillRect(10, 10, 230, 380);
     }
 
     class ButtonListener implements ActionListener {

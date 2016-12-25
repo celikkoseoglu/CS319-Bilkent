@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
-public class InstructionsMenu extends Menu {
+public class InstructionsMenu extends OtoParkerMenu {
 
     private JButton backToMainMenuButton;
 

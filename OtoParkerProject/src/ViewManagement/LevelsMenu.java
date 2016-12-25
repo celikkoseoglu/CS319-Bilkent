@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LevelsMenu extends Menu {
+public class LevelsMenu extends OtoParkerMenu {
 
     private JButton backToMainMenuButton;
     private LocalDataManager mgr;

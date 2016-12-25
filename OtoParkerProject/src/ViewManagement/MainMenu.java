@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
-public class MainMenu extends Menu {
+public class MainMenu extends OtoParkerMenu {
 
     private JButton playButton;
     private JButton upgradeCarButton;

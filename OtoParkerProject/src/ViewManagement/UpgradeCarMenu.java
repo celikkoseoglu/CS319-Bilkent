@@ -9,7 +9,7 @@ import java.awt.font.LineMetrics;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
-public class UpgradeCarMenu extends Menu {
+public class UpgradeCarMenu extends OtoParkerMenu {
 
     private JButton colorLeftButton, colorRightButton;
     private JButton weaponLeftButton, weaponRightButton;

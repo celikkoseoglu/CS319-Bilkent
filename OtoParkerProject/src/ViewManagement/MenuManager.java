@@ -6,11 +6,12 @@ public class MenuManager {
 
     private JFrame mainFrame;
 
-    private Menu mainMenu;
-    private Menu upgradeCar;
-    private Menu credits;
-    private Menu instructions;
-    private Menu levels;
+    private OtoParkerMenu mainMenu;
+    private OtoParkerMenu upgradeCar;
+    private OtoParkerMenu credits;
+    private OtoParkerMenu instructions;
+    private OtoParkerMenu levels;
+    private OtoParkerMenu pauseMenu;
 
     private LocalDataManager mgr;
 
@@ -25,6 +26,7 @@ public class MenuManager {
         credits = new CreditsMenu(this);
         instructions = new InstructionsMenu(this);
         levels = new LevelsMenu(this, mgr);
+        pauseMenu = new PauseMenu(this);
 
         showMainMenu();
     }
@@ -42,7 +44,7 @@ public class MenuManager {
     }
 
     public void showInstructions() {
-        showMenu(instructions);
+        showMenu(pauseMenu);
     }
 
     public void showLevelScreen() {
@@ -52,7 +54,7 @@ public class MenuManager {
     public void showLevel(int levelNo) {
 //        GameObjects.MovingSpriteEx level = new MovingSpriteEx(this, levelNo);
 //        showMenu(level);
-        GameObjects.Map map = new GameObjects.Map(mgr);
+        GameObjects.Map map = new GameObjects.Map(mgr, levelNo, pauseMenu);
         showMenu(map);
     }
 

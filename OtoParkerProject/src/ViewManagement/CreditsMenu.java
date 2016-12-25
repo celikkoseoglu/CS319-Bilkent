@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
-public class CreditsMenu extends Menu {
+public class CreditsMenu extends OtoParkerMenu {
 
     private final int headerY = 40;
     private final int name1Y = 120;
