@@ -54,7 +54,7 @@ public class Car {
         }
 
         double dangle = velocity.calculateRelative(direction);
-        System.out.println("dif="+dif);
+//        System.out.println("dif="+dif);
         if (!Double.isNaN(dangle)) {
             double rand = Math.random() * 50;
             velocity.gyroZ(dangle/((50+rand)*(5*dif)));

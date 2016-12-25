@@ -8,13 +8,12 @@ public class CarPhysics {
     //constructor
     public CarPhysics() {
     }
-    //methods
     public CarPhysics(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
-
+//    methods
     public void set(CarPhysics newd) {
         this.x = newd.x;
         this.y = newd.y;
@@ -60,9 +59,12 @@ public class CarPhysics {
 
     public void standardize() {
         double size = getMagnitude();
-        x /= size;
-        y /= size;
-        z /= size;
+        if(size != 0){
+            x /= size;
+            y /= size;
+            z /= size;
+        }
+
     }
 
     public void multiply(double f) {
