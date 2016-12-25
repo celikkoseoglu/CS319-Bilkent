@@ -151,7 +151,7 @@ public class LocalDataManager
 
         return obstacleList;
     }
-    
+
     public Target getTarget(int level) {
         String[] target = readText("1/target.txt" ,true).split("\\|");
 

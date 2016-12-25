@@ -129,22 +129,14 @@ public class Map extends JPanel implements ActionListener {
             AffineTransform at = background.getTransform();
             AffineTransform at2 = carg.getTransform();
 
-<<<<<<< HEAD
-            boolean draw = true;
-            for (int i = 0; i < Obstacles.size(); i++)
-                if (Obstacles.get(i).getVisibility()) {
-                    if (car.checkCollision(Obstacles.get(i).getBorders()))
-                        draw = false;
-                }
-=======
         boolean draw=true;
         for(int i=0; i < Obstacles.size(); i++)
             if(Obstacles.get(i).getVisibility()) {
-                if (car.checkCollision(Obstacles.get(i).getBorders()))
+                if (car.checkCollision(Obstacles.get(i).getBorders())) {
                     SoundManager.playSound(SoundManager.FAIL);
                     draw = false;
+                }
             }
->>>>>>> 143cc09d7a679f461873e84fdefd2178ce7626c9
 
             if (draw) {
                 car.draw(carg, background);
