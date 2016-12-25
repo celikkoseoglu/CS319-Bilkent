@@ -42,7 +42,7 @@ public class Obstacle {
     }
 
     public Obstacle(int a, int b, String source) {
-        loc = source;
+        loc = "images/"+source+".jpg";
         ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? loc : loc);
         image = icon.getImage();
         x = a;

@@ -67,9 +67,7 @@ public class Map extends JPanel implements ActionListener {
 
         setFocusable(true);
 
-        Obstacles= new ArrayList<>();
-        Obstacles.add(new Obstacle());
-        Obstacles.add(new Obstacle(600,400));
+        Obstacles= localDataManager.getObstacles(1);
 
         target = new Target(600,100,75,100);
 
