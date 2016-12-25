@@ -37,7 +37,7 @@ public class Map extends JPanel implements ActionListener {
     private BufferedImage backImage2;
     private BufferedImage backImage3;
     private Car car = new Car();
-    private boolean isPaused=false;
+    private boolean isPaused = false;
 
     private JLabel elapsedTimeLabel;
     private int elapsedTime;
@@ -69,14 +69,13 @@ public class Map extends JPanel implements ActionListener {
 
         setFocusable(true);
 
-        Obstacles= localDataManager.getObstacles(1);
+        Obstacles = localDataManager.getObstacles(1);
 
         target = localDataManager.getTarget(1);
 
         try {
             backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt_lane.jpg" : "images/asphalt_lane.jpg"));
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
 
         }
 
@@ -89,8 +88,8 @@ public class Map extends JPanel implements ActionListener {
 
         background.drawImage(backImage1, 0, 0, getWidth(), getHeight(), null);
         int alpha = 127; // 50% transparent
-        background.setColor(new Color(123,233,130,alpha));
-        background.fillRect(target.getX(),target.getY(),target.getWidth(),target.getHeight());
+        background.setColor(new Color(123, 233, 130, alpha));
+        background.fillRect(target.getX(), target.getY(), target.getWidth(), target.getHeight());
 
         background.translate(400, 300);
         background.scale(1, -1);
@@ -104,7 +103,7 @@ public class Map extends JPanel implements ActionListener {
             grabFocus();
             requestFocus();
         });
-        timer =new Timer();
+        timer = new Timer();
         timer.schedule(new MainLoop(), 100, 30);
         new Timer().schedule(new CountDownLoop(), 0, 1000);
     }
@@ -119,78 +118,78 @@ public class Map extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        if(!isPaused) {
-            backup.setColor(Color.WHITE);
-            backup.fillRect(0, 0, 800, 600);
+        backup.setColor(Color.WHITE);
+        backup.fillRect(0, 0, 800, 600);
 
-            carg.setBackground(new Color(255, 255, 255, 0));
-            carg.clearRect(-800 / 2, -600 / 2, 800, 600);
+        carg.setBackground(new Color(255, 255, 255, 0));
+        carg.clearRect(-800 / 2, -600 / 2, 800, 600);
+        AffineTransform at = background.getTransform();
+        AffineTransform at2 = carg.getTransform();
 
-            AffineTransform at = background.getTransform();
-            AffineTransform at2 = carg.getTransform();
-
-        boolean draw=true;
-        for(int i=0; i < Obstacles.size(); i++)
-            if(Obstacles.get(i).getVisibility()) {
+        boolean draw = true;
+        for (int i = 0; i < Obstacles.size(); i++)
+            if (Obstacles.get(i).getVisibility()) {
                 if (car.checkCollision(Obstacles.get(i).getBorders())) {
-                    SoundManager.playSound(SoundManager.FAIL);
+                    //SoundManager.playSound(SoundManager.FAIL);
                     draw = false;
                 }
             }
 
-            if (draw) {
-                car.draw(carg, background);
-            }
+        if (draw) {
+            car.draw(carg, background);
+        }
 
-            background.setTransform(at);
-            carg.setTransform(at2);
+        background.setTransform(at);
+        carg.setTransform(at2);
 
-            backup.drawImage(backImage1, 0, 0, null);
-            backup.drawImage(backImage2, 0, 0, null);
-            g2d.drawImage(backImage3, 0, 0, null);
+        backup.drawImage(backImage1, 0, 0, null);
+        backup.drawImage(backImage2, 0, 0, null);
+        g2d.drawImage(backImage3, 0, 0, null);
 
-        if(car.checkParking(target.getBorders())) {
+        if (car.checkParking(target.getBorders())) {
             SoundManager.playSound(SoundManager.SUCCESS);
             System.exit(0);
         }
-            
-        for(int i=0; i < Obstacles.size(); i++)
-            if (Obstacles.get(i).getVisibility() )
+
+        for (int i = 0; i < Obstacles.size(); i++)
+            if (Obstacles.get(i).getVisibility())
                 g2d.drawImage(Obstacles.get(i).getImage(), Obstacles.get(i).getX(), Obstacles.get(i).getY(), this);
-            ArrayList<Cannonball> cs = car.getWeapons();
-            for (Cannonball c : cs) {
-                if (c.getVisibility()) {
-                    g2d.drawImage(c.getImage(), c.getX(), c.getY(), this);
-                }
+        ArrayList<Cannonball> cs = car.getWeapons();
+        for (Cannonball c : cs) {
+            if (c.getVisibility()) {
+                g2d.drawImage(c.getImage(), c.getX(), c.getY(), this);
             }
-
-            //the box for elapsed time and remaining stars
-
-            g2d.setColor(Color.WHITE);
-
-            g2d.fillRect(0, 550, 800, 50);
-
-            g2d.drawLine(0, 550, 800, 550);
-
-            g2d.drawImage(star, 710, 560, 10, 10, this);
-            g2d.drawImage(star, 730, 560, 10, 10, this);
-            g2d.drawImage(star, 750, 560, 10, 10, this);
         }
-        else{
+
+        //the box for elapsed time and remaining stars
+
+        g2d.setColor(Color.WHITE);
+
+        g2d.fillRect(0, 550, 800, 50);
+
+        g2d.drawLine(0, 550, 800, 550);
+
+        g2d.drawImage(star, 710, 560, 10, 10, this);
+        g2d.drawImage(star, 730, 560, 10, 10, this);
+        g2d.drawImage(star, 750, 560, 10, 10, this);
+
+        if(isPaused){
             int alpha = 127; // 50% transparent
-            g2d.setColor(new Color(123,233,130,alpha));
+            g2d.setColor(new Color(0,0,0,alpha));
             g2d.fillRect(0,0,800,600);
+            timer.cancel();
+            timer.purge();
         }
     }
 
-    public void checkExplosion(){
+    public void checkExplosion() {
         ArrayList<Cannonball> cs = car.getWeapons();
 
         for (Cannonball c : cs) {
 
             Rectangle r1 = c.getBorders();
 
-            for(int i=0; i < Obstacles.size(); i++) {
+            for (int i = 0; i < Obstacles.size(); i++) {
                 Rectangle2D r2 = Obstacles.get(i).getBorders();
                 if (r1.intersects(r2) && Obstacles.get(i).getVisibility()) {
                     c.setVisibility(false);
@@ -208,20 +207,21 @@ public class Map extends JPanel implements ActionListener {
     protected void processKeyEvent(KeyEvent e) {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             InputManager.keydown[e.getKeyCode()] = true;
-        }
-        else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-            isPaused = !isPaused;
-        }
-        else if(e.getKeyCode()==KeyEvent.VK_SPACE){
+        } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (isPaused) {
+                isPaused = !isPaused;
+                timer = new Timer();
+                timer.schedule(new MainLoop(), 100, 30);
+            }
+            else
+                isPaused = !isPaused;
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             car.fire();
-        }
-        else if (e.getKeyCode()== KeyEvent.VK_N){
+        } else if (e.getKeyCode() == KeyEvent.VK_N) {
             timer.schedule(new MainLoop(), 100, 10);
-        }
-        else if (e.getKeyCode()== KeyEvent.VK_P){
+        } else if (e.getKeyCode() == KeyEvent.VK_P) {
             timer.schedule(new MainLoop(), 100, 30);
-        }
-        else if (e.getID() == KeyEvent.KEY_RELEASED) {
+        } else if (e.getID() == KeyEvent.KEY_RELEASED) {
             InputManager.keydown[e.getKeyCode()] = false;
         }
     }
