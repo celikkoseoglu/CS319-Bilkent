@@ -22,8 +22,8 @@
       <file leaf-file-name="Cannonball.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameObjects/Cannonball.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state relative-caret-position="139">
+              <caret line="19" column="67" lean-forward="false" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -44,11 +44,11 @@
       <file leaf-file-name="Car.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameObjects/Car.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2374">
-              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state relative-caret-position="120">
+              <caret line="71" column="9" lean-forward="false" selection-start-line="71" selection-start-column="9" selection-end-line="71" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#985#997#0" expanded="true" />
+                <element signature="e#977#989#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -57,12 +57,12 @@
       <file leaf-file-name="Map.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GameObjects/Map.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="686">
-              <caret line="175" column="60" lean-forward="false" selection-start-line="175" selection-start-column="60" selection-end-line="175" selection-end-column="60" />
+            <state relative-caret-position="311">
+              <caret line="197" column="46" lean-forward="false" selection-start-line="197" selection-start-column="46" selection-end-line="197" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1482663347000" expanded="false" signature="5319:5330" ph=" { " />
-                <marker date="1482663347000" expanded="false" signature="5340:5346" ph=" }" />
+                <marker date="1482664380000" expanded="false" signature="5318:5329" ph=" { " />
+                <marker date="1482664380000" expanded="false" signature="5339:5345" ph=" }" />
               </folding>
             </state>
           </provider>
@@ -96,6 +96,16 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Obstacle.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GameObjects/Obstacle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -181,10 +191,10 @@
         <option value="$PROJECT_DIR$/src/GameObjects/CarPhysics.java" />
         <option value="$PROJECT_DIR$/src/GameObjects/Obstacle.java" />
         <option value="$PROJECT_DIR$/src/GameObjects/Sprite.java" />
-        <option value="$PROJECT_DIR$/src/GameObjects/Cannonball.java" />
-        <option value="$PROJECT_DIR$/src/GameObjects/Car.java" />
-        <option value="$PROJECT_DIR$/src/GameObjects/Map.java" />
         <option value="$PROJECT_DIR$/src/GameObjects/Target.java" />
+        <option value="$PROJECT_DIR$/src/GameObjects/Car.java" />
+        <option value="$PROJECT_DIR$/src/GameObjects/Cannonball.java" />
+        <option value="$PROJECT_DIR$/src/GameObjects/Map.java" />
       </list>
     </option>
   </component>
@@ -785,12 +795,12 @@
       <workItem from="1482658059117" duration="2235000" />
       <workItem from="1482660472499" duration="461000" />
       <workItem from="1482661277891" duration="169000" />
-      <workItem from="1482661523670" duration="1820000" />
+      <workItem from="1482661523670" duration="3181000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36220000" />
+    <option name="totallyTimeSpent" value="37581000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -872,7 +882,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/LevelsMenu.java" />
     <entry file="file://$PROJECT_DIR$/src/MainMenu.java" />
     <entry file="file://$PROJECT_DIR$/src/LocalDataManager.java" />
     <entry file="file://$PROJECT_DIR$/src/Map/Map.java" />
@@ -967,24 +976,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameObjects/Obstacle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ViewManagement/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="24" lean-forward="false" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ViewManagement/SoundManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -998,25 +989,6 @@
         <state relative-caret-position="60">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameObjects/Cannonball.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameObjects/Car.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2374">
-          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#985#997#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1046,14 +1018,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameObjects/Map.java">
+    <entry file="file://$PROJECT_DIR$/src/GameObjects/Obstacle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="686">
-          <caret line="175" column="60" lean-forward="false" selection-start-line="175" selection-start-column="60" selection-end-line="175" selection-end-column="60" />
+        <state relative-caret-position="105">
+          <caret line="10" column="23" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameObjects/Car.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="71" column="9" lean-forward="false" selection-start-line="71" selection-start-column="9" selection-end-line="71" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1482663347000" expanded="false" signature="5319:5330" ph=" { " />
-            <marker date="1482663347000" expanded="false" signature="5340:5346" ph=" }" />
+            <element signature="e#977#989#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/src.zip!/java/util/Timer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8569">
+          <caret line="88" column="13" lean-forward="false" selection-start-line="88" selection-start-column="13" selection-end-line="88" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameObjects/Cannonball.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="19" column="67" lean-forward="false" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ViewManagement/MainWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="24" lean-forward="false" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameObjects/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="197" column="46" lean-forward="false" selection-start-line="197" selection-start-column="46" selection-end-line="197" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1482664380000" expanded="false" signature="5318:5329" ph=" { " />
+            <marker date="1482664380000" expanded="false" signature="5339:5345" ph=" }" />
           </folding>
         </state>
       </provider>

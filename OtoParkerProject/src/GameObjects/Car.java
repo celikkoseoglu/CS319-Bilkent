@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Car {
 
@@ -70,7 +70,7 @@ public class Car {
         else  {
             power = 0;
         }
-        
+
         if (drifts) {
             power = power / 5;
         }

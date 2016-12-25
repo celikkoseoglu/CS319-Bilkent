@@ -22,7 +22,7 @@ import java.util.TimerTask;
 
 
 public class Map extends JPanel implements ActionListener {
-    private Timer timer;
+    public Timer timer;
     private ArrayList<Obstacle> Obstacles;
     private Target target;
     private final int DELAY = 10;
@@ -193,6 +193,12 @@ public class Map extends JPanel implements ActionListener {
         }
         else if(e.getKeyCode()==KeyEvent.VK_SPACE){
             car.fire();
+        }
+        else if (e.getKeyCode()== KeyEvent.VK_N){
+            new Timer().schedule(new MainLoop(), 100, 10);
+        }
+        else if (e.getKeyCode()== KeyEvent.VK_P){
+            new Timer().schedule(new MainLoop(), 100, 30);
         }
         else if (e.getID() == KeyEvent.KEY_RELEASED) {
             InputManager.keydown[e.getKeyCode()] = false;
