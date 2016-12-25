@@ -1,6 +1,7 @@
 package ViewManagement;
 
 import javax.swing.*;
+import GameObjects.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,13 +13,14 @@ public class UpgradeCarMenu extends Menu {
 
     private JButton colorLeftButton, colorRightButton;
     private JButton weaponLeftButton, weaponRightButton;
-    private JButton turningRadiusLeftButton, turningRadiusRightButton;
+    private JButton carModelButtonL, carModelButtonR;
     private JButton upgradeCarButton;
     private JButton backToMainMenuButton;
 
     private final int colorLineY = 150;
     private final int weaponLineY = 250;
     private final int turningRadiusLineY = 350;
+
 
     public UpgradeCarMenu(MenuManager manager) {
 
@@ -30,17 +32,16 @@ public class UpgradeCarMenu extends Menu {
         colorRightButton = new JButton(">");
         weaponLeftButton = new JButton("<");
         weaponRightButton = new JButton(">");
-        turningRadiusLeftButton = new JButton("<");
-        turningRadiusRightButton = new JButton(">");
-        upgradeCarButton = new JButton("Upgrade!");
+        carModelButtonL = new JButton("<");
+        carModelButtonR = new JButton(">");
         backToMainMenuButton = new JButton("<- Main ViewManagement.Menu");
 
         colorLeftButton.addActionListener(buttonListener);
         colorRightButton.addActionListener(buttonListener);
         weaponLeftButton.addActionListener(buttonListener);
         weaponRightButton.addActionListener(buttonListener);
-        turningRadiusLeftButton.addActionListener(buttonListener);
-        turningRadiusRightButton.addActionListener(buttonListener);
+        carModelButtonL.addActionListener(buttonListener);
+        carModelButtonR.addActionListener(buttonListener);
         upgradeCarButton.addActionListener(buttonListener);
         backToMainMenuButton.addActionListener(buttonListener);
 
@@ -48,8 +49,8 @@ public class UpgradeCarMenu extends Menu {
         colorRightButton.setBounds(740, colorLineY, 30, 30);
         weaponLeftButton.setBounds(700, weaponLineY, 30, 30);
         weaponRightButton.setBounds(740, weaponLineY, 30, 30);
-        turningRadiusLeftButton.setBounds(700, turningRadiusLineY, 30, 30);
-        turningRadiusRightButton.setBounds(740, turningRadiusLineY, 30, 30);
+        carModelButtonL.setBounds(700, turningRadiusLineY, 30, 30);
+        carModelButtonR.setBounds(740, turningRadiusLineY, 30, 30);
         upgradeCarButton.setBounds(560, 520, 150, 30);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
 
@@ -57,8 +58,8 @@ public class UpgradeCarMenu extends Menu {
         add(colorRightButton);
         add(weaponLeftButton);
         add(weaponRightButton);
-        add(turningRadiusLeftButton);
-        add(turningRadiusRightButton);
+        add(carModelButtonL);
+        add(carModelButtonR);
         add(upgradeCarButton);
         add(backToMainMenuButton);
     }
@@ -105,26 +106,56 @@ public class UpgradeCarMenu extends Menu {
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource() == colorLeftButton) {
-                //TODO change color of the car and update the small square's color
-                ((JButton) e.getSource()).setBackground(Color.red);
+//                if(Car.icon == System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png"){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+//                }
+//                else if(Car.icon == System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png"){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+//                }
+//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png"){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";
+//                }
+//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+//                }
             }
+
             else if (e.getSource() == colorRightButton) {
-
+//                if(Car.icon == System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png"){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+//                }
+//                else if(Car.icon == System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png"){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+//                }
+//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png"){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";
+//                }
+//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/red.png" : "images/red.png";){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+//                }
             }
-            else if (e.getSource() == weaponLeftButton) {
 
+            else if (e.getSource() == weaponLeftButton) {
+                Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png";
             }
             else if (e.getSource() == weaponRightButton) {
-
+                Cannonball.im =  System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png";
             }
-            else if (e.getSource() == turningRadiusLeftButton) {
-
+            else if (e.getSource() == carModelButtonL) {
+//                if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+//                }
+//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+//                }
             }
-            else if (e.getSource() == turningRadiusRightButton) {
-
-            }
-            else if (e.getSource() == upgradeCarButton) {
-
+            else if (e.getSource() == carModelButtonR) {
+//                if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+//                }
+//                else if(Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";){
+//                    Car.icon =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+//                }
             }
             else if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();
