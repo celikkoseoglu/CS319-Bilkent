@@ -18,13 +18,13 @@ public class Car {
     private final double WIDTH =50;
 
     
-    public double cBraking = 1500;
+    public double cBraking = 500;
     public Vec3 fBraking = new Vec3();
     
     public double engineForce = 0;
     public Vec3 fTraction = new Vec3();
-    
-    public double cDrag = 0.4257;
+
+    public double cDrag = 1.4257;
     public Vec3 fDrag = new Vec3();
 
     public Vec3 fRolingResistence = new Vec3();
@@ -55,8 +55,7 @@ public class Car {
             //velocity.rotateZ(Math.toRadians((-cTyre + dif) * velocity.getSize()));
         }
         
-        // alinha a velocidade do carro com a direcao do carro
-        // quanto menor a velocidade, maior o alinhamento
+
         {
             double difAngle = velocity.getRelativeAngleBetween(direction);
             System.out.println("dif="+dif);
@@ -93,7 +92,9 @@ public class Car {
 
 
         boolean isBraking = Keyboard.keydown[66];
-        
+        isBackward=Keyboard.keydown[40];
+
+
         calculateBraking();
         calculateTraction();
         calculateDrag();
@@ -157,7 +158,7 @@ public class Car {
         fTraction.normalize();
         fTraction.scale(engineForce);
     }
- 
+
     // Fdrag = - Cdrag * v * |v| 
     // where Cdrag is a constant and v is the velocity vector and the notation |v| refers to the magnitude of vector v    
     // speed = sqrt(v.x*v.x + v.y*v.y); 
@@ -182,6 +183,10 @@ public class Car {
         if (isBraking) {
             fLongtitudinal.set(fBraking);
         }
+        else if (isBackward){
+            fBraking.scale(4);
+            fLongtitudinal.set(fBraking);
+        }
         else {
             fLongtitudinal.set(fTraction);
         }
@@ -197,6 +202,7 @@ public class Car {
     private void calculateVelocity(double deltaTime) {
         acceleration.scale(deltaTime);
         velocity.add(acceleration);
+        velocity.print();
     }
  
     private void calculatePosition(double deltaTime) {

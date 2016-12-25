@@ -104,7 +104,6 @@ public class Map extends JPanel implements ActionListener {
         }
         else
             car.draw(g2, g1);
-        car.position.print();
         g1.setTransform(at);
         g2.setTransform(at2);
 
