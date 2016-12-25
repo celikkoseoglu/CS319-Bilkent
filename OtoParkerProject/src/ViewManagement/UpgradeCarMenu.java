@@ -14,7 +14,6 @@ public class UpgradeCarMenu extends Menu {
     private JButton colorLeftButton, colorRightButton;
     private JButton weaponLeftButton, weaponRightButton;
     private JButton carModelButtonL, carModelButtonR;
-    private JButton upgradeCarButton;
     private JButton backToMainMenuButton;
 
     private final int colorLineY = 150;
@@ -42,7 +41,6 @@ public class UpgradeCarMenu extends Menu {
         weaponRightButton.addActionListener(buttonListener);
         carModelButtonL.addActionListener(buttonListener);
         carModelButtonR.addActionListener(buttonListener);
-        upgradeCarButton.addActionListener(buttonListener);
         backToMainMenuButton.addActionListener(buttonListener);
 
         colorLeftButton.setBounds(700, colorLineY, 30, 30);
@@ -51,7 +49,6 @@ public class UpgradeCarMenu extends Menu {
         weaponRightButton.setBounds(740, weaponLineY, 30, 30);
         carModelButtonL.setBounds(700, turningRadiusLineY, 30, 30);
         carModelButtonR.setBounds(740, turningRadiusLineY, 30, 30);
-        upgradeCarButton.setBounds(560, 520, 150, 30);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
 
         add(colorLeftButton);
@@ -60,7 +57,6 @@ public class UpgradeCarMenu extends Menu {
         add(weaponRightButton);
         add(carModelButtonL);
         add(carModelButtonR);
-        add(upgradeCarButton);
         add(backToMainMenuButton);
     }
 
