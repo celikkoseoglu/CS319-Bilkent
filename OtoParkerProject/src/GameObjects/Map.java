@@ -23,7 +23,7 @@ import java.util.TimerTask;
 
 public class Map extends JPanel implements ActionListener {
     private Timer timer;
-    private Obstacle obs;
+    private ArrayList<Obstacle> Obstacles;
     private Target target;
     private final int DELAY = 10;
     private Graphics2D g1;
@@ -42,7 +42,10 @@ public class Map extends JPanel implements ActionListener {
 
         setFocusable(true);
 
-        obs=new Obstacle();
+        Obstacles= new ArrayList<Obstacle>();
+        Obstacles.add(new Obstacle());
+        Obstacles.add(new Obstacle(600,400));
+
         target = new Target(600,100);
 
         //try {
@@ -98,12 +101,19 @@ public class Map extends JPanel implements ActionListener {
 
         AffineTransform at = g1.getTransform();
         AffineTransform at2 = g2.getTransform();
-        if(obs.isVisible()){
-            if(!car.checkCollision(obs.getBounds()))
-                car.draw(g2, g1);
-        }
-        else
+
+        boolean draw=true;
+        for(int i=0; i < Obstacles.size(); i++)
+            if(Obstacles.get(i).isVisible()) {
+                if (car.checkCollision(Obstacles.get(i).getBounds()))
+                    draw = false;
+            }
+
+        if(draw) {
             car.draw(g2, g1);
+        }
+
+
         g1.setTransform(at);
         g2.setTransform(at2);
 
@@ -116,9 +126,9 @@ public class Map extends JPanel implements ActionListener {
         if(car.checkParking(target.getBounds()))
             System.exit(0);
 
-
-        if (obs.isVisible() )
-            g2d.drawImage(obs.getImage(), obs.getX(), obs.getY(), this);
+        for(int i=0; i < Obstacles.size(); i++)
+            if (Obstacles.get(i).isVisible() )
+                g2d.drawImage(Obstacles.get(i).getImage(), Obstacles.get(i).getX(), Obstacles.get(i).getY(), this);
 
 
 
@@ -138,11 +148,13 @@ public class Map extends JPanel implements ActionListener {
         for (Cannonball c : cs) {
 
             Rectangle r1 = c.getBounds();
-            Rectangle2D r2 = obs.getBounds();
 
-            if (r1.intersects(r2) && obs.isVisible()) {
-                c.setVisible(false);
-                obs.setVisible(false);
+            for(int i=0; i < Obstacles.size(); i++) {
+                Rectangle2D r2 = Obstacles.get(i).getBounds();
+                if (r1.intersects(r2) && Obstacles.get(i).isVisible()) {
+                    c.setVisible(false);
+                    Obstacles.get(i).setVisible(false);
+                }
             }
 
         }

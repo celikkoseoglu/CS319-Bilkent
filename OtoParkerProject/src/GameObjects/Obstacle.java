@@ -21,8 +21,14 @@ public class Obstacle {
         image = ii.getImage();
         x = 200;
         y = 200;
-        System.out.println("Obstacle working Directory = " +
-                System.getProperty("user.dir"));
+        vis=true;
+    }
+
+    public Obstacle(int a, int b) {
+        ImageIcon ii = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/images.jpg" : "OtoParkerProject/images/images.jpg");
+        image = ii.getImage();
+        x = a;
+        y = b;
         vis=true;
     }
 
