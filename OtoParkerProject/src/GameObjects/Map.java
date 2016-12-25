@@ -11,8 +11,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.util.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -49,7 +51,7 @@ public class Map extends JPanel implements ActionListener {
         elapsedTimeLabel.setBounds(10, 550, 150, 30);
         add(elapsedTimeLabel);
 
-        this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "star.png" : "star.png");
+        this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "OtoParkerProject/images/star.png");
 
         initBoard();
 
@@ -66,7 +68,12 @@ public class Map extends JPanel implements ActionListener {
 
         target = new Target(600,100);
 
-        backImage1 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB); //ImageIO.read(new File("car.jpg"));
+        try {
+            backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt.jpg" : "OtoParkerProject/images/asphalt.jpg"));
+        }
+        catch (Exception ex) {
+
+        }
 
         backImage2 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
         backImage3 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
@@ -157,6 +164,10 @@ public class Map extends JPanel implements ActionListener {
         }
 
         //the box for elapsed time and remaining stars
+
+        g2d.setColor(Color.WHITE);
+
+        g2d.fillRect(0, 550, 800, 50);
 
         g2d.drawLine(0, 550, 800, 550);
 

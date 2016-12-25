@@ -102,7 +102,7 @@ public class Car {
         g.rotate(angle, position.x, position.y + 0);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "car.jpg" : "car.jpg");
+        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/car.jpg" : "OtoParkerProject/images/car.jpg");
         Image image = icon.getImage();
         g.drawImage(image, (int) (position.x-25), (int) (position.y-35), null);
 

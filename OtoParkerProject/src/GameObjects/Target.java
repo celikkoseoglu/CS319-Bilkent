@@ -48,5 +48,4 @@ public class Target {
     public Rectangle2D getBorders() {
         return new Rectangle2D.Double(x, y, width, height);
     }
-
 }

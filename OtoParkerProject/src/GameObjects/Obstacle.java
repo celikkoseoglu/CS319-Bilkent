@@ -15,7 +15,7 @@ public class Obstacle {
     private boolean vis;
 
     public Obstacle() {
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images.jpg" : "images.jpg");
+        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/images.jpg" : "OtoParkerProject/images/images.jpg");
         image = icon.getImage();
         x = 200;
         y = 200;
@@ -23,7 +23,7 @@ public class Obstacle {
     }
 
     public Obstacle(int a, int b) {
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images.jpg" : "images.jpg");
+        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/images.jpg" : "OtoParkerProject/images/images.jpg");
         image = icon.getImage();
         x = a;
         y = b;
