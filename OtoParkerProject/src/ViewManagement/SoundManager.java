@@ -15,19 +15,16 @@ public class SoundManager {
     public static String CLICK = "tik.wav";
     public static String WEAPON = "weapon.wav";
     
-    
-    public SoundManager(){
-    }
-    public void enableSound(){
+    public static void enableSound(){
         soundEnable= true;
     }
-    public void disableSound(){
+    public static void disableSound(){
         soundEnable= false;
     }
-    public boolean isSoundEnable(){
+    public static boolean isSoundEnable(){
         return soundEnable;
     }
-    public void playSound(String filename){
+    public static void playSound(String filename){
         if(isSoundEnable()) {
             try {
                 Clip clip = AudioSystem.getClip();
