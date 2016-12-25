@@ -33,9 +33,27 @@ public class Map extends JPanel implements ActionListener {
     private BufferedImage back2;
     private BufferedImage back3;
     private Car car = new Car();
+
+    private JLabel elapsedTimeLabel;
+    private int elapsedTime;
+
+    private Image star;
+
+
     public Map() {
 
+        setLayout(null);
+
+        elapsedTime = 0;
+        elapsedTimeLabel = new JLabel();
+        elapsedTimeLabel.setBounds(10, 550, 150, 30);
+        add(elapsedTimeLabel);
+
+        this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "OtoParkerProject/images/star.png");
+
         initBoard();
+
+
     }
 
     private void initBoard() {
@@ -84,7 +102,7 @@ public class Map extends JPanel implements ActionListener {
         });
 
         new Timer().schedule(new MainLoop(), 100, 30);
-
+        new Timer().schedule(new CountDownLoop(), 0, 1000);
     }
 
 
@@ -121,7 +139,6 @@ public class Map extends JPanel implements ActionListener {
             car.draw(g2, g1);
         }
 
-
         g1.setTransform(at);
         g2.setTransform(at2);
 
@@ -138,8 +155,6 @@ public class Map extends JPanel implements ActionListener {
             if (Obstacles.get(i).isVisible() )
                 g2d.drawImage(Obstacles.get(i).getImage(), Obstacles.get(i).getX(), Obstacles.get(i).getY(), this);
 
-
-
         ArrayList<Cannonball> cs = car.getWeapons();
         for (Cannonball c : cs) {
             if (c.isVisible()) {
@@ -147,7 +162,13 @@ public class Map extends JPanel implements ActionListener {
             }
         }
 
+        //the box for elapsed time and remaining stars
 
+        g2d.drawLine(0, 550, 800, 550);
+
+        g2d.drawImage(star, 710, 560, 10, 10, this);
+        g2d.drawImage(star, 730, 560, 10, 10, this);
+        g2d.drawImage(star, 750, 560, 10, 10, this);
     }
 
     public void checkExplosion(){
@@ -164,15 +185,12 @@ public class Map extends JPanel implements ActionListener {
                     Obstacles.get(i).setVisible(false);
                 }
             }
-
         }
     }
-
 
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
-
 
     @Override
     protected void processKeyEvent(KeyEvent e) {
@@ -196,4 +214,12 @@ public class Map extends JPanel implements ActionListener {
         }
     }
 
+    private class CountDownLoop extends TimerTask {
+        @Override
+        public void run() {
+            elapsedTime++;
+            elapsedTimeLabel.setText("Time Elapsed: " + Integer.toString(elapsedTime));
+            repaint();
+        }
+    }
 }

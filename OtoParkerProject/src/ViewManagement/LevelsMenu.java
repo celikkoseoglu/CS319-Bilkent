@@ -54,7 +54,7 @@ public class LevelsMenu extends Menu {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Image img1 = Toolkit.getDefaultToolkit().getImage("images/star.png");
+        Image img1 = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "OtoParkerProject/images/star.png");
 
         for (int i = 1; i < 6; i++) {
             int stars = Integer.parseInt(progess[i - 1].split(":")[2]);
