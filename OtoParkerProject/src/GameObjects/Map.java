@@ -26,12 +26,12 @@ public class Map extends JPanel implements ActionListener {
     private ArrayList<Obstacle> Obstacles;
     private Target target;
     private final int DELAY = 10;
-    private Graphics2D g1;
-    private Graphics2D g2;
-    private Graphics2D g3;
-    private BufferedImage back1;
-    private BufferedImage back2;
-    private BufferedImage back3;
+    private Graphics2D background;
+    private Graphics2D carg;
+    private Graphics2D backup;
+    private BufferedImage backImage1;
+    private BufferedImage backImage2;
+    private BufferedImage backImage3;
     private Car car = new Car();
 
     private JLabel elapsedTimeLabel;
@@ -49,7 +49,7 @@ public class Map extends JPanel implements ActionListener {
         elapsedTimeLabel.setBounds(10, 550, 150, 30);
         add(elapsedTimeLabel);
 
-        this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "OtoParkerProject/images/star.png");
+        this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "star.png" : "star.png");
 
         initBoard();
 
@@ -66,38 +66,33 @@ public class Map extends JPanel implements ActionListener {
 
         target = new Target(600,100);
 
-        //try {
-        back1 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB); //ImageIO.read(new File("car.jpg"));
-        //} catch (IOException ex) {
-        //    Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
-        //}
-        back2 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
-        back3 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+        backImage1 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB); //ImageIO.read(new File("car.jpg"));
 
-        g1 = (Graphics2D) back1.getGraphics();
-        g2 = (Graphics2D) back2.getGraphics();
-        g3 = (Graphics2D) back3.getGraphics();
+        backImage2 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+        backImage3 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
 
-        g1.drawImage(back1, 0, 0, getWidth(), getHeight(), null);
-        g1.setColor(new Color(123,233,130));
-        g1.fillRect(target.getX(),target.getY(),target.getWidth(),target.getHeight());
+        background = (Graphics2D) backImage1.getGraphics();
+        carg = (Graphics2D) backImage2.getGraphics();
+        backup = (Graphics2D) backImage3.getGraphics();
 
-        //g1.setColor(Color.WHITE);
-        //g1.fillRect(0, 0, getWidth(), getHeight());
-        g1.translate(400, 300);
-        g1.scale(1, -1);
+        background.drawImage(backImage1, 0, 0, getWidth(), getHeight(), null);
+        background.setColor(new Color(123,233,130));
+        background.fillRect(target.getX(),target.getY(),target.getWidth(),target.getHeight());
 
-        g2.setColor(Color.WHITE);
-        g2.fillRect(0, 0, 800, 600);
-        g2.translate(400, 300);
-        g2.scale(1, -1);
+        background.translate(400, 300);
+        background.scale(1, -1);
+
+        carg.setColor(Color.WHITE);
+        carg.fillRect(0, 0, 800, 600);
+        carg.translate(400, 300);
+        carg.scale(1, -1);
 
         EventQueue.invokeLater(new Runnable() {
 
             @Override
             public void run() {
                 grabFocus();
-                requestFocus();//or inWindow depends if Swing or Awt
+                requestFocus();
             }
         });
 
@@ -119,45 +114,44 @@ public class Map extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g3.setColor(Color.WHITE);
-        g3.fillRect(0, 0, 800, 600);
+        backup.setColor(Color.WHITE);
+        backup.fillRect(0, 0, 800, 600);
 
-        g2.setBackground(new Color(255, 255, 255, 0));
-        g2.clearRect(-800/2, -600/2, 800, 600);
+        carg.setBackground(new Color(255, 255, 255, 0));
+        carg.clearRect(-800/2, -600/2, 800, 600);
 
-        AffineTransform at = g1.getTransform();
-        AffineTransform at2 = g2.getTransform();
+        AffineTransform at = background.getTransform();
+        AffineTransform at2 = carg.getTransform();
 
         boolean draw=true;
         for(int i=0; i < Obstacles.size(); i++)
-            if(Obstacles.get(i).isVisible()) {
-                if (car.checkCollision(Obstacles.get(i).getBounds()))
+            if(Obstacles.get(i).getVisibility()) {
+                if (car.checkCollision(Obstacles.get(i).getBorders()))
                     draw = false;
             }
 
         if(draw) {
-            car.draw(g2, g1);
+            car.draw(carg, background);
         }
 
-        g1.setTransform(at);
-        g2.setTransform(at2);
+        background.setTransform(at);
+        carg.setTransform(at2);
 
-        g3.drawImage(back1, 0, 0, null);
-        g3.drawImage(back2, 0, 0, null);
-        //g2d.drawImage(back1, 0, 0, null);
+        backup.drawImage(backImage1, 0, 0, null);
+        backup.drawImage(backImage2, 0, 0, null);
 
-        g2d.drawImage(back3, 0, 0, null);
+        g2d.drawImage(backImage3, 0, 0, null);
 
-        if(car.checkParking(target.getBounds()))
+        if(car.checkParking(target.getBorders()))
             System.exit(0);
 
         for(int i=0; i < Obstacles.size(); i++)
-            if (Obstacles.get(i).isVisible() )
+            if (Obstacles.get(i).getVisibility() )
                 g2d.drawImage(Obstacles.get(i).getImage(), Obstacles.get(i).getX(), Obstacles.get(i).getY(), this);
 
         ArrayList<Cannonball> cs = car.getWeapons();
         for (Cannonball c : cs) {
-            if (c.isVisible()) {
+            if (c.getVisibility()) {
                 g2d.drawImage(c.getImage(), c.getX(), c.getY(), this);
             }
         }
@@ -176,13 +170,13 @@ public class Map extends JPanel implements ActionListener {
 
         for (Cannonball c : cs) {
 
-            Rectangle r1 = c.getBounds();
+            Rectangle r1 = c.getBorders();
 
             for(int i=0; i < Obstacles.size(); i++) {
-                Rectangle2D r2 = Obstacles.get(i).getBounds();
-                if (r1.intersects(r2) && Obstacles.get(i).isVisible()) {
-                    c.setVisible(false);
-                    Obstacles.get(i).setVisible(false);
+                Rectangle2D r2 = Obstacles.get(i).getBorders();
+                if (r1.intersects(r2) && Obstacles.get(i).getVisibility()) {
+                    c.setVisibility(false);
+                    Obstacles.get(i).setVisiblity(false);
                 }
             }
         }
@@ -195,13 +189,13 @@ public class Map extends JPanel implements ActionListener {
     @Override
     protected void processKeyEvent(KeyEvent e) {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
-            Keyboard.keydown[e.getKeyCode()] = true;
+            InputManager.keydown[e.getKeyCode()] = true;
         }
         else if(e.getKeyCode()==KeyEvent.VK_SPACE){
             car.fire();
         }
         else if (e.getID() == KeyEvent.KEY_RELEASED) {
-            Keyboard.keydown[e.getKeyCode()] = false;
+            InputManager.keydown[e.getKeyCode()] = false;
         }
     }
 

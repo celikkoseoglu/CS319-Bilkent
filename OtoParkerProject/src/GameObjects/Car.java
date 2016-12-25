@@ -8,32 +8,32 @@ import java.util.ArrayList;
 
 public class Car {
 
-    public double mass = 1800; // em kilograma
-    public Vec3 position = new Vec3();
-    public Vec3 direction = new Vec3(0, 1, 0);
-    public Vec3 velocity = new Vec3();
-    public Vec3 acceleration = new Vec3();
+    public double weight = 1800;
+    public CarPhysics position = new CarPhysics();
+    public CarPhysics direction = new CarPhysics(0, 1, 0);
+    public CarPhysics velocity = new CarPhysics();
+    public CarPhysics acceleration = new CarPhysics();
 
     private final double HEIGHT =70;
     private final double WIDTH =50;
 
     
-    public double cBraking = 500;
-    public Vec3 fBraking = new Vec3();
+    public double brakeCons = 500;
+    public CarPhysics brakeForce = new CarPhysics();
     
-    public double engineForce = 0;
-    public Vec3 fTraction = new Vec3();
+    public double power = 0;
+    public CarPhysics tractionForce = new CarPhysics();
 
-    public double cDrag = 1.4257;
-    public Vec3 fDrag = new Vec3();
+    public double dragCons = 1.4257;
+    public CarPhysics dragForce = new CarPhysics();
 
-    public Vec3 fRolingResistence = new Vec3();
-    public double cRolingResistence = 12.8;
+    public CarPhysics rresistanceForce = new CarPhysics();
+    public double rresistanceCons = 12.8;
     
-    public Vec3 fLongtitudinal = new Vec3();
+    public CarPhysics longForce = new CarPhysics();
     private ArrayList<Cannonball> weapons=new ArrayList<Cannonball>();
     
-    public boolean isDrifting;
+    public boolean drifts;
     public boolean visible=true;
     private boolean isBackward=false;
 
@@ -42,178 +42,155 @@ public class Car {
     
     public void update() {
         
-        double cTyre = 0.6;
+        double tyreCons = 0.6;
         
-        double dif = cTyre * (velocity.getSize() / 30.0);
+        double dif = tyreCons * (velocity.getMagnitude() / 30.0);
         
-        if (Keyboard.keydown[37]) {
-            direction.rotateZ(Math.toRadians((cTyre) * velocity.getSize()));
-            //velocity.rotateZ(Math.toRadians((cTyre - dif) * velocity.getSize()));
+        if (InputManager.keydown[37]) {
+            direction.gyroZ(Math.toRadians((tyreCons) * velocity.getMagnitude()));
         }
-        else if (Keyboard.keydown[39]) {
-            direction.rotateZ(Math.toRadians((-cTyre) * velocity.getSize()));
-            //velocity.rotateZ(Math.toRadians((-cTyre + dif) * velocity.getSize()));
+        else if (InputManager.keydown[39]) {
+            direction.gyroZ(Math.toRadians((-tyreCons) * velocity.getMagnitude()));
         }
-        
 
-        {
-            double difAngle = velocity.getRelativeAngleBetween(direction);
-            System.out.println("dif="+dif);
-            if (!Double.isNaN(difAngle)) {
-                double r = Math.random() * 50;
-                velocity.rotateZ(difAngle/((50+r)*(5*dif)));
-
-                isDrifting = Math.abs(Math.toDegrees(difAngle)) > 30;
-            }
-
-            //Vec3 velTmp = new Vec3();
-            //velTmp.set(velocity);
-            //double difAngle2 = 2 * dif * velTmp.relativeAngleBetween(direction);
-            
-            //if (difAngle2 > difAngle) {
-            //    velocity.rotateZ(Math.toRadians(- 2 * dif / 10));
-            //}
-        
+        double dangle = velocity.calculateRelative(direction);
+        System.out.println("dif="+dif);
+        if (!Double.isNaN(dangle)) {
+            double rand = Math.random() * 50;
+            velocity.gyroZ(dangle/((50+rand)*(5*dif)));
+            drifts = Math.abs(Math.toDegrees(dangle)) > 30;
         }
-        
-        if (Keyboard.keydown[38]) {
-            engineForce = 300;
+
+        if (InputManager.keydown[38]) {
+            power = 300;
         }
-        else if (Keyboard.keydown[40]) {
-            engineForce = -300;
+        else if (InputManager.keydown[40]) {
+            power = -300;
         }
         else  {
-            engineForce = 0;
+            power = 0;
         }
         
-        if (isDrifting) {
-            engineForce = engineForce / 5;
+        if (drifts) {
+            power = power / 5;
         }
 
 
-        boolean isBraking = Keyboard.keydown[66];
-        isBackward=Keyboard.keydown[40];
+        boolean brakes = InputManager.keydown[66];
+        isBackward= InputManager.keydown[40];
 
 
-        calculateBraking();
-        calculateTraction();
-        calculateDrag();
-        calculateRolingResistence();
-        calculateLongtitudinalForce(isBraking);
-        calculateAcceleration();
-        calculateVelocity(1);
-        calculatePosition(1);
+        changeBrakeForce();
+        changeTraction();
+        changeDrag();
+        changeRR();
+        changeLongForce(brakes);
+        changeAcceleration();
+        changeVelocity(1);
+        changePos(1);
 
         updateWeapons();
 
     }
     
-    private Point2D driftLastPoint1;
-    private Point2D driftLastPoint2;
+    private Point2D dp1;
+    private Point2D dp2;
     
-    public void draw(Graphics2D g, Graphics2D backg) {
-        backg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    public void draw(Graphics2D g, Graphics2D background) {
+        background.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         double angle = -Math.atan2(direction.x, direction.y);
         g.rotate(angle, position.x, position.y + 0);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
-        ImageIcon ii = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/car.jpg" : "OtoParkerProject/images/car.jpg");
-        Image image = ii.getImage();
+        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "car.jpg" : "car.jpg");
+        Image image = icon.getImage();
         g.drawImage(image, (int) (position.x-25), (int) (position.y-35), null);
 
         
-        if (isDrifting) {
+        if (drifts) {
             AffineTransform transf = new AffineTransform();
             transf.rotate(angle, position.x, position.y + 0);
             
-            backg.setColor(new Color(0, 0, 0, 16));
+            background.setColor(new Color(0, 0, 0, 16));
             BasicStroke basicStroke = new BasicStroke(10);
-            backg.setStroke(basicStroke);
+            background.setStroke(basicStroke);
             
-            if (driftLastPoint1!=null && driftLastPoint2!=null) {
+            if (dp1!=null && dp2!=null) {
                 Point2D p1 = new Point2D.Double((int) (position.x-17), (int) (position.y-30));
                 Point2D p2 = new Point2D.Double((int) (position.x+17), (int) (position.y-30));
 
                 transf.transform(p1, p1);
                 transf.transform(p2, p2);
                 
-                backg.drawLine((int) p1.getX(), (int) p1.getY(), (int) driftLastPoint1.getX(), (int) driftLastPoint1.getY());
-                backg.drawLine((int) p2.getX(), (int) p2.getY(), (int) driftLastPoint2.getX(), (int) driftLastPoint2.getY());
+                background.drawLine((int) p1.getX(), (int) p1.getY(), (int) dp1.getX(), (int) dp1.getY());
+                background.drawLine((int) p2.getX(), (int) p2.getY(), (int) dp2.getX(), (int) dp2.getY());
             }
             
-            driftLastPoint1 = new Point2D.Double((int) (position.x-17), (int) (position.y-30));
-            driftLastPoint2 = new Point2D.Double((int) (position.x+17), (int) (position.y-30));
-            transf.transform(driftLastPoint1, driftLastPoint1);
-            transf.transform(driftLastPoint2, driftLastPoint2);
+            dp1 = new Point2D.Double((int) (position.x-17), (int) (position.y-30));
+            dp2 = new Point2D.Double((int) (position.x+17), (int) (position.y-30));
+            transf.transform(dp1, dp1);
+            transf.transform(dp2, dp2);
         }
         else {
-            driftLastPoint1 = null;
-            driftLastPoint2 = null;
+            dp1 = null;
+            dp2 = null;
         }
     }
     
-    // Ftraction = u * Engineforce, 
-    private void calculateTraction() {
-        fTraction.set(direction);
-        fTraction.normalize();
-        fTraction.scale(engineForce);
+    private void changeTraction() {
+        tractionForce.set(direction);
+        tractionForce.standardize();
+        tractionForce.multiply(power);
+    }
+   
+    private void changeDrag() {
+        double speed = velocity.getMagnitude();
+        dragForce.set(velocity);
+        dragForce.multiply(speed);
+        dragForce.multiply(-dragCons);
     }
 
-    // Fdrag = - Cdrag * v * |v| 
-    // where Cdrag is a constant and v is the velocity vector and the notation |v| refers to the magnitude of vector v    
-    // speed = sqrt(v.x*v.x + v.y*v.y); 
-    // fdrag.x = - Cdrag * v.x * speed; 
-    // fdrag.y = - Cdrag * v.y * speed;    
-    private void calculateDrag() {
-        double speed = velocity.getSize();
-        fDrag.set(velocity);
-        fDrag.scale(speed);
-        fDrag.scale(-cDrag);
-    }
-
-    // Frr = - Crr * v 
-    // where Crr is a constant and v is the velocity vector.    
-    private void calculateRolingResistence() {
-        fRolingResistence.set(velocity);
-        fRolingResistence.scale(-cRolingResistence);
+    
+    private void changeRR() {
+        rresistanceForce.set(velocity);
+        rresistanceForce.multiply(-rresistanceCons);
     }
     
-    // Flong = Ftraction + Fdrag + Frr
-    private void calculateLongtitudinalForce(boolean isBraking) {
-        if (isBraking) {
-            fLongtitudinal.set(fBraking);
+    private void changeLongForce(boolean brakes) {
+        if (brakes) {
+            longForce.set(brakeForce);
         }
         else if (isBackward){
-            fBraking.scale(4);
-            fLongtitudinal.set(fBraking);
+            brakeForce.multiply(4);
+            longForce.set(brakeForce);
         }
         else {
-            fLongtitudinal.set(fTraction);
+            longForce.set(tractionForce);
         }
-        fLongtitudinal.add(fDrag);
-        fLongtitudinal.add(fRolingResistence);
+        longForce.add(dragForce);
+        longForce.add(rresistanceForce);
     }
     
-    private void calculateAcceleration() {
-        acceleration.set(fLongtitudinal);
-        acceleration.scale(1/mass);
+    private void changeAcceleration() {
+        acceleration.set(longForce);
+        acceleration.multiply(1/weight);
     }
     
-    private void calculateVelocity(double deltaTime) {
-        acceleration.scale(deltaTime);
+    private void changeVelocity(double deltaTime) {
+        acceleration.multiply(deltaTime);
         velocity.add(acceleration);
         velocity.print();
     }
  
-    private void calculatePosition(double deltaTime) {
-        velocity.scale(deltaTime);
+    private void changePos(double deltaTime) {
+        velocity.multiply(deltaTime);
         position.add(velocity);
     }
     
-    private void calculateBraking() {
-        fBraking.set(velocity);
-        fBraking.normalize();
-        fBraking.scale(-cBraking);
+    private void changeBrakeForce() {
+        brakeForce.set(velocity);
+        brakeForce.standardize();
+        brakeForce.multiply(-brakeCons);
     }
 
     public void fire() {
@@ -233,7 +210,7 @@ public class Car {
 
             Cannonball c = cs.get(i);
 
-            if (c.isVisible()) {
+            if (c.getVisibility()) {
                 c.move();
             } else {
                 cs.remove(i);
@@ -241,7 +218,7 @@ public class Car {
         }
     }
 
-    public boolean checkCollision(Rectangle2D r){
+    public boolean checkCollision(Rectangle2D rand){
 
         double angle =Math.atan2(direction.x, direction.y);
 
@@ -260,13 +237,13 @@ public class Car {
         boolean x= false;
 
         for(int i=0; i < lines.length; i++)
-            if(lines[i].intersects(r)) {
+            if(lines[i].intersects(rand)) {
                 x = true;
             }
         return x;
     }
 
-    public boolean checkParking(Rectangle2D r){
+    public boolean checkParking(Rectangle2D rand){
 
         double angle =Math.atan2(direction.x, direction.y);
 
@@ -275,7 +252,7 @@ public class Car {
         Point2D leftdown = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
         Point2D rightdown = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
 
-        if(r.contains(leftup) && r.contains(rightdown) && r.contains(leftdown) && r.contains(rightup)) {
+        if(rand.contains(leftup) && rand.contains(rightdown) && rand.contains(leftdown) && rand.contains(rightup)) {
             return true;
         }
 

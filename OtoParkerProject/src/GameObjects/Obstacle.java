@@ -9,24 +9,22 @@ import java.awt.geom.Rectangle2D;
  * Created by HÜSEYİN on 11.12.2016.
  */
 public class Obstacle {
-    private int dx;
-    private int dy;
     private int x;
     private int y;
     private Image image;
     private boolean vis;
 
     public Obstacle() {
-        ImageIcon ii = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/images.jpg" : "OtoParkerProject/images/images.jpg");
-        image = ii.getImage();
+        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images.jpg" : "images.jpg");
+        image = icon.getImage();
         x = 200;
         y = 200;
         vis=true;
     }
 
     public Obstacle(int a, int b) {
-        ImageIcon ii = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/images.jpg" : "OtoParkerProject/images/images.jpg");
-        image = ii.getImage();
+        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images.jpg" : "images.jpg");
+        image = icon.getImage();
         x = a;
         y = b;
         vis=true;
@@ -44,15 +42,15 @@ public class Obstacle {
         return image;
     }
 
-    public boolean isVisible() {
+    public boolean getVisibility() {
         return vis;
     }
 
-    public void setVisible(Boolean visible) {
+    public void setVisiblity(Boolean visible) {
         vis = visible;
     }
 
-    public Rectangle2D getBounds() {
+    public Rectangle2D getBorders() {
         return new Rectangle2D.Double(x, y, image.getWidth(null), image.getHeight(null));
     }
 

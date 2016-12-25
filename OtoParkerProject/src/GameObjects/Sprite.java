@@ -4,8 +4,8 @@ package GameObjects;
  * Created by HÜSEYİN on 11.12.2016.
  */
 import java.awt.Image;
-import java.awt.Rectangle;
 import javax.swing.ImageIcon;
+import java.awt.Rectangle;
 
 public class Sprite {
 
@@ -31,31 +31,37 @@ public class Sprite {
 
     protected void loadImage(String imageName) {
 
-        ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();
+        ImageIcon icon = new ImageIcon(imageName);
+        image = icon.getImage();
     }
 
     public Image getImage() {
+
         return image;
     }
 
     public int getX() {
+
         return x;
     }
 
     public int getY() {
+
         return y;
     }
 
-    public boolean isVisible() {
+    public boolean getVisibility() {
+
         return vis;
     }
 
-    public void setVisible(Boolean visible) {
+    public void setVisibility(Boolean visible) {
+
         vis = visible;
     }
 
-    public Rectangle getBounds() {
+    public Rectangle getBorders() {
+
         return new Rectangle(x, y, width, height);
     }
 

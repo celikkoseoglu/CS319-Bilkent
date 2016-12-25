@@ -8,7 +8,7 @@ package GameObjects;
  *
  * @author leo
  */
-public class Keyboard {
+public class InputManager {
     
     public static boolean[] keydown = new boolean[255];
     

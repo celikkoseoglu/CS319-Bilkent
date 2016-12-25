@@ -45,7 +45,7 @@ public class Target {
         vis = visible;
     }
 
-    public Rectangle2D getBounds() {
+    public Rectangle2D getBorders() {
         return new Rectangle2D.Double(x, y, width, height);
     }
 
