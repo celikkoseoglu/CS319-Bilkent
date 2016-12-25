@@ -9,15 +9,17 @@ import java.awt.geom.Rectangle2D;
  */
 public class Target {
 
-    private int width = 80;
+    private int width = 75;
     private int height = 100;
     private int x;
     private int y;
     private boolean vis;
 
-    public Target(int a,int b) {
+    public Target(int a,int b,int w,int h) {
         x = a;
         y = b;
+        width=w;
+        height=h;
         vis=true;
     }
 

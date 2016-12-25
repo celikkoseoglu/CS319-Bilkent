@@ -36,6 +36,7 @@ public class Car {
     public boolean drifts;
     public boolean visible=true;
     private boolean isBackward=false;
+    double tyreCons = 0.6;
 
     public static String carImageDir= System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
 
@@ -44,7 +45,7 @@ public class Car {
 
     public void update() {
 
-        double tyreCons = 0.6;
+
 
         double dif = tyreCons * (velocity.getMagnitude() / 30.0);
 

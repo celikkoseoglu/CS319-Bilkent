@@ -65,7 +65,7 @@ public class Map extends JPanel implements ActionListener {
         Obstacles.add(new Obstacle());
         Obstacles.add(new Obstacle(600,400));
 
-        target = new Target(600,100);
+        target = new Target(600,100,75,100);
 
         try {
             backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt_lane.jpg" : "images/asphalt_lane.jpg"));
