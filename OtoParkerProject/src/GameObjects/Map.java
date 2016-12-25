@@ -4,6 +4,8 @@ package GameObjects;
  * Created by HÜSEYİN on 11.12.2016.
  */
 
+import ViewManagement.LocalDataManager;
+
 import java.awt.Color;
 import java.awt.*;
 import java.awt.Graphics2D;
@@ -40,8 +42,10 @@ public class Map extends JPanel implements ActionListener {
 
     private Image star;
 
+    private LocalDataManager localDataManager;
 
-    public Map() {
+
+    public Map(LocalDataManager mgr) {
 
         setLayout(null);
 
@@ -51,6 +55,8 @@ public class Map extends JPanel implements ActionListener {
         add(elapsedTimeLabel);
 
         this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "images/star.png");
+
+        this.localDataManager = mgr;
 
         initBoard();
 
