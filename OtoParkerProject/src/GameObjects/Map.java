@@ -5,6 +5,7 @@ package GameObjects;
  */
 
 import ViewManagement.LocalDataManager;
+import ViewManagement.SoundManager;
 
 import java.awt.Color;
 import java.awt.*;
@@ -130,6 +131,7 @@ public class Map extends JPanel implements ActionListener {
         for(int i=0; i < Obstacles.size(); i++)
             if(Obstacles.get(i).getVisibility()) {
                 if (car.checkCollision(Obstacles.get(i).getBorders()))
+                    SoundManager.playSound(SoundManager.FAIL);
                     draw = false;
             }
 
@@ -144,9 +146,11 @@ public class Map extends JPanel implements ActionListener {
         backup.drawImage(backImage2, 0, 0, null);
         g2d.drawImage(backImage3, 0, 0, null);
 
-        if(car.checkParking(target.getBorders()))
+        if(car.checkParking(target.getBorders())) {
+            SoundManager.playSound(SoundManager.SUCCESS);
             System.exit(0);
-
+        }
+            
         for(int i=0; i < Obstacles.size(); i++)
             if (Obstacles.get(i).getVisibility() )
                 g2d.drawImage(Obstacles.get(i).getImage(), Obstacles.get(i).getX(), Obstacles.get(i).getY(), this);
