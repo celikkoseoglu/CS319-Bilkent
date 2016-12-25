@@ -50,7 +50,7 @@ public class Map extends JPanel implements ActionListener {
         elapsedTimeLabel.setBounds(10, 550, 150, 30);
         add(elapsedTimeLabel);
 
-        this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "OtoParkerProject/images/star.png");
+        this.star = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "images/star.png");
 
         initBoard();
 
@@ -68,7 +68,7 @@ public class Map extends JPanel implements ActionListener {
         target = new Target(600,100);
 
         try {
-            backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt.jpg" : "OtoParkerProject/images/asphalt.jpg"));
+            backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt.jpg" : "images/asphalt.jpg"));
         }
         catch (Exception ex) {
 

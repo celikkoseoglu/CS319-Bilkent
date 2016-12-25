@@ -17,14 +17,14 @@ public class Cannonball extends Sprite {
 
     private void initCannonball() {
 
-        loadImage(System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "OtoParkerProject/images/daringfireball.png");
+        loadImage(System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png");
         getImageDimensions();
     }
 
     public void move() {
 
-        x += 5 * Math.sin(angle);
-        y += 5 * -Math.cos(angle);
+        x += 10 * Math.sin(angle);
+        y += 10 * -Math.cos(angle);
 
         if (x > BOARD_WIDTH)
             vis = false;
