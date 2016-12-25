@@ -1,6 +1,7 @@
 package ViewManagement;
 
 import GameObjects.Obstacle;
+import GameObjects.Target;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -150,6 +151,10 @@ public class LocalDataManager
 
         return obstacleList;
     }
+    
+    public Target getTarget(int level) {
+        String[] target = readText("1/target.txt" ,true).split("\\|");
 
-
+        return new Target(Integer.parseInt(target[0]), Integer.parseInt(target[1]), Integer.parseInt(target[2]), Integer.parseInt(target[3]));
+    }
 }
