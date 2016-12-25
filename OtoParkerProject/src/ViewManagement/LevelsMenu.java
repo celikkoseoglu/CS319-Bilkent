@@ -21,7 +21,7 @@ public class LevelsMenu extends Menu {
 
         ButtonListener buttonListener = new ButtonListener();
 
-        backToMainMenuButton = new JButton("<- Main ViewManagement.Menu");
+        backToMainMenuButton = new OtoParkerJButton("<- Main ViewManagement.Menu");
         backToMainMenuButton.addActionListener(buttonListener);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
         add(backToMainMenuButton);
