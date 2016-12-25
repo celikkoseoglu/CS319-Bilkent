@@ -14,8 +14,8 @@ public class Car {
     public CarPhysics velocity = new CarPhysics();
     public CarPhysics acceleration = new CarPhysics();
 
-    private final double HEIGHT =70;
-    private final double WIDTH =50;
+    private final double HEIGHT = 80;
+    private final double WIDTH = 50;
 
     
     public double brakeCons = 500;
@@ -102,9 +102,9 @@ public class Car {
         g.rotate(angle, position.x, position.y + 0);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setColor(Color.BLACK);
-        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/car.jpg" : "OtoParkerProject/images/car.jpg");
+        ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "OtoParkerProject/images/porsche.png");
         Image image = icon.getImage();
-        g.drawImage(image, (int) (position.x-25), (int) (position.y-35), null);
+        g.drawImage(image, (int) (position.x-WIDTH/2), (int) (position.y-HEIGHT/2), null);
 
         
         if (drifts) {

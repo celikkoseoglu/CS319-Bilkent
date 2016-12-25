@@ -27,7 +27,6 @@ public class Map extends JPanel implements ActionListener {
     public Timer timer;
     private ArrayList<Obstacle> Obstacles;
     private Target target;
-    private final int DELAY = 10;
     private Graphics2D background;
     private Graphics2D carg;
     private Graphics2D backup;
@@ -62,7 +61,7 @@ public class Map extends JPanel implements ActionListener {
 
         setFocusable(true);
 
-        Obstacles= new ArrayList<Obstacle>();
+        Obstacles= new ArrayList<>();
         Obstacles.add(new Obstacle());
         Obstacles.add(new Obstacle(600,400));
 
@@ -94,25 +93,18 @@ public class Map extends JPanel implements ActionListener {
         carg.translate(400, 300);
         carg.scale(1, -1);
 
-        EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                grabFocus();
-                requestFocus();
-            }
+        EventQueue.invokeLater(() -> {
+            grabFocus();
+            requestFocus();
         });
-
-        new Timer().schedule(new MainLoop(), 100, 30);
+        timer =new Timer();
+        timer.schedule(new MainLoop(), 100, 30);
         new Timer().schedule(new CountDownLoop(), 0, 1000);
     }
 
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         doDrawing(g);
-
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -146,7 +138,6 @@ public class Map extends JPanel implements ActionListener {
 
         backup.drawImage(backImage1, 0, 0, null);
         backup.drawImage(backImage2, 0, 0, null);
-
         g2d.drawImage(backImage3, 0, 0, null);
 
         if(car.checkParking(target.getBorders()))
@@ -206,10 +197,10 @@ public class Map extends JPanel implements ActionListener {
             car.fire();
         }
         else if (e.getKeyCode()== KeyEvent.VK_N){
-            new Timer().schedule(new MainLoop(), 100, 10);
+            timer.schedule(new MainLoop(), 100, 10);
         }
         else if (e.getKeyCode()== KeyEvent.VK_P){
-            new Timer().schedule(new MainLoop(), 100, 30);
+            timer.schedule(new MainLoop(), 100, 30);
         }
         else if (e.getID() == KeyEvent.KEY_RELEASED) {
             InputManager.keydown[e.getKeyCode()] = false;
