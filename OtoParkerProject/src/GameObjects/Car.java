@@ -17,10 +17,10 @@ public class Car {
     private final double HEIGHT = 80;
     private final double WIDTH = 50;
 
-    
+
     public double brakeCons = 500;
     public CarPhysics brakeForce = new CarPhysics();
-    
+
     public double power = 0;
     public CarPhysics tractionForce = new CarPhysics();
 
@@ -29,23 +29,25 @@ public class Car {
 
     public CarPhysics rresistanceForce = new CarPhysics();
     public double rresistanceCons = 12.8;
-    
+
     public CarPhysics longForce = new CarPhysics();
     private ArrayList<Cannonball> weapons=new ArrayList<Cannonball>();
-    
+
     public boolean drifts;
     public boolean visible=true;
     private boolean isBackward=false;
 
+    public static ImageIcon icon = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png");
+
     public Car() {
     }
-    
+
     public void update() {
-        
+
         double tyreCons = 0.6;
-        
+
         double dif = tyreCons * (velocity.getMagnitude() / 30.0);
-        
+
         if (InputManager.keydown[37]) {
             direction.gyroZ(Math.toRadians((tyreCons) * velocity.getMagnitude()));
         }
@@ -92,10 +94,10 @@ public class Car {
         updateWeapons();
 
     }
-    
+
     private Point2D dp1;
     private Point2D dp2;
-    
+
     public void draw(Graphics2D g, Graphics2D background) {
         background.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         double angle = -Math.atan2(direction.x, direction.y);
@@ -106,26 +108,26 @@ public class Car {
         Image image = icon.getImage();
         g.drawImage(image, (int) (position.x-WIDTH/2), (int) (position.y-HEIGHT/2), null);
 
-        
+
         if (drifts) {
             AffineTransform transf = new AffineTransform();
             transf.rotate(angle, position.x, position.y + 0);
-            
+
             background.setColor(new Color(0, 0, 0, 16));
             BasicStroke basicStroke = new BasicStroke(10);
             background.setStroke(basicStroke);
-            
+
             if (dp1!=null && dp2!=null) {
                 Point2D p1 = new Point2D.Double((int) (position.x-17), (int) (position.y-30));
                 Point2D p2 = new Point2D.Double((int) (position.x+17), (int) (position.y-30));
 
                 transf.transform(p1, p1);
                 transf.transform(p2, p2);
-                
+
                 background.drawLine((int) p1.getX(), (int) p1.getY(), (int) dp1.getX(), (int) dp1.getY());
                 background.drawLine((int) p2.getX(), (int) p2.getY(), (int) dp2.getX(), (int) dp2.getY());
             }
-            
+
             dp1 = new Point2D.Double((int) (position.x-17), (int) (position.y-30));
             dp2 = new Point2D.Double((int) (position.x+17), (int) (position.y-30));
             transf.transform(dp1, dp1);
@@ -136,13 +138,13 @@ public class Car {
             dp2 = null;
         }
     }
-    
+
     private void changeTraction() {
         tractionForce.set(direction);
         tractionForce.standardize();
         tractionForce.multiply(power);
     }
-   
+
     private void changeDrag() {
         double speed = velocity.getMagnitude();
         dragForce.set(velocity);
@@ -150,12 +152,12 @@ public class Car {
         dragForce.multiply(-dragCons);
     }
 
-    
+
     private void changeRR() {
         rresistanceForce.set(velocity);
         rresistanceForce.multiply(-rresistanceCons);
     }
-    
+
     private void changeLongForce(boolean brakes) {
         if (brakes) {
             longForce.set(brakeForce);
@@ -170,23 +172,23 @@ public class Car {
         longForce.add(dragForce);
         longForce.add(rresistanceForce);
     }
-    
+
     private void changeAcceleration() {
         acceleration.set(longForce);
         acceleration.multiply(1/weight);
     }
-    
+
     private void changeVelocity(double deltaTime) {
         acceleration.multiply(deltaTime);
         velocity.add(acceleration);
         velocity.print();
     }
- 
+
     private void changePos(double deltaTime) {
         velocity.multiply(deltaTime);
         position.add(velocity);
     }
-    
+
     private void changeBrakeForce() {
         brakeForce.set(velocity);
         brakeForce.standardize();
@@ -234,10 +236,18 @@ public class Car {
         lines[2]=new Line2D.Double(rightup,rightdown);
         lines[3]=new Line2D.Double(leftdown,rightdown);
 
+        Line2D[] frames = new Line2D[4];
+        frames[0]=new Line2D.Double(16,18,768,18);
+        frames[1]=new Line2D.Double(16,18,16,522);
+        frames[2]=new Line2D.Double(16,522,768,522);
+        frames[3]=new Line2D.Double(768,18,768,522);
+
+        Rectangle2D frame = new Rectangle2D.Double(16,18,768,522);
+
         boolean x= false;
 
         for(int i=0; i < lines.length; i++)
-            if(lines[i].intersects(rand)) {
+            if(lines[i].intersects(rand) || !frame.contains(leftup) || !frame.contains(rightup) || !frame.contains(rightdown) || !frame.contains(leftdown)) {
                 x = true;
             }
         return x;
