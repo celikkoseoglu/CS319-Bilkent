@@ -68,7 +68,7 @@ public class Map extends JPanel implements ActionListener {
         target = new Target(600,100);
 
         try {
-            backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt.jpg" : "images/asphalt.jpg"));
+            backImage1 = ImageIO.read(new File(System.getProperty("os.name").contains("Mac") ? "images/asphalt_lane.jpg" : "images/asphalt_lane.jpg"));
         }
         catch (Exception ex) {
 
