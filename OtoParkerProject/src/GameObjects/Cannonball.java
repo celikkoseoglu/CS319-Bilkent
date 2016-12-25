@@ -17,7 +17,7 @@ public class Cannonball extends Sprite {
 
     private void initCannonball() {
 
-        loadImage("OtoParkerProject/images/shot.gif");
+        loadImage(System.getProperty("os.name").contains("Mac") ? "images/shot.gif" : "OtoParkerProject/images/shot.gif");
         getImageDimensions();
     }
 

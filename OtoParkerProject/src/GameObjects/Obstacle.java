@@ -17,7 +17,7 @@ public class Obstacle {
     private boolean vis;
 
     public Obstacle() {
-        ImageIcon ii = new ImageIcon("OtoParkerProject/images/images.jpg");
+        ImageIcon ii = new ImageIcon(System.getProperty("os.name").contains("Mac") ? "images/images.jpg" : "OtoParkerProject/images/images.jpg");
         image = ii.getImage();
         x = 200;
         y = 200;
