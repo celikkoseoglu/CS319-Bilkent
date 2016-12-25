@@ -1,3 +1,5 @@
+package ViewManagement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +16,7 @@ public class InstructionsMenu extends Menu {
 
         ButtonListener buttonListener = new ButtonListener();
 
-        backToMainMenuButton = new JButton("<- Main Menu");
+        backToMainMenuButton = new JButton("<- Main ViewManagement.Menu");
         backToMainMenuButton.addActionListener(buttonListener);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
         add(backToMainMenuButton);

@@ -1,3 +1,5 @@
+package ViewManagement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +21,7 @@ public class LevelsMenu extends Menu {
 
         ButtonListener buttonListener = new ButtonListener();
 
-        backToMainMenuButton = new JButton("<- Main Menu");
+        backToMainMenuButton = new JButton("<- Main ViewManagement.Menu");
         backToMainMenuButton.addActionListener(buttonListener);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
         add(backToMainMenuButton);
@@ -100,6 +102,7 @@ public class LevelsMenu extends Menu {
                 manager.showMainMenu();
             }
             else {
+                manager.showLevel(1);
                 System.out.println("Open Level: " + ((JButton)e.getSource()).getText());
             }
         }

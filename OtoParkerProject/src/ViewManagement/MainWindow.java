@@ -1,3 +1,7 @@
+package ViewManagement;
+
+import ViewManagement.MenuManager;
+
 import javax.swing.*;
 
 public class MainWindow {

@@ -1,3 +1,5 @@
+package ViewManagement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +33,7 @@ public class UpgradeCarMenu extends Menu {
         turningRadiusLeftButton = new JButton("<");
         turningRadiusRightButton = new JButton(">");
         upgradeCarButton = new JButton("Upgrade!");
-        backToMainMenuButton = new JButton("<- Main Menu");
+        backToMainMenuButton = new JButton("<- Main ViewManagement.Menu");
 
         colorLeftButton.addActionListener(buttonListener);
         colorRightButton.addActionListener(buttonListener);

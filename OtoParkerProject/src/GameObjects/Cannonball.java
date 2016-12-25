@@ -29,6 +29,4 @@ public class Cannonball extends Sprite {
         if (x > BOARD_WIDTH)
             vis = false;
     }
-
-
 }

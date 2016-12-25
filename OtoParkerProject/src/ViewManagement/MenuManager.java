@@ -1,5 +1,6 @@
+package ViewManagement;
+
 import javax.swing.*;
-import java.util.Arrays;
 
 public class MenuManager {
 
@@ -48,7 +49,14 @@ public class MenuManager {
         showMenu(levels);
     }
 
-    private void showMenu(Menu m) {
+    public void showLevel(int levelNo) {
+//        GameObjects.MovingSpriteEx level = new MovingSpriteEx(this, levelNo);
+//        showMenu(level);
+        GameObjects.Map map = new GameObjects.Map();
+        showMenu(map);
+    }
+
+    private void showMenu(JPanel m) {
         mainFrame.getContentPane().removeAll();
         mainFrame.add(m);
         mainFrame.getContentPane().revalidate();

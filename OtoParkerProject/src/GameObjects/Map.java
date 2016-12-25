@@ -74,6 +74,14 @@ public class Map extends JPanel implements ActionListener {
         g2.translate(400, 300);
         g2.scale(1, -1);
 
+        EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                grabFocus();
+                requestFocus();//or inWindow depends if Swing or Awt
+            }
+        });
 
         new Timer().schedule(new MainLoop(), 100, 30);
 
