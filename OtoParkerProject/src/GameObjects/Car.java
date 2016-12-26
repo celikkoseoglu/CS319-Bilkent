@@ -8,29 +8,28 @@ import java.util.*;
 
 public class Car {
 
-    public double weight = 1800;
-    public CarPhysics position = new CarPhysics();
-    public CarPhysics direction = new CarPhysics(0, 1, 0);
-    public CarPhysics velocity = new CarPhysics();
-    public CarPhysics acceleration = new CarPhysics();
+    private double weight = 1800;
+    private CarPhysics position = new CarPhysics();
+    private CarPhysics direction = new CarPhysics(0, 1, 0);
+    private CarPhysics velocity = new CarPhysics();
+    private CarPhysics acceleration = new CarPhysics();
 
     private final double HEIGHT = 80;
     private final double WIDTH = 50;
 
+    private double brakeCons = 500;
+    private CarPhysics brakeForce = new CarPhysics();
 
-    public double brakeCons = 500;
-    public CarPhysics brakeForce = new CarPhysics();
+    private double power = 0;
+    private CarPhysics tractionForce = new CarPhysics();
 
-    public double power = 0;
-    public CarPhysics tractionForce = new CarPhysics();
+    private double dragCons = 1.4257;
+    private CarPhysics dragForce = new CarPhysics();
 
-    public double dragCons = 1.4257;
-    public CarPhysics dragForce = new CarPhysics();
+    private CarPhysics rresistanceForce = new CarPhysics();
+    private double rresistanceCons = 12.8;
 
-    public CarPhysics rresistanceForce = new CarPhysics();
-    public double rresistanceCons = 12.8;
-
-    public CarPhysics longForce = new CarPhysics();
+    private CarPhysics longForce = new CarPhysics();
     private ArrayList<Cannonball> weapons=new ArrayList<Cannonball>();
 
     public boolean drifts;
@@ -44,9 +43,6 @@ public class Car {
     }
 
     public void update() {
-
-
-
         double dif = tyreCons * (velocity.getMagnitude() / 30.0);
 
         if (InputManager.keydown[37]) {
@@ -78,10 +74,8 @@ public class Car {
             power = power / 5;
         }
 
-
         boolean brakes = InputManager.keydown[66];
         isBackward= InputManager.keydown[40];
-
 
         changeBrakeForce();
         changeTraction();
@@ -93,7 +87,6 @@ public class Car {
         changePos(1);
 
         updateWeapons();
-
     }
 
     private Point2D dp1;

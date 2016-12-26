@@ -5,15 +5,18 @@ public class CarPhysics {
     public double x;
     public double y;
     public double z;
+
     //constructor
     public CarPhysics() {
     }
+
     public CarPhysics(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
-//    methods
+
+    //    methods
     public void set(CarPhysics newd) {
         this.x = newd.x;
         this.y = newd.y;
@@ -59,7 +62,7 @@ public class CarPhysics {
 
     public void standardize() {
         double size = getMagnitude();
-        if(size != 0){
+        if (size != 0) {
             x /= size;
             y /= size;
             z /= size;
@@ -113,11 +116,11 @@ public class CarPhysics {
     }
 
     public int getSign(CarPhysics v) {
-        return (y*v.x > x*v.y)?-1:1;
+        return (y * v.x > x * v.y) ? -1 : 1;
     }
 
-    public void print(){
-        System.out.println(x+400+", "+y+300+", "+z+", ");
+    public void print() {
+        System.out.println(x + 400 + ", " + y + 300 + ", " + z + ", ");
     }
 
 }

@@ -15,8 +15,7 @@ import java.util.Arrays;
  * @version 17
  */
 
-public class LocalDataManager
-{
+public class LocalDataManager {
     private String OS_FILE_PATH;
 
     public LocalDataManager() {
@@ -30,8 +29,7 @@ public class LocalDataManager
      * macOS : user.home/OtoParker/
      * Linux? Same with macOS
      */
-    public boolean setOS_FILE_PATH()
-    {
+    public boolean setOS_FILE_PATH() {
         String osName = System.getProperty("os.name");
         System.out.println("Operating System: " + osName + "\n");
 
@@ -43,24 +41,20 @@ public class LocalDataManager
 
         else if (osName.contains("Linux"))
             OS_FILE_PATH = System.getProperty("user.home") + "/OtoParker/";
-  
+
         System.out.println("Default OS FilePath: " + OS_FILE_PATH);
         System.out.println("\nOS FILE PATH SET SUCCESS\n");
         return true;
     }
 
-    private boolean saveText(String filePath, String fileName, String text)
-    {
-        try
-        {
+    private boolean saveText(String filePath, String fileName, String text) {
+        try {
             directoryExists(filePath);
             FileWriter fw = new FileWriter(filePath + fileName);
             fw.write(text);
             fw.close();
             return true;
-        }
-        catch ( Exception ioe )
-        {
+        } catch (Exception ioe) {
             System.err.println("IOException: " + ioe.getMessage());
             return false;
         }
@@ -99,11 +93,9 @@ public class LocalDataManager
                         "7:120:0|\n" +
                         "8:220:0|\n" +
                         "9:120:0";
-            }
-            else
+            } else
                 return null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.toString() + ": Something is wrong with OtoParker's note files");
             e.printStackTrace();
             return null;
@@ -116,23 +108,16 @@ public class LocalDataManager
      * @param directoryName the directory that is to be created if not found
      * @return true if exists
      */
-    private boolean directoryExists(String directoryName)
-    {
+    private boolean directoryExists(String directoryName) {
         File f = new File(directoryName);
-        if ( f.exists() && f.isDirectory() )
+        if (f.exists() && f.isDirectory())
             return true;
-        else
-        {
-            try
-            {
+        else {
+            try {
                 new File(directoryName).mkdirs();
-            }
-            catch ( SecurityException sException )
-            {
+            } catch (SecurityException sException) {
                 System.err.println(sException.toString() + " :Cannot create " + directoryName + " directory because of security permissions");
-            }
-            catch ( Exception ex )
-            {
+            } catch (Exception ex) {
                 System.err.println(ex.toString() + " :Unknown exception occured while creating \"" + directoryName + "\" directory.");
             }
             return false;
@@ -140,7 +125,7 @@ public class LocalDataManager
     }
 
     public ArrayList<Obstacle> getObstacles(int level) {
-        String[] obstacles = readText(level+"/obstacles.txt" ,true).split("\\|");
+        String[] obstacles = readText(level + "/obstacles.txt", true).split("\\|");
 
         ArrayList<Obstacle> obstacleList = new ArrayList<>();
 
@@ -153,8 +138,7 @@ public class LocalDataManager
     }
 
     public Target getTarget(int level) {
-        String[] target = readText(level+"/target.txt" ,true).split("\\|");
-
+        String[] target = readText(level + "/target.txt", true).split("\\|");
         return new Target(Integer.parseInt(target[0]), Integer.parseInt(target[1]), Integer.parseInt(target[2]), Integer.parseInt(target[3]));
     }
 }

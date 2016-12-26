@@ -98,13 +98,10 @@ public class LevelsMenu extends OtoParkerMenu {
     class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed (ActionEvent e) {
-            if (e.getSource() == backToMainMenuButton) {
+            if (e.getSource() == backToMainMenuButton)
                 manager.showMainMenu();
-            }
-            else {
-                manager.showLevel(1);
-                System.out.println("Open Level: " + ((JButton)e.getSource()).getText());
-            }
+            else
+                manager.showLevel(Integer.parseInt(((JButton)e.getSource()).getText()));
         }
     }
 }

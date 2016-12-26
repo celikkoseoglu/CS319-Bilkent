@@ -28,7 +28,7 @@ import java.util.TimerTask;
 
 
 public class Map extends JPanel implements ActionListener {
-    public Timer timer;
+    private Timer timer;
     private ArrayList<Obstacle> Obstacles;
     private Target target;
     private Graphics2D background;
@@ -133,9 +133,9 @@ public class Map extends JPanel implements ActionListener {
         AffineTransform at2 = carg.getTransform();
 
         boolean draw = true;
-        for (int i = 0; i < Obstacles.size(); i++)
-            if (Obstacles.get(i).getVisibility()) {
-                if (car.checkCollision(Obstacles.get(i).getBorders())) {
+        for (Obstacle o : Obstacles)
+            if (o.getVisibility()) {
+                if (car.checkCollision(o.getBorders())) {
                     //SoundManager.playSound(SoundManager.FAIL);
                     draw = false;
                 }
@@ -157,9 +157,11 @@ public class Map extends JPanel implements ActionListener {
             System.exit(0);
         }
 
-        for (int i = 0; i < Obstacles.size(); i++)
-            if (Obstacles.get(i).getVisibility())
-                g2d.drawImage(Obstacles.get(i).getImage(), Obstacles.get(i).getX(), Obstacles.get(i).getY(), this);
+        //draw the obstacles
+        for (Obstacle o : Obstacles)
+            if (o.getVisibility())
+                g2d.drawImage(o.getImage(), o.getX(), o.getY(), this);
+
         ArrayList<Cannonball> cs = car.getWeapons();
         for (Cannonball c : cs) {
             if (c.getVisibility()) {
@@ -168,24 +170,19 @@ public class Map extends JPanel implements ActionListener {
         }
 
         //the box for elapsed time and remaining stars
-
         g2d.setColor(Color.WHITE);
-
         g2d.fillRect(0, 550, 800, 50);
-
         g2d.drawLine(0, 550, 800, 550);
-
         g2d.drawImage(star, 710, 560, 10, 10, this);
         g2d.drawImage(star, 730, 560, 10, 10, this);
         g2d.drawImage(star, 750, 560, 10, 10, this);
 
+        //pause menu
         if(isPaused){
             int alpha = 127; // 50% transparent
             g2d.setColor(new Color(0,0,0, alpha));
             g2d.fillRect(0,0,800,600);
-
             add(pauseMenu);
-
             timer.cancel();
             timer.purge();
         }
