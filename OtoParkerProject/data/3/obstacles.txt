@@ -1,0 +1,8 @@
+0:tree.png:550:160|
+1:car.png:410:23|
+2:tree.png:300:460|
+3:car_horiz.png:685:320|
+4:car.png:250:25|
+5:tree.png:315:310|
+6:tree.png:525:250|
+7:cone.png:450:340|
