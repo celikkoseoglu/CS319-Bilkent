@@ -91,7 +91,11 @@ public class MainMenu extends OtoParkerMenu {
                 manager.showCredits();
             }
             else if (e.getSource() == soundButton) {
-                //TODO enable disable sound
+                if(SoundManager.isSoundEnable()){
+                    SoundManager.disableSound();
+                } else {
+                    SoundManager.enableSound();
+                }
             }
 
         }

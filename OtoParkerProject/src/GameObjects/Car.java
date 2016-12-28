@@ -1,5 +1,7 @@
 package GameObjects;
 
+import ViewManagement.SoundManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -195,6 +197,7 @@ public class Car {
         double angle =Math.atan2(direction.x, direction.y);
 
         weapons.add(new Cannonball((int)(position.x+400+35*Math.sin(angle)) , (int) (-position.y + 300- 35*Math.cos(angle)),angle));
+        SoundManager.playSound(SoundManager.WEAPON);
     }
 
     public ArrayList<Cannonball> getWeapons(){
