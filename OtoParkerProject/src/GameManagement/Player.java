@@ -58,4 +58,9 @@ public class Player {
     public ArrayList<Double> getUnlockedCarTurningRadiuses() {
         return unlockedCarTurningRadiuses;
     }
+
+    public void setCurrentCarTurningRadius(double currentCarTurningRadius) {
+        this.currentCarTurningRadius = currentCarTurningRadius;
+        System.out.println(currentCarTurningRadius);
+    }
 }
