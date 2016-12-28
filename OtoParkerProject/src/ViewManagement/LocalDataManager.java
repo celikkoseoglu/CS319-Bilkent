@@ -150,4 +150,19 @@ public class LocalDataManager {
 
         return new Player(numberOfStars, currentCarColor, currentCarWeapon, currentCarTurningRadius, unlockedCarColorStringArray, unlockedCarWeaponsStringArray, unlockedCarTurningRadiusesStringArray);
     }
+
+    public void savePlayerStats(Player player) {
+
+        StringBuilder playerStats = new StringBuilder();
+
+        playerStats.append(player.getNumberOfStars());
+        playerStats.append("|\n");
+        playerStats.append(player.getCurrentCarColor());
+        playerStats.append("|\n");
+        playerStats.append(player.getCurrentCarWeapon());
+        playerStats.append("|\n");
+        playerStats.append(player.getCurrentCarTurningRadius());
+
+        saveText(OS_FILE_PATH, "stats.txt", playerStats.toString());
+    }
 }

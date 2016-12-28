@@ -1,36 +1,26 @@
 package GameObjects;
 
-/**
- * Created by HÜSEYİN on 11.12.2016.
- */
+import GameManagement.Player;
+import ViewManagement.*;
 
-import ViewManagement.LevelCompletetionMenu;
-import ViewManagement.LocalDataManager;
-import ViewManagement.OtoParkerMenu;
-import ViewManagement.SoundManager;
-
-import java.awt.Color;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.util.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Map extends JPanel implements ActionListener {
+public class Map extends OtoParkerMenu implements ActionListener {
     private Timer timer;
-    private ArrayList<Obstacle> Obstacles;
+    private ArrayList<Obstacle> obstacles;
     private Target target;
     private Graphics2D background;
     private Graphics2D carg;
@@ -39,21 +29,23 @@ public class Map extends JPanel implements ActionListener {
     private BufferedImage backImage2;
     private BufferedImage backImage3;
     private Car car = new Car(0.6);
-    private boolean isPaused = false;
-
     private JLabel elapsedTimeLabel;
-    private int elapsedTime;
-    private int level;
-
     private Image star;
+
+    private int elapsedTime;
+    private int currentLevel;
+    private boolean isPaused = false;
 
     private LocalDataManager localDataManager;
 
     private OtoParkerMenu pauseMenu;
     private OtoParkerMenu levelCompletionMenu;
 
+    private Player player;
 
-    public Map(LocalDataManager mgr, int level, OtoParkerMenu pauseMenu, OtoParkerMenu levelCompletionMenu) {
+    public Map(MenuManager mgr, LocalDataManager localDataManager, int currentLevel, Player player) {
+
+        super(mgr);
 
         BorderLayout panelMapLayout = new BorderLayout();
         setLayout(panelMapLayout);
@@ -65,30 +57,25 @@ public class Map extends JPanel implements ActionListener {
 
         this.star = Toolkit.getDefaultToolkit().getImage("images/star.png");
 
-        this.localDataManager = mgr;
+        this.localDataManager = localDataManager;
 
-        this.level = level;
+        this.currentLevel = currentLevel;
 
-        this.pauseMenu = pauseMenu;
-        this.levelCompletionMenu = levelCompletionMenu;
-        ((LevelCompletetionMenu)this.levelCompletionMenu).setLevel(level);
+        this.pauseMenu = new PauseMenu(mgr, this.currentLevel);
+        this.levelCompletionMenu = new LevelCompletetionMenu(mgr, this.currentLevel);
+        ((LevelCompletetionMenu) this.levelCompletionMenu).setLevel(currentLevel);
+        this.player = player;
 
         initBoard();
     }
 
     private void initBoard() {
-
-        setFocusable(true);
-
-        Obstacles = localDataManager.getObstacles(level);
-
-        target = localDataManager.getTarget(level);
+        obstacles = localDataManager.getObstacles(currentLevel);
+        target = localDataManager.getTarget(currentLevel);
 
         try {
             backImage1 = ImageIO.read(new File("images/asphalt_lane.jpg"));
-        } catch (Exception ex) {
-
-        }
+        } catch (Exception ex) { }
 
         backImage2 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
         backImage3 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
@@ -97,7 +84,9 @@ public class Map extends JPanel implements ActionListener {
         carg = (Graphics2D) backImage2.getGraphics();
         backup = (Graphics2D) backImage3.getGraphics();
 
-        background.drawImage(backImage1, 0, 0, getWidth(), getHeight(), null);
+        background.drawImage(backImage1, 0, 0, getWidth(), getHeight(), null); //draw the asphalt texture
+
+        //draw the parking area
         int alpha = 127; // 50% transparent
         background.setColor(new Color(123, 233, 130, alpha));
         background.fillRect(target.getX(), target.getY(), target.getWidth(), target.getHeight());
@@ -115,7 +104,7 @@ public class Map extends JPanel implements ActionListener {
             requestFocus();
         });
         timer = new Timer();
-        timer.schedule(new MainLoop(), 100, 30);
+        timer.schedule(new MainLoop(), 0, 30);
         new Timer().schedule(new CountDownLoop(), 0, 1000);
     }
 
@@ -126,11 +115,8 @@ public class Map extends JPanel implements ActionListener {
     }
 
     private void doDrawing(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        backup.setColor(Color.WHITE);
-        backup.fillRect(0, 0, 800, 600);
 
         carg.setBackground(new Color(255, 255, 255, 0));
         carg.clearRect(-800 / 2, -600 / 2, 800, 600);
@@ -138,11 +124,18 @@ public class Map extends JPanel implements ActionListener {
         AffineTransform at2 = carg.getTransform();
 
         boolean draw = true;
-        for (Obstacle o : Obstacles)
+        for (Obstacle o : obstacles)
             if (o.getVisibility()) {
                 if (car.checkCollision(o.getBorders())) {
                     //SoundManager.playSound(SoundManager.FAIL);
-                    draw = false;
+                    //draw = false;
+                    timer.cancel();
+                    timer.purge();
+                    int alpha = 127; // 50% transparent
+                    g2d.setColor(new Color(0, 0, 0, alpha));
+                    g2d.fillRect(0, 0, 800, 600);
+                    add(levelCompletionMenu, BorderLayout.CENTER);
+
                 }
             }
 
@@ -158,7 +151,7 @@ public class Map extends JPanel implements ActionListener {
         g2d.drawImage(backImage3, 0, 0, null);
 
         //draw the obstacles
-        for (Obstacle o : Obstacles)
+        for (Obstacle o : obstacles)
             if (o.getVisibility())
                 g2d.drawImage(o.getImage(), o.getX(), o.getY(), this);
 
@@ -179,20 +172,18 @@ public class Map extends JPanel implements ActionListener {
 
         if (car.checkParking(target.getBorders())) {
             SoundManager.playSound(SoundManager.SUCCESS);
-            int alpha = 127; // 50% transparent
-            g2d.setColor(new Color(0,0,0, alpha));
-            g2d.fillRect(0,0,800,600);
-            add(levelCompletionMenu, BorderLayout.CENTER);
-            timer.cancel();
-            timer.purge();
+
+            
+
+            localDataManager.savePlayerStats(player);
 
         }
 
         //pause menu
-        if(isPaused){
+        if (isPaused) {
             int alpha = 127; // 50% transparent
-            g2d.setColor(new Color(0,0,0, alpha));
-            g2d.fillRect(0,0,800,600);
+            g2d.setColor(new Color(0, 0, 0, alpha));
+            g2d.fillRect(0, 0, 800, 600);
             add(pauseMenu);
             timer.cancel();
             timer.purge();
@@ -206,11 +197,11 @@ public class Map extends JPanel implements ActionListener {
 
             Rectangle r1 = c.getBorders();
 
-            for (int i = 0; i < Obstacles.size(); i++) {
-                Rectangle2D r2 = Obstacles.get(i).getBorders();
-                if (r1.intersects(r2) && Obstacles.get(i).getVisibility()) {
+            for (int i = 0; i < obstacles.size(); i++) {
+                Rectangle2D r2 = obstacles.get(i).getBorders();
+                if (r1.intersects(r2) && obstacles.get(i).getVisibility()) {
                     c.setVisibility(false);
-                    Obstacles.get(i).setVisiblity(false);
+                    obstacles.get(i).setVisiblity(false);
                 }
             }
         }
@@ -234,10 +225,8 @@ public class Map extends JPanel implements ActionListener {
                 timer = new Timer();
                 timer.schedule(new MainLoop(), 0, car.getPeriod());
                 remove(pauseMenu);
-            }
-            else {
+            } else {
                 isPaused = !isPaused;
-
                 add(pauseMenu, BorderLayout.CENTER);
             }
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {

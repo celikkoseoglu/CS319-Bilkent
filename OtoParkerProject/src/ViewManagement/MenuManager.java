@@ -14,9 +14,6 @@ public class MenuManager {
     private OtoParkerMenu credits;
     private OtoParkerMenu instructions;
     private OtoParkerMenu levels;
-    private OtoParkerMenu pauseMenu;
-    private OtoParkerMenu levelCompletionMenu;
-
     private LocalDataManager mgr;
     private Player player;
 
@@ -32,8 +29,6 @@ public class MenuManager {
         credits = new CreditsMenu(this);
         instructions = new InstructionsMenu(this);
         levels = new LevelsMenu(this, mgr);
-        pauseMenu = new PauseMenu(this);
-        levelCompletionMenu =  new LevelCompletetionMenu(this);
 
         showMainMenu();
     }
@@ -59,7 +54,7 @@ public class MenuManager {
     }
 
     public void showLevel(int levelNo) {
-        GameObjects.Map map = new GameObjects.Map(mgr, levelNo, pauseMenu, levelCompletionMenu);
+        GameObjects.Map map = new GameObjects.Map(this, mgr, levelNo, player);
         showMenu(map);
     }
 
@@ -69,5 +64,4 @@ public class MenuManager {
         mainFrame.getContentPane().revalidate();
         mainFrame.getContentPane().repaint();
     }
-
 }

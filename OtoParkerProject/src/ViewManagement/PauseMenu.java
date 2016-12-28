@@ -12,8 +12,12 @@ public class PauseMenu extends OtoParkerMenu {
     private JButton exitGameButton;
     private JButton resumeButton;
 
-    public PauseMenu(MenuManager manager) {
+    private int currentLevel;
+
+    public PauseMenu(MenuManager manager, int currentLevel) {
         super(manager);
+
+        this.currentLevel = currentLevel;
 
         ButtonListener buttonListener = new ButtonListener();
 
