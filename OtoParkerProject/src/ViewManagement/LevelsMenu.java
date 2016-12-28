@@ -8,16 +8,13 @@ import java.awt.event.ActionListener;
 public class LevelsMenu extends OtoParkerMenu {
 
     private JButton backToMainMenuButton;
-    private LocalDataManager mgr;
 
-    private String[] progess;
+    private String[] progress;
 
     public LevelsMenu(MenuManager manager, LocalDataManager mgr) {
         super(manager);
 
-        this.mgr = mgr;
-
-        progess = mgr.readText("levelProgress.txt", false).split("\\|");
+        progress = mgr.readText("levelProgress.txt", false).split("\\|");
 
         ButtonListener buttonListener = new ButtonListener();
 
@@ -27,10 +24,10 @@ public class LevelsMenu extends OtoParkerMenu {
         add(backToMainMenuButton);
 
         for (int i = 1; i < 6; i++) {
-            int stars = Integer.parseInt(progess[i - 1].split(":")[2]);
+            int stars = Integer.parseInt(progress[i - 1].split(":")[2]);
 
             JButton button = new OtoParkerJButton(Integer.toString(i));
-            System.out.println(Integer.parseInt(progess[i - 1].split(":")[2]));
+            System.out.println(Integer.parseInt(progress[i - 1].split(":")[2]));
             button.setEnabled(stars > 0);
             button.addActionListener(buttonListener);
             button.setBounds(100 + (i - 1) * 128,160, 88, 88);
@@ -38,7 +35,7 @@ public class LevelsMenu extends OtoParkerMenu {
         }
 
         for (int i = 1; i < 6; i++) {
-            int stars = Integer.parseInt(progess[i + 3].split(":")[2]);
+            int stars = Integer.parseInt(progress[i + 3].split(":")[2]);
 
             JButton button = new OtoParkerJButton(Integer.toString(i + 5));
             button.setEnabled(stars > 0);
@@ -54,10 +51,10 @@ public class LevelsMenu extends OtoParkerMenu {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Image img1 = Toolkit.getDefaultToolkit().getImage(System.getProperty("os.name").contains("Mac") ? "images/star.png" : "OtoParkerProject/images/star.png");
+        Image img1 = Toolkit.getDefaultToolkit().getImage("images/star.png");
 
         for (int i = 1; i < 6; i++) {
-            int stars = Integer.parseInt(progess[i - 1].split(":")[2]);
+            int stars = Integer.parseInt(progress[i - 1].split(":")[2]);
 
             switch (stars) {
                 case 3:
@@ -76,7 +73,7 @@ public class LevelsMenu extends OtoParkerMenu {
         }
 
         for (int i = 1; i < 6; i++) {
-            int stars = Integer.parseInt(progess[i + 3].split(":")[2]);
+            int stars = Integer.parseInt(progress[i + 3].split(":")[2]);
 
             switch (stars) {
                 case 3:
