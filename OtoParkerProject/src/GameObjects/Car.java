@@ -240,10 +240,30 @@ public class Car {
         lines[2]=new Line2D.Double(rightup,rightdown);
         lines[3]=new Line2D.Double(leftdown,rightdown);
 
+        QuadCurve2D[] curves = new QuadCurve2D[4];
+
+        curves[0] = new QuadCurve2D.Double(position.x+400+WIDTH/2*Math.cos(angle),-position.y+300+WIDTH/2*Math.sin(angle),
+                position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle),
+                position.x+400+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle));
+
+        curves[1] = new QuadCurve2D.Double(position.x+400-WIDTH/2*Math.cos(angle),-position.y+300-WIDTH/2*Math.sin(angle),
+                position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle),
+                position.x+400+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle));
+
+        curves[2] = new QuadCurve2D.Double(position.x+400+WIDTH/2*Math.cos(angle)-2/3*HEIGHT/2*Math.sin(angle),-position.y+300+WIDTH/2*Math.sin(angle)+2/3*HEIGHT/2*Math.cos(angle),
+                position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle),
+                position.x+400-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle));
+
+        curves[3] = new QuadCurve2D.Double(position.x+400-WIDTH/2*Math.cos(angle)-2/3*HEIGHT/2*Math.sin(angle),-position.y+300-WIDTH/2*Math.sin(angle)-2/3*HEIGHT/2*Math.cos(angle),
+                position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle),
+                position.x+400-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle));
+
+
+
         boolean x= false;
 
         for(int i=0; i < lines.length; i++)
-            if(lines[i].intersects(rand)) {
+            if(lines[i].intersects(rand) || curves[i].intersects(rand)) {
                 x = true;
             }
         return x;
@@ -266,11 +286,30 @@ public class Car {
 
         Rectangle2D frame = new Rectangle2D.Double(16,18,768,522);
 
+        QuadCurve2D[] curves = new QuadCurve2D[4];
+
+        curves[0] = new QuadCurve2D.Double(position.x+400+WIDTH/2*Math.cos(angle),-position.y+300+WIDTH/2*Math.sin(angle),
+                position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle),
+                position.x+400+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle));
+
+        curves[1] = new QuadCurve2D.Double(position.x+400-WIDTH/2*Math.cos(angle),-position.y+300-WIDTH/2*Math.sin(angle),
+                position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle),
+                position.x+400+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle));
+
+        curves[2] = new QuadCurve2D.Double(position.x+400+WIDTH/2*Math.cos(angle)-2/3*HEIGHT/2*Math.sin(angle),-position.y+300+WIDTH/2*Math.sin(angle)+2/3*HEIGHT/2*Math.cos(angle),
+                position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle),
+                position.x+400-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle));
+
+        curves[3] = new QuadCurve2D.Double(position.x+400-WIDTH/2*Math.cos(angle)-2/3*HEIGHT/2*Math.sin(angle),-position.y+300-WIDTH/2*Math.sin(angle)-2/3*HEIGHT/2*Math.cos(angle),
+                position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle),
+                position.x+400-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle));
+
         boolean x= false;
 
         if( !frame.contains(leftup) || !frame.contains(rightup) || !frame.contains(rightdown) || !frame.contains(leftdown)) {
             x = true;
         }
+
         return x;
     }
 
