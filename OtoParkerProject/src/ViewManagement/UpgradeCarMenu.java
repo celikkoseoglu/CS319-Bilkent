@@ -27,6 +27,8 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     private final int turningRadiusLineY = 350;
 
     String intendedColor = "";
+    String intendedWeapon = "";
+    boolean incTR = false;
 
 
     JPanel bluep = new JPanel();
@@ -72,7 +74,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         DturningRadius = new JButton("<");
         IncTurningRadius = new JButton(">");
         backToMainMenuButton = new JButton("<- Main ViewManagement.Menu");
-        update = new JButton("Update");
+        update = new JButton("Upgrade!!");
 
         colorLeftButton.addActionListener(buttonListener);
         colorRightButton.addActionListener(buttonListener);
@@ -89,7 +91,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         weaponRightButton.setBounds(740, weaponLineY, 30, 30);
         DturningRadius.setBounds(700, turningRadiusLineY, 30, 30);
         IncTurningRadius.setBounds(740, turningRadiusLineY, 30, 30);
-        update.setBounds(740,740,70,50);
+        update.setBounds(700,450,100,30);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
 
         bl.setOpaque(false);
@@ -146,6 +148,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         add(DturningRadius);
         add(IncTurningRadius);
         add(backToMainMenuButton);
+        add(update);
     }
 
     @Override
@@ -192,88 +195,106 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource() == colorLeftButton) {
-                if (player.getUnlockedCarColors().contains("White")){
-                    if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
-                        blackp.setVisible(false);
-                        bluep.setVisible(false);
-                        wp.setVisible(true);
-                        redp.setVisible(false);
-                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
+                    blackp.setVisible(false);
+                    bluep.setVisible(false);
+                    wp.setVisible(true);
+                    redp.setVisible(false);
+                    if (player.getUnlockedCarColors().contains("White")) {
+                        Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+                    }
+                    else{
+                        intendedColor = "White";
                     }
                 }
-                else{
-                    intendedColor = "White";
-                }
-
-                if (player.getUnlockedCarColors().contains("Blue")){
-                    if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
                         blackp.setVisible(false);
                         redp.setVisible(false);
                         wp.setVisible(false);
                         bluep.setVisible(true);
-                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
-                    }
+                        if (player.getUnlockedCarColors().contains("Blue")) {
+                            Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+                        }
+                        else
+                            intendedColor = "Blue";
                 }
-                else
-                    intendedColor = "Blue";
-                if (player.getUnlockedCarColors().contains("Black")){
-                    if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
-                        blackp.setVisible(true);
-                        redp.setVisible(false);
-                        wp.setVisible(false);
-                        bluep.setVisible(false);
-                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
-                    }
-                }
-                else
-                    intendedColor = "Black";
 
-                if (player.getUnlockedCarColors().contains("Orange")){
-                    if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png")){
-                        blackp.setVisible(false);
-                        redp.setVisible(true);
-                        wp.setVisible(false);
-                        bluep.setVisible(false);
-                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
+                    blackp.setVisible(true);
+                    redp.setVisible(false);
+                    wp.setVisible(false);
+                    bluep.setVisible(false);
+                    if (player.getUnlockedCarColors().contains("Black")) {
+                        Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
                     }
+                    else
+                        intendedColor = "Black";
                 }
-                else
-                    intendedColor = "Orange";
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png")){
+                    blackp.setVisible(false);
+                    redp.setVisible(true);
+                    wp.setVisible(false);
+                    bluep.setVisible(false);
+                    if (player.getUnlockedCarColors().contains("Orange")) {
+                        Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+                    }
+                    else
+                        intendedColor = "Orange";
+                }
 
             }
-
             else if (e.getSource() == colorRightButton) {
                 if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
                     blackp.setVisible(false);
                     bluep.setVisible(false);
                     wp.setVisible(false);
                     redp.setVisible(true);
-                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+                    if (player.getUnlockedCarColors().contains("Orange")) {
+                        Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+                    }
+                    else
+                        intendedColor = "Orange";
                 }
-                else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
+
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
                     blackp.setVisible(true);
                     redp.setVisible(false);
                     wp.setVisible(false);
                     bluep.setVisible(false);
-                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
+                    if (player.getUnlockedCarColors().contains("Black")){
+                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
+                    }
+                    else
+                        intendedColor = "Black";
                 }
-                else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
+
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
                     blackp.setVisible(false);
                     redp.setVisible(false);
                     wp.setVisible(false);
                     bluep.setVisible(true);
-                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+                    if (player.getUnlockedCarColors().contains("Blue")){
+                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+                    }
+                    else
+                        intendedColor = "Black";
                 }
-                else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png")){
+                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png")){
                     redp.setVisible(false);
                     wp.setVisible(true);
                     bluep.setVisible(false);
                     blackp.setVisible(false);
-                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+                    if (player.getUnlockedCarColors().contains("White")){
+                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+                    }
+                    else
+                        intendedColor = "White";
                 }
             }
-
             else if (e.getSource() == weaponLeftButton) {
+                if (player.getUnlockedCarWeapons().contains("NA")){
+
+                }
                 if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png")){
                     laserPanel.setVisible(true);
                     bomba.setVisible(false);
@@ -290,23 +311,42 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                 if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png")){
                     laserPanel.setVisible(true);
                     bomba.setVisible(false);
-                    Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png";
+                    if (player.getUnlockedCarWeapons().contains("Cannon")){
+                        Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png";
+                    }
+                    else
+                        intendedWeapon = "Cannon";
                 }
                 else if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png")){
                     laserPanel.setVisible(false);
                     bomba.setVisible(true);
-                    Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png";
+                    if (player.getUnlockedCarColors().contains("Nuke")){
+                        Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png";
+                    }
+                    else
+                        intendedWeapon = "Nuke";
                 }
             }
             else if (e.getSource() == DturningRadius) {
                     player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius()-0.5);
             }
             else if (e.getSource() == IncTurningRadius) {
-                player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius()+1);
+                if (player.getUnlockedCarTurningRadiuses().contains(player.getCurrentCarTurningRadius()+1)){
+                    player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius()+1);
+                }
+                else
+                    incTR = true;
+
 
             }
             else if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();
+            }
+            else if (e.getSource() == update){
+                player.changeCarColor(intendedColor);
+                player.changeWeapon(intendedWeapon);
+                if (incTR == true)
+                    player.increaseTR();
             }
 
         }

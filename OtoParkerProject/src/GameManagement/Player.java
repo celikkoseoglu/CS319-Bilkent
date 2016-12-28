@@ -1,5 +1,6 @@
 package GameManagement;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Player {
@@ -74,6 +75,10 @@ public class Player {
             setNumberOfStars(-Prices.COLOR_COST);
             setCurrentCarColor(nc);
             unlockedCarColors.add(nc);
+            System.out.println(getNumberOfStars());
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Not enough stars!!!","Error",JOptionPane.ERROR_MESSAGE);
         }
     }
     public void increaseTR(){
@@ -81,6 +86,10 @@ public class Player {
             setNumberOfStars(-Prices.TR_COST);
             setCurrentCarTurningRadius(getCurrentCarTurningRadius()+1);
             unlockedCarTurningRadiuses.add(getCurrentCarTurningRadius());
+            System.out.println(getNumberOfStars());
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Not enough stars!!!","Error",JOptionPane.ERROR_MESSAGE);
         }
     }
     public void changeWeapon(String nw){
@@ -88,6 +97,10 @@ public class Player {
             setNumberOfStars(-Prices.WEAPON_COST);
             setCurrentCarWeapon(nw);
             unlockedCarWeapons.add(nw);
+            System.out.println(getNumberOfStars());
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Not enough stars!!!","Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 }
