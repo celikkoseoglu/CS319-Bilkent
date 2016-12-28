@@ -35,6 +35,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
     private int elapsedTime;
     private int currentLevel;
     private boolean isPaused = false;
+    private boolean isCrashed = false;
 
     private LocalDataManager localDataManager;
 
@@ -123,23 +124,15 @@ public class Map extends OtoParkerMenu implements ActionListener {
         AffineTransform at = background.getTransform();
         AffineTransform at2 = carg.getTransform();
 
-        boolean draw = true;
         for (Obstacle o : obstacles)
             if (o.getVisibility()) {
-                if (car.checkCollision(o.getBorders())) {
+                if (car.checkCollision(o.getBorders()) || car.checkFrame()) {
                     //SoundManager.playSound(SoundManager.FAIL);
-                    //draw = false;
-                    timer.cancel();
-                    timer.purge();
-                    int alpha = 127; // 50% transparent
-                    g2d.setColor(new Color(0, 0, 0, alpha));
-                    g2d.fillRect(0, 0, 800, 600);
-                    add(levelCompletionMenu, BorderLayout.CENTER);
-
+                    isCrashed = true;
                 }
             }
 
-        if (draw && !car.checkFrame()) {
+        if (!car.checkFrame()) {
             car.draw(carg, background);
         }
 
@@ -162,6 +155,24 @@ public class Map extends OtoParkerMenu implements ActionListener {
             }
         }
 
+        if (car.checkParking(target.getBorders())) {
+            SoundManager.playSound(SoundManager.SUCCESS);
+
+            //player.getStars + 3
+
+            localDataManager.savePlayerStats(player);
+        }
+
+        //pause menu
+        if (isPaused || isCrashed) {
+            int alpha = 127; // 50% transparent
+            g2d.setColor(new Color(0, 0, 0, alpha));
+            g2d.fillRect(0, 0, 800, 600);
+            add(isPaused ? pauseMenu : levelCompletionMenu, BorderLayout.CENTER);
+            timer.cancel();
+            timer.purge();
+        }
+
         //the box for elapsed time and remaining stars
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 550, 800, 50);
@@ -169,25 +180,6 @@ public class Map extends OtoParkerMenu implements ActionListener {
         g2d.drawImage(star, 710, 560, 10, 10, this);
         g2d.drawImage(star, 730, 560, 10, 10, this);
         g2d.drawImage(star, 750, 560, 10, 10, this);
-
-        if (car.checkParking(target.getBorders())) {
-            SoundManager.playSound(SoundManager.SUCCESS);
-
-            
-
-            localDataManager.savePlayerStats(player);
-
-        }
-
-        //pause menu
-        if (isPaused) {
-            int alpha = 127; // 50% transparent
-            g2d.setColor(new Color(0, 0, 0, alpha));
-            g2d.fillRect(0, 0, 800, 600);
-            add(pauseMenu);
-            timer.cancel();
-            timer.purge();
-        }
     }
 
     public void checkExplosion() {
@@ -213,12 +205,8 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
     @Override
     protected void processKeyEvent(KeyEvent e) {
-        if (e.getID() == KeyEvent.KEY_PRESSED) {
+        if (e.getID() == KeyEvent.KEY_PRESSED && !isPaused) {
             InputManager.keydown[e.getKeyCode()] = true;
-            timer.cancel();
-            timer.purge();
-            timer = new Timer();
-            timer.schedule(new MainLoop(), 0, car.getPeriod());
         } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             if (isPaused) {
                 isPaused = !isPaused;
@@ -234,7 +222,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
         } else if (e.getKeyCode() == KeyEvent.VK_N) {
             car.setPeriod(8);
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
-            timer.schedule(new MainLoop(), 100, 30);
+            timer.schedule(new MainLoop(), 0, 30);
         } else if (e.getID() == KeyEvent.KEY_RELEASED) {
             InputManager.keydown[e.getKeyCode()] = false;
         }
