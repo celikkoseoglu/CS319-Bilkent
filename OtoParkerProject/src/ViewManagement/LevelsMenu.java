@@ -17,7 +17,7 @@ public class LevelsMenu extends OtoParkerMenu {
 
         this.mgr = mgr;
 
-        progess = mgr.readText("progress.txt", false).split("\\|");
+        progess = mgr.readText("levelProgress.txt", false).split("\\|");
 
         ButtonListener buttonListener = new ButtonListener();
 
