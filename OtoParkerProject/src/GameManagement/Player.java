@@ -72,37 +72,46 @@ public class Player {
         this.currentCarTurningRadius = currentCarTurningRadius;
         System.out.println(currentCarTurningRadius);
     }
-    public void changeCarColor(String nc){
+    public boolean changeCarColor(String nc){
+        boolean res = false;
         if (getNumberOfStars() >=  Prices.COLOR_COST && !(unlockedCarColors.contains(nc))){
             addNumberOfStars(-Prices.COLOR_COST);
             setCurrentCarColor(nc);
             unlockedCarColors.add(nc);
             System.out.println(getNumberOfStars());
+            res = true;
         }
         else{
             JOptionPane.showMessageDialog(null,"Not enough stars!!!","Error",JOptionPane.ERROR_MESSAGE);
         }
+        return  res;
     }
-    public void increaseTR(){
+    public boolean increaseTR(){
+        boolean res = false;
         if (getNumberOfStars() >= Prices.TR_COST){
             addNumberOfStars(-Prices.TR_COST);
             setCurrentCarTurningRadius(getCurrentCarTurningRadius()+1);
             unlockedCarTurningRadiuses.add(getCurrentCarTurningRadius());
             System.out.println(getNumberOfStars());
+            res = true;
         }
         else{
             JOptionPane.showMessageDialog(null,"Not enough stars!!!","Error",JOptionPane.ERROR_MESSAGE);
         }
+        return res;
     }
-    public void changeWeapon(String nw){
+    public boolean changeWeapon(String nw){
+        boolean res = false;
         if (getNumberOfStars() >= Prices.WEAPON_COST && !(unlockedCarWeapons.contains(nw))){
             addNumberOfStars(-Prices.WEAPON_COST);
             setCurrentCarWeapon(nw);
             unlockedCarWeapons.add(nw);
             System.out.println(getNumberOfStars());
+            res = true;
         }
         else{
             JOptionPane.showMessageDialog(null,"Not enough stars!!!","Error",JOptionPane.ERROR_MESSAGE);
         }
+        return  res;
     }
 }

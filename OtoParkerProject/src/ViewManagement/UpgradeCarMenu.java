@@ -30,6 +30,8 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     String intendedWeapon = "";
     boolean incTR = false;
 
+    boolean  colorChanged;
+
 
     JPanel bluep = new JPanel();
     ImageIcon blue_porsche = new ImageIcon("images/porsche.png");
@@ -200,7 +202,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     bluep.setVisible(false);
                     wp.setVisible(true);
                     redp.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("White")) {
+                    if (player.getUnlockedCarColors().contains("White") || colorChanged == true) {
                         Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
                     }
                     else{
@@ -212,7 +214,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                         redp.setVisible(false);
                         wp.setVisible(false);
                         bluep.setVisible(true);
-                        if (player.getUnlockedCarColors().contains("Blue")) {
+                        if (player.getUnlockedCarColors().contains("Blue") || colorChanged == true) {
                             Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
                         }
                         else
@@ -224,7 +226,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     redp.setVisible(false);
                     wp.setVisible(false);
                     bluep.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("Black")) {
+                    if (player.getUnlockedCarColors().contains("Black") ||colorChanged == true) {
                         Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
                     }
                     else
@@ -235,11 +237,12 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     redp.setVisible(true);
                     wp.setVisible(false);
                     bluep.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("Orange")) {
+                    if (player.getUnlockedCarColors().contains("Orange") ||colorChanged == true) {
                         Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
                     }
                     else
                         intendedColor = "Orange";
+
                 }
 
             }
@@ -249,7 +252,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     bluep.setVisible(false);
                     wp.setVisible(false);
                     redp.setVisible(true);
-                    if (player.getUnlockedCarColors().contains("Orange")) {
+                    if (player.getUnlockedCarColors().contains("Orange") ||colorChanged == true) {
                         Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
                     }
                     else
@@ -261,7 +264,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     redp.setVisible(false);
                     wp.setVisible(false);
                     bluep.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("Black")){
+                    if (player.getUnlockedCarColors().contains("Black")|| colorChanged == true){
                         Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
                     }
                     else
@@ -273,7 +276,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     redp.setVisible(false);
                     wp.setVisible(false);
                     bluep.setVisible(true);
-                    if (player.getUnlockedCarColors().contains("Blue")){
+                    if (player.getUnlockedCarColors().contains("Blue")|| colorChanged == true){
                         Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
                     }
                     else
@@ -284,7 +287,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     wp.setVisible(true);
                     bluep.setVisible(false);
                     blackp.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("White")){
+                    if (player.getUnlockedCarColors().contains("White") || colorChanged == true){
                         Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
                     }
                     else
@@ -343,7 +346,8 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                 manager.showMainMenu();
             }
             else if (e.getSource() == update){
-                player.changeCarColor(intendedColor);
+                colorChanged = player.changeCarColor(intendedColor);
+                System.out.println(colorChanged);
                 player.changeWeapon(intendedWeapon);
                 if (incTR == true)
                     player.increaseTR();
