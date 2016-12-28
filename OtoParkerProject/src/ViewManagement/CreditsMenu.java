@@ -64,6 +64,7 @@ public class CreditsMenu extends OtoParkerMenu {
     class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed (ActionEvent e) {
+            SoundManager.playSound(SoundManager.CLICK);
             if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();
             }
