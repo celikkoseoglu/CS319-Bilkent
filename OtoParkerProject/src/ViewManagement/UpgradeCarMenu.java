@@ -2,6 +2,8 @@ package ViewManagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import GameManagement.Player;
 import GameObjects.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +34,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     ImageIcon red_porsche = new ImageIcon("images/porsche_turuncu.png");
     JLabel rl = new JLabel("",red_porsche,JLabel.CENTER);
 
-    public UpgradeCarMenu(MenuManager manager) {
+    public UpgradeCarMenu(MenuManager manager, Player player) {
 
         super(manager);
 
