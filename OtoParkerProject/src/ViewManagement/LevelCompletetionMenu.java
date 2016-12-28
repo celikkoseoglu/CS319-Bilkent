@@ -5,14 +5,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PauseMenu extends OtoParkerMenu {
+/**
+ * Created by celikkoseoglu on 28/12/2016.
+ */
+public class LevelCompletetionMenu extends OtoParkerMenu {
 
+    private JLabel statusLabel;
+
+    private JButton retryLevelButton;
     private JButton upgradesButton;
     private JButton mainMenuButton;
     private JButton exitGameButton;
-    private JButton resumeButton;
 
-    public PauseMenu(MenuManager manager) {
+    private JButton nextLevelButton;
+
+    public LevelCompletetionMenu(MenuManager manager) {
         super(manager);
 
         ButtonListener buttonListener = new ButtonListener();
@@ -21,30 +28,31 @@ public class PauseMenu extends OtoParkerMenu {
 
         setOpaque(false);
 
+
         upgradesButton = new OtoParkerJButton("Upgrades");
         mainMenuButton = new OtoParkerJButton("Main Menu");
         exitGameButton = new OtoParkerJButton("Exit Game");
-        resumeButton = new OtoParkerJButton("Resume");
+        nextLevelButton = new OtoParkerJButton("Next Level");
 
         upgradesButton.setForeground(Color.white);
         mainMenuButton.setForeground(Color.white);
         exitGameButton.setForeground(Color.white);
-        resumeButton.setForeground(Color.white);
+        nextLevelButton.setForeground(Color.white);
 
         upgradesButton.setBounds(350, 150, 150, 40);
         mainMenuButton.setBounds(350, 220, 150, 40);
         exitGameButton.setBounds(350, 290, 150, 40);
-        resumeButton.setBounds(350, 360, 150, 40);
+        nextLevelButton.setBounds(350, 360, 150, 40);
 
         upgradesButton.addActionListener(buttonListener);
         mainMenuButton.addActionListener(buttonListener);
         exitGameButton.addActionListener(buttonListener);
-        resumeButton.addActionListener(buttonListener);
+        nextLevelButton.addActionListener(buttonListener);
 
         add(upgradesButton);
         add(mainMenuButton);
         add(exitGameButton);
-        add(resumeButton);
+        add(nextLevelButton);
     }
 
     class ButtonListener implements ActionListener {
