@@ -35,13 +35,19 @@ public class Player {
         return numberOfStars;
     }
 
+    public void setNumberOfStars(double val){numberOfStars += val;}
+
     public String getCurrentCarColor() {
         return currentCarColor;
     }
 
+    public void setCurrentCarColor(String nc){currentCarColor = nc;}
+
     public String getCurrentCarWeapon() {
         return currentCarWeapon;
     }
+
+    public void setCurrentCarWeapon(String nw){currentCarWeapon = nw;}
 
     public double getCurrentCarTurningRadius() {
         return currentCarTurningRadius;
@@ -62,5 +68,26 @@ public class Player {
     public void setCurrentCarTurningRadius(double currentCarTurningRadius) {
         this.currentCarTurningRadius = currentCarTurningRadius;
         System.out.println(currentCarTurningRadius);
+    }
+    public void changeCarColor(String nc){
+        if (getNumberOfStars() >=  Prices.COLOR_COST && !(unlockedCarColors.contains(nc))){
+            setNumberOfStars(-Prices.COLOR_COST);
+            setCurrentCarColor(nc);
+            unlockedCarColors.add(nc);
+        }
+    }
+    public void increaseTR(){
+        if (getNumberOfStars() >= Prices.TR_COST){
+            setNumberOfStars(-Prices.TR_COST);
+            setCurrentCarTurningRadius(getCurrentCarTurningRadius()+1);
+            unlockedCarTurningRadiuses.add(getCurrentCarTurningRadius());
+        }
+    }
+    public void changeWeapon(String nw){
+        if (getNumberOfStars() >= Prices.WEAPON_COST && !(unlockedCarWeapons.contains(nw))){
+            setNumberOfStars(-Prices.WEAPON_COST);
+            setCurrentCarWeapon(nw);
+            unlockedCarWeapons.add(nw);
+        }
     }
 }
