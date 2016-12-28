@@ -30,7 +30,6 @@ public class SoundManager {
                 Clip clip = AudioSystem.getClip();
                 clip.open(AudioSystem.getAudioInputStream(new File(filename)));
                 clip.start();
-                Thread.sleep(clip.getMicrosecondLength() / 1000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
