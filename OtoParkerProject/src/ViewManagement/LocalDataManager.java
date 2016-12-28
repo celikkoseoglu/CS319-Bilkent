@@ -1,6 +1,7 @@
 package ViewManagement;
 
 import GameManagement.Player;
+import GameManagement.Unlockables;
 import GameObjects.Obstacle;
 import GameObjects.Target;
 
@@ -191,5 +192,16 @@ public class LocalDataManager {
         }
 
         return levelTimes.get(level - 1);
+    }
+
+    public Unlockables getUnlockables() {
+        String[] unlocks = readText("unlockables.txt", true).split("\\|");
+
+        String[] unlockedCarColorStringArray = unlocks[0].split("-");
+        String[] unlockedCarWeaponsStringArray = unlocks[1].split("-");
+        String[] unlockedCarTurningRadiusesStringArray = unlocks[2].split("-");
+
+
+        return new Unlockables(unlockedCarColorStringArray, unlockedCarWeaponsStringArray, unlockedCarTurningRadiusesStringArray);
     }
 }

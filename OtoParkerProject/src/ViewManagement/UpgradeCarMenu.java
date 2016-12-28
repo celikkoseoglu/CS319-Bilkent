@@ -1,14 +1,13 @@
 package ViewManagement;
 
 import GameManagement.Player;
+import GameManagement.Unlockables;
 import GameObjects.Cannonball;
-import GameObjects.Car;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.LineMetrics;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
@@ -18,68 +17,72 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     private JButton weaponLeftButton, weaponRightButton;
     private JButton DturningRadius, IncTurningRadius;
     private JButton backToMainMenuButton;
-    private JButton update;
+    private JButton upgradeButton;
 
     private final int colorLineY = 150;
     private final int weaponLineY = 250;
     private final int turningRadiusLineY = 350;
 
-    String intendedColor = "";
-    String intendedWeapon = "";
-    boolean incTR = false;
+    private String intendedColor = "";
+    private String intendedWeapon = "";
+    private boolean incTR = false;
 
-    boolean  colorChanged;
-    boolean weaponChanged;
-
-
-    JPanel bluep = new JPanel();
-    ImageIcon blue_porsche = new ImageIcon("images/porsche.png");
-    JLabel bl = new JLabel("",blue_porsche,JLabel.CENTER);
-
-    JPanel redp = new JPanel();
-    ImageIcon red_porsche = new ImageIcon("images/porsche_turuncu.png");
-    JLabel rl = new JLabel("",red_porsche,JLabel.CENTER);
-
-    JPanel wp = new JPanel();
-    ImageIcon lx = new ImageIcon("images/car.png");
-    JLabel wl = new JLabel("",lx,JLabel.CENTER);
-
-    JPanel blackp = new JPanel();
-    ImageIcon bb = new ImageIcon("images/black.png");
-    JLabel black = new JLabel("",bb,JLabel.CENTER);
-
-    JPanel laserPanel = new JPanel();
-    ImageIcon lz = new ImageIcon("images/daringfireball.png");
-    JLabel ll = new JLabel("",lz,JLabel.CENTER);
-
-    JPanel bomba = new JPanel();
-    ImageIcon bmb = new ImageIcon("images/1.png");
-    JLabel bombaDotCom = new JLabel("",bmb,JLabel.CENTER);
-
-    JLabel scount;
+    private boolean colorChanged;
+    private boolean weaponChanged;
 
 
-    Player player;
+    private JPanel bluep = new JPanel();
+    private ImageIcon blue_porsche = new ImageIcon("images/porsche.png");
+    private JLabel bl = new JLabel("", blue_porsche, JLabel.CENTER);
 
-    public UpgradeCarMenu(MenuManager manager, Player player) {
+    private JPanel redp = new JPanel();
+    private ImageIcon red_porsche = new ImageIcon("images/porsche_turuncu.png");
+    private JLabel rl = new JLabel("", red_porsche, JLabel.CENTER);
+
+    private JPanel wp = new JPanel();
+    private ImageIcon lx = new ImageIcon("images/car.png");
+    private JLabel wl = new JLabel("", lx, JLabel.CENTER);
+    private JPanel blackp = new JPanel();
+    private ImageIcon bb = new ImageIcon("images/black.png");
+    private JLabel black = new JLabel("", bb, JLabel.CENTER);
+    private JPanel laserPanel = new JPanel();
+    private ImageIcon lz = new ImageIcon("images/daringfireball.png");
+    private JLabel ll = new JLabel("", lz, JLabel.CENTER);
+    private JPanel bomba = new JPanel();
+    private ImageIcon bmb = new ImageIcon("images/1.png");
+    private JLabel bombaDotCom = new JLabel("", bmb, JLabel.CENTER);
+    private JLabel scount;
+    private JLabel costLabel;
+    private LocalDataManager localDataManager;
+    private Player player;
+    private Unlockables unlockables;
+
+    Image img1, img2;
+    int currentColor = 0;
+    int currentWeapon = 0;
+    int totalCost = 0;
+
+    public UpgradeCarMenu(MenuManager manager, Player player, LocalDataManager localDataManager) {
 
         super(manager);
 
+        this.localDataManager = localDataManager;
         this.player = player;
+        this.unlockables = localDataManager.getUnlockables();
 
         ButtonListener buttonListener = new ButtonListener();
 
-        scount = new JLabel(""+player.getNumberOfStars(),null,JLabel.CENTER);
+        scount = new JLabel("Number of Stars Available: " + player.getNumberOfStars(), null, JLabel.CENTER);
+        costLabel = new JLabel("Total Cost: ");
 
-
-        colorLeftButton = new JButton("<");
-        colorRightButton = new JButton(">");
-        weaponLeftButton = new JButton("<");
-        weaponRightButton = new JButton(">");
-        DturningRadius = new JButton("<");
-        IncTurningRadius = new JButton(">");
-        backToMainMenuButton = new JButton("<- Main ViewManagement.Menu");
-        update = new JButton("Upgrade!!");
+        colorLeftButton = new OtoParkerJButton("<");
+        colorRightButton = new OtoParkerJButton(">");
+        weaponLeftButton = new OtoParkerJButton("<");
+        weaponRightButton = new OtoParkerJButton(">");
+        DturningRadius = new OtoParkerJButton("<");
+        IncTurningRadius = new OtoParkerJButton(">");
+        backToMainMenuButton = new OtoParkerJButton("<- Main Menu");
+        upgradeButton = new OtoParkerJButton("Upgrade!");
 
         colorLeftButton.addActionListener(buttonListener);
         colorRightButton.addActionListener(buttonListener);
@@ -88,57 +91,56 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         DturningRadius.addActionListener(buttonListener);
         IncTurningRadius.addActionListener(buttonListener);
         backToMainMenuButton.addActionListener(buttonListener);
-        update.addActionListener(buttonListener);
+        upgradeButton.addActionListener(buttonListener);
 
-        colorLeftButton.setBounds(700, colorLineY, 30, 30);
-        colorRightButton.setBounds(740, colorLineY, 30, 30);
-        weaponLeftButton.setBounds(700, weaponLineY, 30, 30);
-        weaponRightButton.setBounds(740, weaponLineY, 30, 30);
-        DturningRadius.setBounds(700, turningRadiusLineY, 30, 30);
-        IncTurningRadius.setBounds(740, turningRadiusLineY, 30, 30);
-        update.setBounds(700,450,100,30);
-        scount.setBounds(400,450,100,30);
-        backToMainMenuButton.setBounds(10, 10, 150, 30);
+        colorLeftButton.setBounds(650, colorLineY, 60, 40);
+        colorRightButton.setBounds(720, colorLineY, 60, 40);
+        weaponLeftButton.setBounds(650, weaponLineY, 60, 40);
+        weaponRightButton.setBounds(720, weaponLineY, 60, 40);
+        DturningRadius.setBounds(650, turningRadiusLineY, 60, 40);
+        IncTurningRadius.setBounds(720, turningRadiusLineY, 60, 40);
+        upgradeButton.setBounds(620, 450, 150, 40);
+        scount.setBounds(350, 450, 200, 40);
+        costLabel.setBounds(350, 500, 200, 40);
+        backToMainMenuButton.setBounds(10, 10, 150, 40);
 
         bl.setOpaque(false);
-        bluep.setPreferredSize(new Dimension(50,70));
-        bluep.setBounds(125,220,100,100);
+        bluep.setPreferredSize(new Dimension(50, 70));
+        bluep.setBounds(125, 220, 100, 100);
         bluep.add(bl);
         bluep.setVisible(false);
 
         rl.setOpaque(false);
-        redp.setPreferredSize(new Dimension(50,70));
-        redp.setBounds(125,220,100,160);
+        redp.setPreferredSize(new Dimension(50, 70));
+        redp.setBounds(125, 220, 100, 160);
         redp.add(rl);
         redp.setVisible(false);
 
         wl.setOpaque(false);
-        wp.setPreferredSize(new Dimension(50,70));
-        wp.setBounds(125,220,100,160);
+        wp.setPreferredSize(new Dimension(50, 70));
+        wp.setBounds(125, 220, 100, 160);
         wp.add(wl);
         wp.setVisible(false);
 
         black.setOpaque(false);
-        blackp.setPreferredSize(new Dimension(50,70));
-        blackp.setBounds(125,220,100,160);
+        blackp.setPreferredSize(new Dimension(50, 70));
+        blackp.setBounds(125, 220, 100, 160);
         blackp.add(black);
         blackp.setVisible(false);
 
         ll.setOpaque(false);
-        laserPanel.setPreferredSize(new Dimension(50,50));
-        laserPanel.setBounds(125,400,50,50);
+        laserPanel.setPreferredSize(new Dimension(50, 50));
+        laserPanel.setBounds(125, 400, 50, 50);
         laserPanel.add(ll);
         laserPanel.setOpaque(false);
         laserPanel.setVisible(false);
 
         bombaDotCom.setOpaque(false);
-        bomba.setPreferredSize(new Dimension(50,50));
-        bomba.setBounds(125,400,50,50);
+        bomba.setPreferredSize(new Dimension(50, 50));
+        bomba.setBounds(125, 400, 50, 50);
         bomba.setOpaque(false);
         bomba.add(bombaDotCom);
         bomba.setVisible(false);
-
-
 
         add(bluep);
         add(redp);
@@ -154,8 +156,9 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         add(DturningRadius);
         add(IncTurningRadius);
         add(backToMainMenuButton);
-        add(update);
+        add(upgradeButton);
         add(scount);
+        add(costLabel);
     }
 
     @Override
@@ -164,33 +167,18 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        /* ATTRIBUTED STRING EXAMPLE
-
-        AttributedString text = new AttributedString("Bunny rabits and flying ponies");
-        text.addAttribute(TextAttribute.FONT, new Font("Arial", Font.BOLD, 24), 0, "Bunny rabits".length());
-        text.addAttribute(TextAttribute.FOREGROUND, Color.RED, 0, "Bunny rabits".length());
-
-        text.addAttribute(TextAttribute.FONT, new Font("Arial", Font.BOLD & Font.ITALIC, 32), 17, 17 + "flying ponies".length());
-        text.addAttribute(TextAttribute.FOREGROUND, Color.BLUE, 17, 17 + "flying ponies".length());
-
-        FontMetrics fm = g2d.getFontMetrics();
-        LineMetrics lm = fm.getLineMetrics(text.getIterator(), 0, text.getIterator().getEndIndex(), g);
-
-        g2d.drawString(text.getIterator(), 0, (int)lm.getAscent() + lm.getHeight());*/
-
         AttributedString upgradesString = new AttributedString("Upgrades");
         upgradesString.addAttribute(TextAttribute.FONT, new Font("Arial", Font.BOLD, 30));
         upgradesString.addAttribute(TextAttribute.FOREGROUND, new Color(201, 103, 32));
 
-        FontMetrics fm = g2d.getFontMetrics();
-        LineMetrics lm = fm.getLineMetrics(upgradesString.getIterator(), 0, upgradesString.getIterator().getEndIndex(), g);
-
         g2d.drawString(upgradesString.getIterator(), 340, 40);
 
 
-        //TODO change this with the current car's image
-        g2d.drawRect(40, 40, 250, 500);
+        g2d.drawImage(img1, 68, 150, 200, 320, this);
+        g2d.drawImage(img2, 158, 480, 20, 20, this);
 
+        //TODO change this with the current car's image
+        g2d.drawRect(40, 80, 250, 460);
 
         g2d.drawString("Color", 320, colorLineY);
         g2d.drawString("Weapon", 320, weaponLineY);
@@ -200,163 +188,74 @@ public class UpgradeCarMenu extends OtoParkerMenu {
 
     class ButtonListener implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if (e.getSource() == colorLeftButton) {
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
-                    blackp.setVisible(false);
-                    bluep.setVisible(false);
-                    wp.setVisible(true);
-                    redp.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("White") || colorChanged == true) {
-                        Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
-                    }
-                    else{
-                        intendedColor = "White";
-                    }
-                }
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
-                        blackp.setVisible(false);
-                        redp.setVisible(false);
-                        wp.setVisible(false);
-                        bluep.setVisible(true);
-                        if (player.getUnlockedCarColors().contains("Blue") || colorChanged == true) {
-                            Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
-                        }
-                        else
-                            intendedColor = "Blue";
-                }
 
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
-                    blackp.setVisible(true);
-                    redp.setVisible(false);
-                    wp.setVisible(false);
-                    bluep.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("Black") ||colorChanged == true) {
-                        Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
-                    }
-                    else
-                        intendedColor = "Black";
-                }
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png")){
-                    blackp.setVisible(false);
-                    redp.setVisible(true);
-                    wp.setVisible(false);
-                    bluep.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("Orange") ||colorChanged == true) {
-                        Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
-                    }
-                    else
-                        intendedColor = "Orange";
+                String currentCar = unlockables.getUnlockableCarColors().get(currentColor);
+                img1 = Toolkit.getDefaultToolkit().getImage("images/" + currentCar);
 
-                }
-
-            }
-            else if (e.getSource() == colorRightButton) {
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
-                    blackp.setVisible(false);
-                    bluep.setVisible(false);
-                    wp.setVisible(false);
-                    redp.setVisible(true);
-                    if (player.getUnlockedCarColors().contains("Orange") ||colorChanged == true) {
-                        Car.carImageDir = System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
-                    }
-                    else
-                        intendedColor = "Orange";
-                }
-
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
-                    blackp.setVisible(true);
-                    redp.setVisible(false);
-                    wp.setVisible(false);
-                    bluep.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("Black")|| colorChanged == true){
-                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
-                    }
-                    else
-                        intendedColor = "Black";
-                }
-
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
-                    blackp.setVisible(false);
-                    redp.setVisible(false);
-                    wp.setVisible(false);
-                    bluep.setVisible(true);
-                    if (player.getUnlockedCarColors().contains("Blue")|| colorChanged == true){
-                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
-                    }
-                    else
-                        intendedColor = "Black";
-                }
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png")){
-                    redp.setVisible(false);
-                    wp.setVisible(true);
-                    bluep.setVisible(false);
-                    blackp.setVisible(false);
-                    if (player.getUnlockedCarColors().contains("White") || colorChanged == true){
-                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
-                    }
-                    else
-                        intendedColor = "White";
-                }
-            }
-            else if (e.getSource() == weaponLeftButton) {
-                if (player.getUnlockedCarWeapons().contains("NA")){
-
-                }
-                if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png")){
-                    laserPanel.setVisible(true);
-                    bomba.setVisible(false);
-                    Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png";
-                }
-                else if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png")){
-                    laserPanel.setVisible(false);
-                    bomba.setVisible(true);
-                    Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png";
-                }
-
-            }
-            else if (e.getSource() == weaponRightButton) {
-                if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png")){
-                    laserPanel.setVisible(true);
-                    bomba.setVisible(false);
-                    if (player.getUnlockedCarWeapons().contains("Cannon") || weaponChanged == true){
-                        Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png";
-                    }
-                    else
-                        intendedWeapon = "Cannon";
-                }
-                else if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png")){
-                    laserPanel.setVisible(false);
-                    bomba.setVisible(true);
-                    if (player.getUnlockedCarColors().contains("Nuke")||weaponChanged == true){
-                        Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png";
-                    }
-                    else
-                        intendedWeapon = "Nuke";
-                }
-            }
-            else if (e.getSource() == DturningRadius) {
-                    player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius()-0.5);
-            }
-            else if (e.getSource() == IncTurningRadius) {
-                if (player.getUnlockedCarTurningRadiuses().contains(player.getCurrentCarTurningRadius()+1)||incTR==true){
-                    player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius()+1);
-                }
+                if (currentColor >= unlockables.getUnlockableCarColors().size() - 1)
+                    currentColor = 0;
                 else
+                    currentColor++;
+                repaint();
+
+                if (!player.getUnlockedCarColors().contains(currentCar)) {
+                    totalCost += 1;
+                    costLabel.setText("Total Cost: " + totalCost);
+                }
+
+            } else if (e.getSource() == colorRightButton) {
+
+                String currentCar = unlockables.getUnlockableCarColors().get(currentColor);
+                img1 = Toolkit.getDefaultToolkit().getImage("images/" + currentCar);
+
+                if (currentColor <= 0)
+                    currentColor = unlockables.getUnlockableCarColors().size() - 1;
+                else
+                    currentColor--;
+                repaint();
+
+            } else if (e.getSource() == weaponLeftButton) {
+
+                String currentCar = unlockables.getUnlockableCarWeapons().get(currentWeapon);
+                img2 = Toolkit.getDefaultToolkit().getImage("images/" + currentCar);
+
+                if (currentWeapon >= unlockables.getUnlockableCarWeapons().size() - 1)
+                    currentWeapon = 0;
+                else
+                    currentWeapon++;
+                repaint();
+
+            } else if (e.getSource() == weaponRightButton) {
+
+                String currentCar = unlockables.getUnlockableCarWeapons().get(currentWeapon);
+                img2 = Toolkit.getDefaultToolkit().getImage("images/" + currentCar);
+
+                if (currentWeapon <= 0)
+                    currentWeapon = unlockables.getUnlockableCarWeapons().size() - 1;
+                else
+                    currentWeapon--;
+                repaint();
+
+            } else if (e.getSource() == DturningRadius) {
+                player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius() - 0.5);
+            } else if (e.getSource() == IncTurningRadius) {
+                if (player.getUnlockedCarTurningRadiuses().contains(player.getCurrentCarTurningRadius() + 1) || incTR) {
+                    player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius() + 1);
+                } else
                     incTR = true;
 
 
-            }
-            else if (e.getSource() == backToMainMenuButton) {
+            } else if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();
-            }
-            else if (e.getSource() == update){
+            } else if (e.getSource() == upgradeButton) {
                 colorChanged = player.changeCarColor(intendedColor);
-                System.out.println(colorChanged);
-                weaponChanged=player.changeWeapon(intendedWeapon);
-                if (incTR == true)
+                weaponChanged = player.changeWeapon(intendedWeapon);
+                if (incTR)
                     player.increaseTR();
-                scount.setText(""+player.getNumberOfStars());
+                scount.setText("Number of Stars Available: "  + player.getNumberOfStars());
+
             }
 
         }

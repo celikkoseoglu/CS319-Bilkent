@@ -25,7 +25,7 @@ public class MenuManager {
         this.mainFrame = mainFrame;
 
         mainMenu = new MainMenu(this);
-        upgradeCar = new UpgradeCarMenu(this, player);
+        upgradeCar = new UpgradeCarMenu(this, player, mgr);
         credits = new CreditsMenu(this);
         instructions = new InstructionsMenu(this);
         levels = new LevelsMenu(this, mgr);
