@@ -20,10 +20,14 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     private JButton weaponLeftButton, weaponRightButton;
     private JButton DturningRadius, IncTurningRadius;
     private JButton backToMainMenuButton;
+    private JButton update;
 
     private final int colorLineY = 150;
     private final int weaponLineY = 250;
     private final int turningRadiusLineY = 350;
+
+    String intendedColor = "";
+
 
     JPanel bluep = new JPanel();
     ImageIcon blue_porsche = new ImageIcon("images/porsche.png");
@@ -49,6 +53,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     ImageIcon bmb = new ImageIcon("images/1.png");
     JLabel bombaDotCom = new JLabel("",bmb,JLabel.CENTER);
 
+
     Player player;
 
     public UpgradeCarMenu(MenuManager manager, Player player) {
@@ -67,6 +72,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         DturningRadius = new JButton("<");
         IncTurningRadius = new JButton(">");
         backToMainMenuButton = new JButton("<- Main ViewManagement.Menu");
+        update = new JButton("Update");
 
         colorLeftButton.addActionListener(buttonListener);
         colorRightButton.addActionListener(buttonListener);
@@ -75,6 +81,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         DturningRadius.addActionListener(buttonListener);
         IncTurningRadius.addActionListener(buttonListener);
         backToMainMenuButton.addActionListener(buttonListener);
+        update.addActionListener(buttonListener);
 
         colorLeftButton.setBounds(700, colorLineY, 30, 30);
         colorRightButton.setBounds(740, colorLineY, 30, 30);
@@ -82,39 +89,48 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         weaponRightButton.setBounds(740, weaponLineY, 30, 30);
         DturningRadius.setBounds(700, turningRadiusLineY, 30, 30);
         IncTurningRadius.setBounds(740, turningRadiusLineY, 30, 30);
+        update.setBounds(740,740,70,50);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
 
-
+        bl.setOpaque(false);
         bluep.setPreferredSize(new Dimension(50,70));
         bluep.setBounds(125,220,100,100);
         bluep.add(bl);
         bluep.setVisible(false);
 
-
+        rl.setOpaque(false);
         redp.setPreferredSize(new Dimension(50,70));
         redp.setBounds(125,220,100,160);
         redp.add(rl);
         redp.setVisible(false);
 
+        wl.setOpaque(false);
         wp.setPreferredSize(new Dimension(50,70));
         wp.setBounds(125,220,100,160);
         wp.add(wl);
         wp.setVisible(false);
 
+        black.setOpaque(false);
         blackp.setPreferredSize(new Dimension(50,70));
         blackp.setBounds(125,220,100,160);
         blackp.add(black);
         blackp.setVisible(false);
 
+        ll.setOpaque(false);
         laserPanel.setPreferredSize(new Dimension(50,50));
         laserPanel.setBounds(125,400,50,50);
         laserPanel.add(ll);
+        laserPanel.setOpaque(false);
         laserPanel.setVisible(false);
 
+        bombaDotCom.setOpaque(false);
         bomba.setPreferredSize(new Dimension(50,50));
         bomba.setBounds(125,400,50,50);
+        bomba.setOpaque(false);
         bomba.add(bombaDotCom);
         bomba.setVisible(false);
+
+
 
         add(bluep);
         add(redp);
@@ -176,34 +192,54 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource() == colorLeftButton) {
-                if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
-                    blackp.setVisible(false);
-                    bluep.setVisible(false);
-                    wp.setVisible(true);
-                    redp.setVisible(false);
-                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
-               }
-               else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
-                    blackp.setVisible(false);
-                    redp.setVisible(false);
-                    wp.setVisible(false);
-                    bluep.setVisible(true);
-                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
-               }
-               else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
-                    blackp.setVisible(true);
-                    redp.setVisible(false);
-                    wp.setVisible(false);
-                    bluep.setVisible(false);
-                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
-               }
-               else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png")){
-                    blackp.setVisible(false);
-                    redp.setVisible(true);
-                    wp.setVisible(false);
-                    bluep.setVisible(false);
-                    Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
-               }
+                if (player.getUnlockedCarColors().contains("White")){
+                    if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
+                        blackp.setVisible(false);
+                        bluep.setVisible(false);
+                        wp.setVisible(true);
+                        redp.setVisible(false);
+                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png";
+                    }
+                }
+                else{
+                    intendedColor = "White";
+                }
+
+                if (player.getUnlockedCarColors().contains("Blue")){
+                    if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
+                        blackp.setVisible(false);
+                        redp.setVisible(false);
+                        wp.setVisible(false);
+                        bluep.setVisible(true);
+                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
+                    }
+                }
+                else
+                    intendedColor = "Blue";
+                if (player.getUnlockedCarColors().contains("Black")){
+                    if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){
+                        blackp.setVisible(true);
+                        redp.setVisible(false);
+                        wp.setVisible(false);
+                        bluep.setVisible(false);
+                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png";
+                    }
+                }
+                else
+                    intendedColor = "Black";
+
+                if (player.getUnlockedCarColors().contains("Orange")){
+                    if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/black.png" : "images/black.png")){
+                        blackp.setVisible(false);
+                        redp.setVisible(true);
+                        wp.setVisible(false);
+                        bluep.setVisible(false);
+                        Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+                    }
+                }
+                else
+                    intendedColor = "Orange";
+
             }
 
             else if (e.getSource() == colorRightButton) {
@@ -260,7 +296,8 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     laserPanel.setVisible(false);
                     bomba.setVisible(true);
                     Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png";
-                }            }
+                }
+            }
             else if (e.getSource() == DturningRadius) {
                     player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius()-0.5);
             }
