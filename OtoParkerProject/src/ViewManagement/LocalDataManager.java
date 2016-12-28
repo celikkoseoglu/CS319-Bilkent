@@ -84,7 +84,7 @@ public class LocalDataManager {
             fr.close();
             return strBuffer.toString();
         } catch (FileNotFoundException fNEF) {
-            if (textFile.equals("progress.txt") || textFile.equals("stats.txt"))
+            if (textFile.equals("progress.txt") || textFile.equals("stats.txt") || textFile.equals("unlocks.txt"))
                 return readText(textFile, true);
             else
                 return null;
