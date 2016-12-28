@@ -39,8 +39,10 @@ public class Car {
     public boolean visible=true;
     private boolean isBackward=false;
     double tyreCons = 0.6;
+    int period=30;
 
     public static String carImageDir= System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+
     public Car(double tyreC) {
         tyreCons = tyreC;
     }
@@ -292,7 +294,13 @@ public class Car {
     public int getPeriod(){
         if(isBackward)
             return 5;
-        return 30;
+        return period;
     }
+
+    public void setPeriod(int x){
+        period=x;
+    }
+
+
 
 }

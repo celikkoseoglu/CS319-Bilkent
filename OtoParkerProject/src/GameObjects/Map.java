@@ -232,7 +232,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             car.fire();
         } else if (e.getKeyCode() == KeyEvent.VK_N) {
-            timer.schedule(new MainLoop(), 100, 10);
+            car.setPeriod(8);
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             timer.schedule(new MainLoop(), 100, 30);
         } else if (e.getID() == KeyEvent.KEY_RELEASED) {
