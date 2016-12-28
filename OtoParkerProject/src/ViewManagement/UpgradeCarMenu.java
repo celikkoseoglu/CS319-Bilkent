@@ -31,6 +31,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     boolean incTR = false;
 
     boolean  colorChanged;
+    boolean weaponChanged;
 
 
     JPanel bluep = new JPanel();
@@ -57,6 +58,8 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     ImageIcon bmb = new ImageIcon("images/1.png");
     JLabel bombaDotCom = new JLabel("",bmb,JLabel.CENTER);
 
+    JLabel scount;
+
 
     Player player;
 
@@ -67,6 +70,8 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         this.player = player;
 
         ButtonListener buttonListener = new ButtonListener();
+
+        scount = new JLabel(""+player.getNumberOfStars(),null,JLabel.CENTER);
 
 
         colorLeftButton = new JButton("<");
@@ -94,6 +99,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         DturningRadius.setBounds(700, turningRadiusLineY, 30, 30);
         IncTurningRadius.setBounds(740, turningRadiusLineY, 30, 30);
         update.setBounds(700,450,100,30);
+        scount.setBounds(400,450,100,30);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
 
         bl.setOpaque(false);
@@ -151,6 +157,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         add(IncTurningRadius);
         add(backToMainMenuButton);
         add(update);
+        add(scount);
     }
 
     @Override
@@ -314,7 +321,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                 if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png")){
                     laserPanel.setVisible(true);
                     bomba.setVisible(false);
-                    if (player.getUnlockedCarWeapons().contains("Cannon")){
+                    if (player.getUnlockedCarWeapons().contains("Cannon") || weaponChanged == true){
                         Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png";
                     }
                     else
@@ -323,7 +330,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                 else if (Cannonball.im.equals(System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png")){
                     laserPanel.setVisible(false);
                     bomba.setVisible(true);
-                    if (player.getUnlockedCarColors().contains("Nuke")){
+                    if (player.getUnlockedCarColors().contains("Nuke")||weaponChanged == true){
                         Cannonball.im = System.getProperty("os.name").contains("Mac") ? "images/1.png" : "images/1.png";
                     }
                     else
@@ -334,7 +341,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius()-0.5);
             }
             else if (e.getSource() == IncTurningRadius) {
-                if (player.getUnlockedCarTurningRadiuses().contains(player.getCurrentCarTurningRadius()+1)){
+                if (player.getUnlockedCarTurningRadiuses().contains(player.getCurrentCarTurningRadius()+1)||incTR==true){
                     player.setCurrentCarTurningRadius(player.getCurrentCarTurningRadius()+1);
                 }
                 else
@@ -348,9 +355,10 @@ public class UpgradeCarMenu extends OtoParkerMenu {
             else if (e.getSource() == update){
                 colorChanged = player.changeCarColor(intendedColor);
                 System.out.println(colorChanged);
-                player.changeWeapon(intendedWeapon);
+                weaponChanged=player.changeWeapon(intendedWeapon);
                 if (incTR == true)
                     player.increaseTR();
+                scount.setText(""+player.getNumberOfStars());
             }
 
         }
