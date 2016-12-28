@@ -1,5 +1,6 @@
 package ViewManagement;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import GameObjects.*;
 import java.awt.*;
@@ -7,7 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.LineMetrics;
 import java.awt.font.TextAttribute;
+import java.io.File;
 import java.text.AttributedString;
+import java.awt.image.*;
 
 public class UpgradeCarMenu extends OtoParkerMenu {
 
@@ -21,11 +24,20 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     private final int turningRadiusLineY = 350;
 
 
+    JPanel bp = new JPanel();
+    ImageIcon blue_porsche = new ImageIcon("images/porsche.png");
+    JLabel bl = new JLabel("",blue_porsche,JLabel.CENTER);
+
+    JPanel rp = new JPanel();
+    ImageIcon red_porsche = new ImageIcon("images/porsche_turuncu.png");
+    JLabel rl = new JLabel("",red_porsche,JLabel.CENTER);
+
     public UpgradeCarMenu(MenuManager manager) {
 
         super(manager);
 
         ButtonListener buttonListener = new ButtonListener();
+
 
         colorLeftButton = new JButton("<");
         colorRightButton = new JButton(">");
@@ -50,6 +62,20 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         carModelButtonL.setBounds(700, turningRadiusLineY, 30, 30);
         carModelButtonR.setBounds(740, turningRadiusLineY, 30, 30);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
+
+
+        bp.setPreferredSize(new Dimension(50,70));
+        bp.setBounds(125,250,100,100);
+        bp.add(bl);
+        bp.setVisible(false);
+
+        rp.setPreferredSize(new Dimension(50,70));
+        rp.setBounds(125,250,100,100);
+        rp.add(rl);
+        rp.setVisible(false);
+
+        add(bp);
+        add(rp);
 
         add(colorLeftButton);
         add(colorRightButton);
@@ -89,12 +115,15 @@ public class UpgradeCarMenu extends OtoParkerMenu {
 
         g2d.drawString(upgradesString.getIterator(), 340, 40);
 
+
         //TODO change this with the current car's image
         g2d.drawRect(40, 40, 250, 500);
+//        g2d.drawImage(bp,145,250,null);
+
 
         g2d.drawString("Color", 320, colorLineY);
         g2d.drawString("Weapon", 320, weaponLineY);
-        g2d.drawString("Turning Radius", 320, turningRadiusLineY);
+        g2d.drawString("Model", 320, turningRadiusLineY);
     }
 
 
@@ -103,9 +132,11 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         public void actionPerformed (ActionEvent e) {
             if (e.getSource() == colorLeftButton) {
                 if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png")){
+                    rp.setVisible(true);
                     Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
                }
                else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png")){
+                    bp.setVisible(true);
                     Car.carImageDir =  System.getProperty("os.name").contains("Mac") ? "images/porsche.png" : "images/porsche.png";
                }
                else if(Car.carImageDir.equals(System.getProperty("os.name").contains("Mac") ? "images/car.png" : "images/car.png")){

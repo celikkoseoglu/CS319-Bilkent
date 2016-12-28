@@ -16,7 +16,7 @@ public class SoundManager {
     public static String WEAPON = "weapon.wav";
     
     public static void enableSound(){
-        soundEnable= true;
+         soundEnable= true;
     }
     public static void disableSound(){
         soundEnable= false;
