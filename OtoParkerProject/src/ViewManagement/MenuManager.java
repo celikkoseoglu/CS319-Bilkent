@@ -59,8 +59,6 @@ public class MenuManager {
     }
 
     public void showLevel(int levelNo) {
-//        GameObjects.MovingSpriteEx level = new MovingSpriteEx(this, levelNo);
-//        showMenu(level);
         GameObjects.Map map = new GameObjects.Map(mgr, levelNo, pauseMenu, levelCompletionMenu);
         showMenu(map);
     }
