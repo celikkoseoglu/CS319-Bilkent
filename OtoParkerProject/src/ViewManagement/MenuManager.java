@@ -1,5 +1,7 @@
 package ViewManagement;
 
+import GameManagement.Player;
+
 import javax.swing.*;
 
 public class MenuManager {
@@ -14,15 +16,17 @@ public class MenuManager {
     private OtoParkerMenu pauseMenu;
 
     private LocalDataManager mgr;
+    private Player player;
 
     public MenuManager(JFrame mainFrame) {
 
         mgr = new LocalDataManager();
+        player = mgr.getPlayer();
 
         this.mainFrame = mainFrame;
 
         mainMenu = new MainMenu(this);
-        upgradeCar = new UpgradeCarMenu(this);
+        upgradeCar = new UpgradeCarMenu(this, player);
         credits = new CreditsMenu(this);
         instructions = new InstructionsMenu(this);
         levels = new LevelsMenu(this, mgr);

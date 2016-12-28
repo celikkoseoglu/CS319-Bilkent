@@ -1,8 +1,10 @@
 package ViewManagement;
 
+import GameManagement.Player;
 import GameObjects.Obstacle;
 import GameObjects.Target;
 
+import javax.lang.model.type.ArrayType;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,18 +84,9 @@ public class LocalDataManager {
             fr.close();
             return strBuffer.toString();
         } catch (FileNotFoundException fNEF) {
-            if (textFile == "progress.txt") {
-                return "0:220:1|\n" +
-                        "1:120:0|\n" +
-                        "2:220:0|\n" +
-                        "3:120:0|\n" +
-                        "4:220:0|\n" +
-                        "5:120:0|\n" +
-                        "6:220:0|\n" +
-                        "7:120:0|\n" +
-                        "8:220:0|\n" +
-                        "9:120:0";
-            } else
+            if (textFile.equals("progress.txt") || textFile.equals("stats.txt"))
+                return readText(textFile, true);
+            else
                 return null;
         } catch (Exception e) {
             System.out.println(e.toString() + ": Something is wrong with OtoParker's note files");
@@ -140,5 +133,21 @@ public class LocalDataManager {
     public Target getTarget(int level) {
         String[] target = readText(level + "/target.txt", true).split("\\|");
         return new Target(Integer.parseInt(target[0]), Integer.parseInt(target[1]), Integer.parseInt(target[2]), Integer.parseInt(target[3]));
+    }
+
+    public Player getPlayer() {
+        String[] unlocks = readText("unlocks.txt", false).split("\\|");
+        String[] stats = readText("stats.txt", false).split("\\|");
+
+        String[] unlockedCarColorStringArray = unlocks[0].split("-");
+        String[] unlockedCarWeaponsStringArray = unlocks[1].split("-");
+        String[] unlockedCarTurningRadiusesStringArray = unlocks[2].split("-");
+
+        int numberOfStars = Integer.parseInt(stats[0]);
+        String currentCarColor = stats[1];
+        String currentCarWeapon = stats[2];
+        double currentCarTurningRadius = Double.parseDouble(stats[3]);
+
+        return new Player(numberOfStars, currentCarColor, currentCarWeapon, currentCarTurningRadius, unlockedCarColorStringArray, unlockedCarWeaponsStringArray, unlockedCarTurningRadiusesStringArray);
     }
 }
