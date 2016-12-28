@@ -49,6 +49,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     ImageIcon bmb = new ImageIcon("images/1.png");
     JLabel bombaDotCom = new JLabel("",bmb,JLabel.CENTER);
 
+
     Player player;
 
     public UpgradeCarMenu(MenuManager manager, Player player) {
@@ -84,37 +85,45 @@ public class UpgradeCarMenu extends OtoParkerMenu {
         IncTurningRadius.setBounds(740, turningRadiusLineY, 30, 30);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
 
-
+        bl.setOpaque(false);
         bluep.setPreferredSize(new Dimension(50,70));
         bluep.setBounds(125,220,100,100);
         bluep.add(bl);
         bluep.setVisible(false);
 
-
+        rl.setOpaque(false);
         redp.setPreferredSize(new Dimension(50,70));
         redp.setBounds(125,220,100,160);
         redp.add(rl);
         redp.setVisible(false);
 
+        wl.setOpaque(false);
         wp.setPreferredSize(new Dimension(50,70));
         wp.setBounds(125,220,100,160);
         wp.add(wl);
         wp.setVisible(false);
 
+        black.setOpaque(false);
         blackp.setPreferredSize(new Dimension(50,70));
         blackp.setBounds(125,220,100,160);
         blackp.add(black);
         blackp.setVisible(false);
 
+        ll.setOpaque(false);
         laserPanel.setPreferredSize(new Dimension(50,50));
         laserPanel.setBounds(125,400,50,50);
         laserPanel.add(ll);
+        laserPanel.setOpaque(false);
         laserPanel.setVisible(false);
 
+        bombaDotCom.setOpaque(false);
         bomba.setPreferredSize(new Dimension(50,50));
         bomba.setBounds(125,400,50,50);
+        bomba.setOpaque(false);
         bomba.add(bombaDotCom);
         bomba.setVisible(false);
+
+
 
         add(bluep);
         add(redp);
