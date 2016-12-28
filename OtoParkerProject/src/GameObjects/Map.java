@@ -19,7 +19,8 @@ import java.util.TimerTask;
 
 
 public class Map extends OtoParkerMenu implements ActionListener {
-    private Timer timer;
+    private Timer tick;
+    private Timer countdown;
     private ArrayList<Obstacle> obstacles;
     private Target target;
     private Graphics2D background;
@@ -34,6 +35,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
     private int elapsedTime;
     private int currentLevel;
+    private int levelTime;
     private boolean isPaused = false;
     private boolean isCrashed = false;
     private boolean isParked = false;
@@ -54,15 +56,14 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
         this.car = new Car(player.getCurrentCarTurningRadius());
 
+        this.levelTime = localDataManager.getLevelTime(currentLevel);
         elapsedTime = 0;
         elapsedTimeLabel = new JLabel();
         elapsedTimeLabel.setBounds(10, -10, 150, 30);
         add(elapsedTimeLabel, BorderLayout.PAGE_END);
 
         this.star = Toolkit.getDefaultToolkit().getImage("images/star.png");
-
         this.localDataManager = localDataManager;
-
         this.currentLevel = currentLevel;
 
         this.pauseMenu = new PauseMenu(mgr, this.currentLevel);
@@ -107,9 +108,11 @@ public class Map extends OtoParkerMenu implements ActionListener {
             grabFocus();
             requestFocus();
         });
-        timer = new Timer();
-        timer.schedule(new MainLoop(), 0, 30);
-        new Timer().schedule(new CountDownLoop(), 0, 1000);
+        tick = new Timer();
+        tick.schedule(new MainLoop(), 0, 30);
+
+        countdown = new Timer();
+        countdown.schedule(new CountDownLoop(), 0, 1000);
     }
 
     public void paintComponent(Graphics g) {
@@ -121,6 +124,8 @@ public class Map extends OtoParkerMenu implements ActionListener {
     private void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        int starsToEarn = 4;
 
         carg.setBackground(new Color(255, 255, 255, 0));
         carg.clearRect(-800 / 2, -600 / 2, 800, 600);
@@ -162,20 +167,21 @@ public class Map extends OtoParkerMenu implements ActionListener {
             SoundManager.playSound(SoundManager.SUCCESS);
             isParked = true;
 
-            player.addNumberOfStars(3);
-            localDataManager.saveLevelStats(currentLevel - 1, 2);
+            int earnedStars = (levelTime - elapsedTime + (levelTime / 3)) / (levelTime / 3);
+
+            player.addNumberOfStars(earnedStars);
+            localDataManager.saveLevelStats(currentLevel - 1, earnedStars);
             localDataManager.savePlayerStats(player);
         }
 
         if (isParked) {
-            int i = 1;
             int alpha = 127; // 50% transparent
             g2d.setColor(new Color(0, 0, 0, alpha));
             g2d.fillRect(0, 0, 800, 600);
             levelCompletionMenu.setSuccessful(true);
             add(levelCompletionMenu, BorderLayout.CENTER);
-            timer.cancel();
-            timer.purge();
+            tick.cancel();
+            tick.purge();
         }
 
         if (isCrashed) {
@@ -184,25 +190,29 @@ public class Map extends OtoParkerMenu implements ActionListener {
             g2d.fillRect(0, 0, 800, 600);
             levelCompletionMenu.setSuccessful(false);
             add(levelCompletionMenu, BorderLayout.CENTER);
-            timer.cancel();
-            timer.purge();
+            tick.cancel();
+            tick.purge();
         }
 
         if (isPaused) {
             int alpha = 127; // 50% transparent
             g2d.setColor(new Color(0, 0, 0, alpha));
             g2d.fillRect(0, 0, 800, 600);
-            timer.cancel();
-            timer.purge();
+            tick.cancel();
+            tick.purge();
         }
 
         //the box for elapsed time and remaining stars
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 550, 800, 50);
         g2d.drawLine(0, 550, 800, 550);
-        g2d.drawImage(star, 710, 560, 10, 10, this);
-        g2d.drawImage(star, 730, 560, 10, 10, this);
-        g2d.drawImage(star, 750, 560, 10, 10, this);
+
+        if ((levelTime - elapsedTime + (levelTime / 3)) / (levelTime / 3) >= 3)
+            g2d.drawImage(star, 710, 560, 10, 10, this);
+        if ((levelTime - elapsedTime + (levelTime / 3)) / (levelTime / 3) >= 2)
+            g2d.drawImage(star, 730, 560, 10, 10, this);
+        if ((levelTime - elapsedTime + (levelTime / 3)) / (levelTime / 3) >= 1)
+            g2d.drawImage(star, 750, 560, 10, 10, this);
     }
 
     public void checkExplosion() {
@@ -233,8 +243,8 @@ public class Map extends OtoParkerMenu implements ActionListener {
         } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             if (isPaused) {
                 isPaused = !isPaused;
-                timer = new Timer();
-                timer.schedule(new MainLoop(), 0, car.getPeriod());
+                tick = new Timer();
+                tick.schedule(new MainLoop(), 0, car.getPeriod());
                 remove(pauseMenu);
             } else {
                 isPaused = !isPaused;
@@ -243,8 +253,8 @@ public class Map extends OtoParkerMenu implements ActionListener {
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             car.fire();
 
-        } else if (e.getKeyCode() == KeyEvent.VK_P) {
-            timer.schedule(new MainLoop(), 0, 30);
+        } else if (e.getKeyCode() == KeyEvent.VK_N) {
+            tick.schedule(new MainLoop(), 0, 30);
         } else if (e.getID() == KeyEvent.KEY_RELEASED) {
             InputManager.keydown[e.getKeyCode()] = false;
         }
@@ -263,7 +273,14 @@ public class Map extends OtoParkerMenu implements ActionListener {
         @Override
         public void run() {
             elapsedTime++;
-            elapsedTimeLabel.setText("Time Elapsed: " + Integer.toString(elapsedTime));
+            elapsedTimeLabel.setText("Time Elapsed: " + Integer.toString(levelTime - elapsedTime));
+
+            if (elapsedTime == levelTime) {
+                countdown.cancel();
+                countdown.purge();
+                elapsedTimeLabel.setText(" JUST DO IT! :)");
+            }
+
             repaint();
         }
     }

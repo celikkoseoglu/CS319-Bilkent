@@ -180,4 +180,16 @@ public class LocalDataManager {
 
         saveText(OS_FILE_PATH, "levelProgress.txt", levelStats.toString());
     }
+
+    public int getLevelTime(int level) {
+        String[] progress = readText("levelProgress.txt", false).split("\\|");
+        ArrayList<Integer> levelTimes = new ArrayList<>();
+
+        for (String s : progress) {
+            String[] levels = s.split(":");
+            levelTimes.add(Integer.parseInt(levels[1]));
+        }
+
+        return levelTimes.get(level - 1);
+    }
 }

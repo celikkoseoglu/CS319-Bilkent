@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class LevelsMenu extends OtoParkerMenu {
 
@@ -11,23 +12,30 @@ public class LevelsMenu extends OtoParkerMenu {
 
     private String[] progress;
 
+    private ArrayList<Integer> levelTimes;
+
     public LevelsMenu(MenuManager manager, LocalDataManager mgr) {
         super(manager);
+
+        this.levelTimes = new ArrayList<>();
 
         progress = mgr.readText("levelProgress.txt", false).split("\\|");
 
         ButtonListener buttonListener = new ButtonListener();
 
-        backToMainMenuButton = new OtoParkerJButton("<- Main ViewManagement.Menu");
+        backToMainMenuButton = new OtoParkerJButton("<- Main Menu");
         backToMainMenuButton.addActionListener(buttonListener);
         backToMainMenuButton.setBounds(10, 10, 150, 30);
         add(backToMainMenuButton);
 
+        for (String s : progress) {
+            String[] levels = s.split(":");
+            levelTimes.add(Integer.parseInt(levels[1]));
+        }
+
         boolean previousUnlocked = true;
 
         for (int i = 1; i < 6; i++) {
-            int stars = Integer.parseInt(progress[i - 1].split(":")[2]);
-
             if (i > 1)
                 previousUnlocked = Integer.parseInt(progress[i - 2].split(":")[2]) > 0;
 
@@ -39,10 +47,11 @@ public class LevelsMenu extends OtoParkerMenu {
         }
 
         for (int i = 1; i < 6; i++) {
-            int stars = Integer.parseInt(progress[i + 3].split(":")[2]);
+            if (i > 1)
+                previousUnlocked = Integer.parseInt(progress[i + 2].split(":")[2]) > 0;
 
             JButton button = new OtoParkerJButton(Integer.toString(i + 5));
-            button.setEnabled(stars > 0);
+            button.setEnabled(previousUnlocked);
             button.addActionListener(buttonListener);
             button.setBounds(100 + (i - 1) * 128,  360, 88, 88);
             add(button);
@@ -102,8 +111,10 @@ public class LevelsMenu extends OtoParkerMenu {
             SoundManager.playSound(SoundManager.CLICK);
             if (e.getSource() == backToMainMenuButton)
                 manager.showMainMenu();
-            else
-                manager.showLevel(Integer.parseInt(((JButton)e.getSource()).getText()));
+            else {
+                int levelNo = Integer.parseInt(((JButton) e.getSource()).getText());
+                manager.showLevel(levelNo);
+            }
         }
     }
 }
