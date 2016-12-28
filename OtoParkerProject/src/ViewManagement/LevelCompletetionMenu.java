@@ -19,6 +19,8 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
 
     private int currentLevel;
 
+    private boolean successful;
+
     public LevelCompletetionMenu(MenuManager manager, int currentLevel) {
         super(manager);
 
@@ -28,7 +30,7 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
 
         setOpaque(false);
 
-        statusLabel = new JLabel("Level Completed?");
+        statusLabel = new JLabel();
         retryLevelButton = new OtoParkerJButton("Retry Level");
         upgradesButton = new OtoParkerJButton("Upgrades");
         mainMenuButton = new OtoParkerJButton("Main Menu");
@@ -62,6 +64,16 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
 
     public void setLevel(int level) {
         this.currentLevel = level;
+    }
+
+    public boolean isSuccessful() {
+        return successful;
+    }
+
+    public void setSuccessful(boolean successful) {
+        this.successful = successful;
+        statusLabel.setText(successful ? "Level Completed!" : "You Crashed!");
+        nextLevelButton.setEnabled(successful ? true : false);
     }
 
     class ButtonListener implements ActionListener {

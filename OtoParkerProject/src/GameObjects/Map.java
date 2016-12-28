@@ -28,7 +28,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
     private BufferedImage backImage1;
     private BufferedImage backImage2;
     private BufferedImage backImage3;
-    private Car car = new Car(0.6);
+    private Car car;
     private JLabel elapsedTimeLabel;
     private Image star;
 
@@ -36,11 +36,12 @@ public class Map extends OtoParkerMenu implements ActionListener {
     private int currentLevel;
     private boolean isPaused = false;
     private boolean isCrashed = false;
+    private boolean isParked = false;
 
     private LocalDataManager localDataManager;
 
-    private OtoParkerMenu pauseMenu;
-    private OtoParkerMenu levelCompletionMenu;
+    private PauseMenu pauseMenu;
+    private LevelCompletetionMenu levelCompletionMenu;
 
     private Player player;
 
@@ -50,6 +51,8 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
         BorderLayout panelMapLayout = new BorderLayout();
         setLayout(panelMapLayout);
+
+        this.car = new Car(player.getCurrentCarTurningRadius());
 
         elapsedTime = 0;
         elapsedTimeLabel = new JLabel();
@@ -157,18 +160,40 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
         if (car.checkParking(target.getBorders())) {
             SoundManager.playSound(SoundManager.SUCCESS);
+            isParked = true;
 
-            //player.getStars + 3
+            player.setNumberOfStars(player.getNumberOfStars() + 3);
+            localDataManager.savePlayerStats(player);
 
             localDataManager.savePlayerStats(player);
         }
 
-        //pause menu
-        if (isPaused || isCrashed) {
+        if (isParked) {
+            int i = 1;
             int alpha = 127; // 50% transparent
             g2d.setColor(new Color(0, 0, 0, alpha));
             g2d.fillRect(0, 0, 800, 600);
-            add(isPaused ? pauseMenu : levelCompletionMenu, BorderLayout.CENTER);
+            levelCompletionMenu.setSuccessful(true);
+            add(levelCompletionMenu, BorderLayout.CENTER);
+            timer.cancel();
+            timer.purge();
+        }
+
+
+        if (isCrashed) {
+            int alpha = 127; // 50% transparent
+            g2d.setColor(new Color(0, 0, 0, alpha));
+            g2d.fillRect(0, 0, 800, 600);
+            levelCompletionMenu.setSuccessful(false);
+            add(levelCompletionMenu, BorderLayout.CENTER);
+            timer.cancel();
+            timer.purge();
+        }
+
+        if (isPaused) {
+            int alpha = 127; // 50% transparent
+            g2d.setColor(new Color(0, 0, 0, alpha));
+            g2d.fillRect(0, 0, 800, 600);
             timer.cancel();
             timer.purge();
         }
@@ -205,7 +230,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
     @Override
     protected void processKeyEvent(KeyEvent e) {
-        if (e.getID() == KeyEvent.KEY_PRESSED && !isPaused) {
+        if (e.getID() == KeyEvent.KEY_PRESSED) {
             InputManager.keydown[e.getKeyCode()] = true;
         } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             if (isPaused) {
