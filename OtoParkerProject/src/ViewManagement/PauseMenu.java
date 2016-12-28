@@ -20,15 +20,23 @@ public class PauseMenu extends OtoParkerMenu {
 
         setPreferredSize(new Dimension(250, 400));
 
+        setOpaque(false);
+
         upgradesButton = new OtoParkerJButton("Upgrades");
         mainMenuButton = new OtoParkerJButton("Main Menu");
         exitGameButton = new OtoParkerJButton("Exit Game");
         resumeButton = new OtoParkerJButton("Resume");
 
+        upgradesButton.setForeground(Color.white);
+        mainMenuButton.setForeground(Color.white);
+        exitGameButton.setForeground(Color.white);
+        resumeButton.setForeground(Color.white);
+
         upgradesButton.setBounds(350, 150, 150, 40);
         mainMenuButton.setBounds(350, 220, 150, 40);
         exitGameButton.setBounds(350, 290, 150, 40);
         resumeButton.setBounds(350, 360, 150, 40);
+
         add(upgradesButton);
         add(mainMenuButton);
         add(exitGameButton);

@@ -53,7 +53,8 @@ public class Map extends JPanel implements ActionListener {
 
     public Map(LocalDataManager mgr, int level, OtoParkerMenu pauseMenu) {
 
-        setLayout(null);
+        BorderLayout panelMapLayout = new BorderLayout();
+        setLayout(panelMapLayout);
 
         elapsedTime = 0;
         elapsedTimeLabel = new JLabel();
@@ -218,9 +219,13 @@ public class Map extends JPanel implements ActionListener {
                 isPaused = !isPaused;
                 timer = new Timer();
                 timer.schedule(new MainLoop(), 100, 30);
+                remove(pauseMenu);
             }
-            else
+            else {
                 isPaused = !isPaused;
+
+                add(pauseMenu, BorderLayout.CENTER);
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             car.fire();
         } else if (e.getKeyCode() == KeyEvent.VK_N) {

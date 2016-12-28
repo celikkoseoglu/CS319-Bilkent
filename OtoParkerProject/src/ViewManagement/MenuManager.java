@@ -48,7 +48,7 @@ public class MenuManager {
     }
 
     public void showInstructions() {
-        showMenu(pauseMenu);
+        showMenu(instructions);
     }
 
     public void showLevelScreen() {
