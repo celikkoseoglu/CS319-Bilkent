@@ -4,6 +4,7 @@ package GameObjects;
  * Created by HÜSEYİN on 11.12.2016.
  */
 
+import ViewManagement.LevelCompletetionMenu;
 import ViewManagement.LocalDataManager;
 import ViewManagement.OtoParkerMenu;
 import ViewManagement.SoundManager;
@@ -70,6 +71,7 @@ public class Map extends JPanel implements ActionListener {
 
         this.pauseMenu = pauseMenu;
         this.levelCompletionMenu = levelCompletionMenu;
+        ((LevelCompletetionMenu)this.levelCompletionMenu).setLevel(level);
 
         initBoard();
     }
