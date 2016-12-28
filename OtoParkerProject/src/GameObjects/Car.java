@@ -263,7 +263,7 @@ public class Car {
         boolean x= false;
 
         for(int i=0; i < lines.length; i++)
-            if(lines[i].intersects(rand) || curves[i].intersects(rand)) {
+            if(curves[i].intersects(rand)) {
                 x = true;
             }
         return x;
