@@ -1,18 +1,16 @@
 package ViewManagement;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 import GameManagement.Player;
-import GameObjects.*;
+import GameObjects.Cannonball;
+import GameObjects.Car;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.LineMetrics;
 import java.awt.font.TextAttribute;
-import java.io.File;
 import java.text.AttributedString;
-import java.awt.image.*;
 
 public class UpgradeCarMenu extends OtoParkerMenu {
 
