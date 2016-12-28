@@ -37,7 +37,7 @@ public class Map extends JPanel implements ActionListener {
     private BufferedImage backImage1;
     private BufferedImage backImage2;
     private BufferedImage backImage3;
-    private Car car = new Car();
+    private Car car = new Car(0.6);
     private boolean isPaused = false;
 
     private JLabel elapsedTimeLabel;
@@ -214,11 +214,15 @@ public class Map extends JPanel implements ActionListener {
     protected void processKeyEvent(KeyEvent e) {
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             InputManager.keydown[e.getKeyCode()] = true;
+            timer.cancel();
+            timer.purge();
+            timer = new Timer();
+            timer.schedule(new MainLoop(), 0, car.getPeriod());
         } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             if (isPaused) {
                 isPaused = !isPaused;
                 timer = new Timer();
-                timer.schedule(new MainLoop(), 100, 30);
+                timer.schedule(new MainLoop(), 0, car.getPeriod());
                 remove(pauseMenu);
             }
             else {

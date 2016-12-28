@@ -1,3 +1,4 @@
+
 package GameObjects;
 
 import ViewManagement.SoundManager;
@@ -41,7 +42,8 @@ public class Car {
 
     public static String carImageDir= System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
 
-    public Car() {
+    public Car(double tyreC) {
+        tyreCons = tyreC;
     }
 
     public void update() {
@@ -107,7 +109,7 @@ public class Car {
         g.drawImage(image, (int) (position.x-WIDTH/2), (int) (position.y-HEIGHT/2), (int)WIDTH, (int)HEIGHT, null);
 
 
-        if (drifts) {
+        if (drifts && !isBackward) {
             AffineTransform transf = new AffineTransform();
             transf.rotate(angle, position.x, position.y + 0);
 
@@ -158,9 +160,11 @@ public class Car {
 
     private void changeLongForce(boolean brakes) {
         if (brakes) {
+            dragCons = 1.4257;
             longForce.set(brakeForce);
         }
         else if (isBackward){
+            dragCons = 10;
             brakeForce.multiply(4);
             longForce.set(brakeForce);
         }
@@ -284,6 +288,12 @@ public class Car {
 
 
         return false;
+    }
+
+    public int getPeriod(){
+        if(isBackward)
+            return 5;
+        return 30;
     }
 
 }
