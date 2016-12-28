@@ -13,5 +13,6 @@ public class MainWindow {
         MenuManager menuManager = new MenuManager(myFrame);
         myFrame.setVisible(true);
         myFrame.setResizable(false);
+        SoundManager.playSound(SoundManager.INTRO_MUSIC);
     }
 }

@@ -78,6 +78,7 @@ public class MainMenu extends OtoParkerMenu {
     class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed (ActionEvent e) {
+            SoundManager.playSound(SoundManager.CLICK);
             if (e.getSource() == playButton) {
                 manager.showLevelScreen();
             }
