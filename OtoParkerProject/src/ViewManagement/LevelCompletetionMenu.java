@@ -17,6 +17,8 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
     private JButton mainMenuButton;
     private JButton nextLevelButton;
 
+    private int level;
+
     public LevelCompletetionMenu(MenuManager manager) {
         super(manager);
 
@@ -56,15 +58,24 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
         add(nextLevelButton);
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource() == retryLevelButton)
-                manager.showLevel(1); // buna basınca hala 1. level'a gidiyo amaaa...
+                manager.showLevel(level); // buna basınca hala 1. level'a gidiyo amaaa...
             else if (e.getSource() == upgradesButton)
                 manager.showUpgradeCar();
             else if (e.getSource() == mainMenuButton)
                 manager.showMainMenu();
+            else if (e.getSource() == nextLevelButton)
+                if (level == 10)
+                    manager.showCredits();
+                else
+                    manager.showLevel(level + 1);
         }
     }
 }
