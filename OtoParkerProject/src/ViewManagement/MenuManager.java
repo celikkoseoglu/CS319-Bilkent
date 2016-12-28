@@ -50,6 +50,7 @@ public class MenuManager {
     }
 
     public void showLevelScreen() {
+        levels = new LevelsMenu(this, mgr);
         showMenu(levels);
     }
 

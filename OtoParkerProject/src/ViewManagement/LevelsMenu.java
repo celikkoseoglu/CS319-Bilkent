@@ -23,13 +23,16 @@ public class LevelsMenu extends OtoParkerMenu {
         backToMainMenuButton.setBounds(10, 10, 150, 30);
         add(backToMainMenuButton);
 
+        boolean previousUnlocked = true;
+
         for (int i = 1; i < 6; i++) {
             int stars = Integer.parseInt(progress[i - 1].split(":")[2]);
 
+            if (i > 1)
+                previousUnlocked = Integer.parseInt(progress[i - 2].split(":")[2]) > 0;
+
             JButton button = new OtoParkerJButton(Integer.toString(i));
-            System.out.println(Integer.parseInt(progress[i - 1].split(":")[2]));
-            if (i != 1)
-                button.setEnabled(stars > 0);
+            button.setEnabled(previousUnlocked);
             button.addActionListener(buttonListener);
             button.setBounds(100 + (i - 1) * 128,160, 88, 88);
             add(button);

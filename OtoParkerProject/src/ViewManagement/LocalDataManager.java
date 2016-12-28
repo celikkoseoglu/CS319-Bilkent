@@ -165,4 +165,19 @@ public class LocalDataManager {
 
         saveText(OS_FILE_PATH, "stats.txt", playerStats.toString());
     }
+
+    public void saveLevelStats(int level, int numberOfStars) {
+        StringBuilder levelStats = new StringBuilder();
+        String[] levelData = readText("levelProgress.txt", false).split("\\|");
+
+        for (String s : levelData) {
+            String[] currentLevel = s.split(":");
+            if (Integer.parseInt(currentLevel[0]) == level)
+                levelStats.append(level + ":" + currentLevel[1] + ":" + numberOfStars + "|\n");
+            else
+                levelStats.append(currentLevel[0] + ":" + currentLevel[1] + ":" + currentLevel[2] + "|\n");
+        }
+
+        saveText(OS_FILE_PATH, "levelProgress.txt", levelStats.toString());
+    }
 }

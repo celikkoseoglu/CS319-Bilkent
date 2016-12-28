@@ -67,7 +67,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
         this.pauseMenu = new PauseMenu(mgr, this.currentLevel);
         this.levelCompletionMenu = new LevelCompletetionMenu(mgr, this.currentLevel);
-        ((LevelCompletetionMenu) this.levelCompletionMenu).setLevel(currentLevel);
+        this.levelCompletionMenu.setLevel(currentLevel);
         this.player = player;
 
         initBoard();
@@ -163,6 +163,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
             isParked = true;
 
             player.addNumberOfStars(3);
+            localDataManager.saveLevelStats(currentLevel - 1, 2);
             localDataManager.savePlayerStats(player);
         }
 
@@ -176,7 +177,6 @@ public class Map extends OtoParkerMenu implements ActionListener {
             timer.cancel();
             timer.purge();
         }
-
 
         if (isCrashed) {
             int alpha = 127; // 50% transparent
@@ -242,8 +242,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
             }
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             car.fire();
-        } else if (e.getKeyCode() == KeyEvent.VK_N) {
-            car.setPeriod(8);
+
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             timer.schedule(new MainLoop(), 0, 30);
         } else if (e.getID() == KeyEvent.KEY_RELEASED) {
