@@ -3,6 +3,7 @@ package ViewManagement;
 import GameManagement.Player;
 
 import javax.swing.*;
+import java.util.logging.Level;
 
 public class MenuManager {
 
@@ -14,6 +15,7 @@ public class MenuManager {
     private OtoParkerMenu instructions;
     private OtoParkerMenu levels;
     private OtoParkerMenu pauseMenu;
+    private OtoParkerMenu levelCompletionMenu;
 
     private LocalDataManager mgr;
     private Player player;
@@ -31,6 +33,7 @@ public class MenuManager {
         instructions = new InstructionsMenu(this);
         levels = new LevelsMenu(this, mgr);
         pauseMenu = new PauseMenu(this);
+        levelCompletionMenu =  new LevelCompletetionMenu(this);
 
         showMainMenu();
     }
@@ -58,7 +61,7 @@ public class MenuManager {
     public void showLevel(int levelNo) {
 //        GameObjects.MovingSpriteEx level = new MovingSpriteEx(this, levelNo);
 //        showMenu(level);
-        GameObjects.Map map = new GameObjects.Map(mgr, levelNo, pauseMenu);
+        GameObjects.Map map = new GameObjects.Map(mgr, levelNo, pauseMenu, levelCompletionMenu);
         showMenu(map);
     }
 

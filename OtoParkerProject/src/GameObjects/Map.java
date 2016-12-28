@@ -49,17 +49,18 @@ public class Map extends JPanel implements ActionListener {
     private LocalDataManager localDataManager;
 
     private OtoParkerMenu pauseMenu;
+    private OtoParkerMenu levelCompletionMenu;
 
 
-    public Map(LocalDataManager mgr, int level, OtoParkerMenu pauseMenu) {
+    public Map(LocalDataManager mgr, int level, OtoParkerMenu pauseMenu, OtoParkerMenu levelCompletionMenu) {
 
         BorderLayout panelMapLayout = new BorderLayout();
         setLayout(panelMapLayout);
 
         elapsedTime = 0;
         elapsedTimeLabel = new JLabel();
-        elapsedTimeLabel.setBounds(10, 550, 150, 30);
-        add(elapsedTimeLabel);
+        elapsedTimeLabel.setBounds(10, -10, 150, 30);
+        add(elapsedTimeLabel, BorderLayout.PAGE_END);
 
         this.star = Toolkit.getDefaultToolkit().getImage("images/star.png");
 
@@ -68,6 +69,7 @@ public class Map extends JPanel implements ActionListener {
         this.level = level;
 
         this.pauseMenu = pauseMenu;
+        this.levelCompletionMenu = levelCompletionMenu;
 
         initBoard();
     }
@@ -153,11 +155,6 @@ public class Map extends JPanel implements ActionListener {
         backup.drawImage(backImage2, 0, 0, null);
         g2d.drawImage(backImage3, 0, 0, null);
 
-        if (car.checkParking(target.getBorders())) {
-            SoundManager.playSound(SoundManager.SUCCESS);
-            System.exit(0);
-        }
-
         //draw the obstacles
         for (Obstacle o : Obstacles)
             if (o.getVisibility())
@@ -177,6 +174,17 @@ public class Map extends JPanel implements ActionListener {
         g2d.drawImage(star, 710, 560, 10, 10, this);
         g2d.drawImage(star, 730, 560, 10, 10, this);
         g2d.drawImage(star, 750, 560, 10, 10, this);
+
+        if (car.checkParking(target.getBorders())) {
+            SoundManager.playSound(SoundManager.SUCCESS);
+            int alpha = 127; // 50% transparent
+            g2d.setColor(new Color(0,0,0, alpha));
+            g2d.fillRect(0,0,800,600);
+            add(levelCompletionMenu, BorderLayout.CENTER);
+            timer.cancel();
+            timer.purge();
+
+        }
 
         //pause menu
         if(isPaused){

@@ -15,8 +15,6 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
     private JButton retryLevelButton;
     private JButton upgradesButton;
     private JButton mainMenuButton;
-    private JButton exitGameButton;
-
     private JButton nextLevelButton;
 
     public LevelCompletetionMenu(MenuManager manager) {
@@ -28,42 +26,45 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
 
         setOpaque(false);
 
-
+        statusLabel = new JLabel("Level Completed?");
+        retryLevelButton = new OtoParkerJButton("Retry Level");
         upgradesButton = new OtoParkerJButton("Upgrades");
         mainMenuButton = new OtoParkerJButton("Main Menu");
-        exitGameButton = new OtoParkerJButton("Exit Game");
         nextLevelButton = new OtoParkerJButton("Next Level");
 
+        statusLabel.setForeground(Color.white);
+        retryLevelButton.setForeground(Color.white);
         upgradesButton.setForeground(Color.white);
         mainMenuButton.setForeground(Color.white);
-        exitGameButton.setForeground(Color.white);
         nextLevelButton.setForeground(Color.white);
 
-        upgradesButton.setBounds(350, 150, 150, 40);
-        mainMenuButton.setBounds(350, 220, 150, 40);
-        exitGameButton.setBounds(350, 290, 150, 40);
+        statusLabel.setBounds(350, 80, 150, 40);
+        retryLevelButton.setBounds(350, 150, 150, 40);
+        upgradesButton.setBounds(350, 220, 150, 40);
+        mainMenuButton.setBounds(350, 290, 150, 40);
         nextLevelButton.setBounds(350, 360, 150, 40);
 
+        retryLevelButton.addActionListener(buttonListener);
         upgradesButton.addActionListener(buttonListener);
         mainMenuButton.addActionListener(buttonListener);
-        exitGameButton.addActionListener(buttonListener);
         nextLevelButton.addActionListener(buttonListener);
 
+        add(statusLabel);
+        add(retryLevelButton);
         add(upgradesButton);
         add(mainMenuButton);
-        add(exitGameButton);
         add(nextLevelButton);
     }
 
     class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed (ActionEvent e) {
-            if (e.getSource() == upgradesButton)
+            if (e.getSource() == retryLevelButton)
+                manager.showLevel(1); // buna basınca hala 1. level'a gidiyo amaaa...
+            else if (e.getSource() == upgradesButton)
                 manager.showUpgradeCar();
             else if (e.getSource() == mainMenuButton)
                 manager.showMainMenu();
-            else if (e.getSource() == exitGameButton)
-                System.exit(1);
         }
     }
 }
