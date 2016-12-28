@@ -184,7 +184,7 @@ public class Car {
     private void changeVelocity(double deltaTime) {
         acceleration.multiply(deltaTime);
         velocity.add(acceleration);
-        velocity.print();
+        //velocity.print();
     }
 
     private void changePos(double deltaTime) {

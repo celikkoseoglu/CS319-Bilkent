@@ -158,13 +158,11 @@ public class Map extends OtoParkerMenu implements ActionListener {
             }
         }
 
-        if (car.checkParking(target.getBorders())) {
+        if (car.checkParking(target.getBorders()) && (!isParked && !isCrashed && !isPaused)) {
             SoundManager.playSound(SoundManager.SUCCESS);
             isParked = true;
 
-            player.setNumberOfStars(player.getNumberOfStars() + 3);
-            localDataManager.savePlayerStats(player);
-
+            player.addNumberOfStars(3);
             localDataManager.savePlayerStats(player);
         }
 

@@ -66,10 +66,6 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
         this.currentLevel = level;
     }
 
-    public boolean isSuccessful() {
-        return successful;
-    }
-
     public void setSuccessful(boolean successful) {
         this.successful = successful;
         statusLabel.setText(successful ? "Level Completed!" : "You Crashed!");

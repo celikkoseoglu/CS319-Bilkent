@@ -36,7 +36,9 @@ public class Player {
         return numberOfStars;
     }
 
-    public void setNumberOfStars(double val){numberOfStars += val;}
+    public void addNumberOfStars(double val){
+        numberOfStars += val;
+    }
 
     public String getCurrentCarColor() {
         return currentCarColor;
@@ -72,7 +74,7 @@ public class Player {
     }
     public void changeCarColor(String nc){
         if (getNumberOfStars() >=  Prices.COLOR_COST && !(unlockedCarColors.contains(nc))){
-            setNumberOfStars(-Prices.COLOR_COST);
+            addNumberOfStars(-Prices.COLOR_COST);
             setCurrentCarColor(nc);
             unlockedCarColors.add(nc);
             System.out.println(getNumberOfStars());
@@ -83,7 +85,7 @@ public class Player {
     }
     public void increaseTR(){
         if (getNumberOfStars() >= Prices.TR_COST){
-            setNumberOfStars(-Prices.TR_COST);
+            addNumberOfStars(-Prices.TR_COST);
             setCurrentCarTurningRadius(getCurrentCarTurningRadius()+1);
             unlockedCarTurningRadiuses.add(getCurrentCarTurningRadius());
             System.out.println(getNumberOfStars());
@@ -94,7 +96,7 @@ public class Player {
     }
     public void changeWeapon(String nw){
         if (getNumberOfStars() >= Prices.WEAPON_COST && !(unlockedCarWeapons.contains(nw))){
-            setNumberOfStars(-Prices.WEAPON_COST);
+            addNumberOfStars(-Prices.WEAPON_COST);
             setCurrentCarWeapon(nw);
             unlockedCarWeapons.add(nw);
             System.out.println(getNumberOfStars());

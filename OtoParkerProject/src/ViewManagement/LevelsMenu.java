@@ -28,7 +28,8 @@ public class LevelsMenu extends OtoParkerMenu {
 
             JButton button = new OtoParkerJButton(Integer.toString(i));
             System.out.println(Integer.parseInt(progress[i - 1].split(":")[2]));
-            button.setEnabled(stars > 0);
+            if (i != 1)
+                button.setEnabled(stars > 0);
             button.addActionListener(buttonListener);
             button.setBounds(100 + (i - 1) * 128,160, 88, 88);
             add(button);
