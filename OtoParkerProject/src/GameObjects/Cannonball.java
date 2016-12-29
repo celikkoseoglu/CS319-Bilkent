@@ -8,17 +8,17 @@ public class Cannonball extends Sprite {
 
     private final int BOARD_WIDTH = 800;
     private double angle;
-    private String im = "images/daringfireball.png";
+    private String im;
 
-    public Cannonball(int x, int y,double an) {
+    public Cannonball(int x, int y,double an, String weaponImageDir) {
         super(x, y);
         angle=an;
+        this.im = weaponImageDir;
         initCannonball();
     }
 
     private void initCannonball() {
         loadImage(im);
-        System.out.println(im);
         getImageDimensions();
     }
 
@@ -35,6 +35,5 @@ public class Cannonball extends Sprite {
         ImageIcon icon = new ImageIcon(imageName);
         image = icon.getImage();
     }
-
 
 }

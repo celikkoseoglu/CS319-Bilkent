@@ -71,6 +71,10 @@ public class Map extends OtoParkerMenu implements ActionListener {
         this.levelCompletionMenu.setLevel(currentLevel);
         this.player = player;
 
+        car.carImageDir = "images/" + player.getCurrentCarColor();
+        car.weaponImageDir = "images/" + player.getCurrentCarWeapon();
+        car.tyreCons = player.getCurrentCarTurningRadius();
+
         initBoard();
     }
 

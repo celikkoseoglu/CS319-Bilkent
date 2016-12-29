@@ -33,15 +33,16 @@ public class Car {
     private double rresistanceCons = 12.8;
 
     private CarPhysics longForce = new CarPhysics();
-    private ArrayList<Cannonball> weapons=new ArrayList<Cannonball>();
+    private ArrayList<Cannonball> weapons = new ArrayList<Cannonball>();
 
     public boolean drifts;
     public boolean visible=true;
     private boolean isBackward=false;
-    double tyreCons = 0.6;
+    public static double tyreCons = 0.6;
     int period=30;
 
-    public static String carImageDir= "images/porsche_turuncu.png";
+    public static String carImageDir;
+    public static String weaponImageDir;
 
     public Car(double tyreC) {
         tyreCons = tyreC;
@@ -201,7 +202,7 @@ public class Car {
     public void fire() {
         double angle =Math.atan2(direction.x, direction.y);
 
-        weapons.add(new Cannonball((int)(position.x+400+35*Math.sin(angle)) , (int) (-position.y + 300- 35*Math.cos(angle)),angle));
+        weapons.add(new Cannonball((int)(position.x+400+35*Math.sin(angle)), (int)(-position.y + 300- 35*Math.cos(angle)),angle, weaponImageDir));
         SoundManager.playSound(SoundManager.WEAPON);
     }
 

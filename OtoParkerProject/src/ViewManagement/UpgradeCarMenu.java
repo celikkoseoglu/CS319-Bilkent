@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
+import java.util.Arrays;
 
 public class UpgradeCarMenu extends OtoParkerMenu {
 
@@ -29,7 +30,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
     private int currentTurningRadius = 0;
     private String currentColorImageFileName;
     private String currentWeaponImageFileName;
-    private double currentTurningRadiusDouble;
+    private double currentTurningRadiusDouble = 0.6;
 
     public UpgradeCarMenu(MenuManager manager, Player player, LocalDataManager localDataManager) {
 
@@ -143,7 +144,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
 
             } else if (e.getSource() == weaponRightButton) {
 
-                String currentWeaponImageFileName = unlockables.getUnlockableCarWeapons().get(currentWeapon);
+                currentWeaponImageFileName = unlockables.getUnlockableCarWeapons().get(currentWeapon);
                 weaponImage = Toolkit.getDefaultToolkit().getImage("images/" + currentWeaponImageFileName);
 
                 if (currentWeapon <= 0)
@@ -189,22 +190,49 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                     turningRadiusCost = 5;
                 }
 
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Would upgrade? Total Cost: " + (colorCost + weaponCost + turningRadiusCost), "Warning", JOptionPane.YES_NO_OPTION);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    player.addNumberOfStars(-(colorCost + weaponCost + turningRadiusCost));
-                    player.addUnlockedCar(currentColorImageFileName);
-                    player.addUnlockedWeapon(currentWeaponImageFileName);
-                    player.addUnlockedTurningRadius(currentTurningRadiusDouble);
+                if ((colorCost + weaponCost + turningRadiusCost) <= player.getNumberOfStars()) {
 
-                    player.setCurrentCarColor(currentColorImageFileName);
-                    player.setCurrentCarWeapon(currentWeaponImageFileName);
-                    player.setCurrentCarTurningRadius(currentTurningRadiusDouble);
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Would upgrade? Total Cost: " + (colorCost + weaponCost + turningRadiusCost), "Warning", JOptionPane.YES_NO_OPTION);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        player.addNumberOfStars(-(colorCost + weaponCost + turningRadiusCost));
 
-                    localDataManager.savePlayerStats(player);
+                        if (!player.getUnlockedCarColors().contains(currentColorImageFileName)) {
+                            player.addUnlockedCar(currentColorImageFileName);
+                        }
 
-                    Unlockables playersNewUnlocks = new Unlockables((String[])player.getUnlockedCarColors().toArray(), (String[])player.getUnlockedCarWeapons().toArray(), (String[])player.getUnlockedCarTurningRadiuses().toArray());
-                    localDataManager.saveUnlockables(playersNewUnlocks);
+                        if (!player.getUnlockedCarWeapons().contains(currentWeaponImageFileName)) {
+                            player.addUnlockedWeapon(currentWeaponImageFileName);
+                        }
+
+                        if (!player.getUnlockedCarTurningRadiuses().contains(currentTurningRadiusDouble)) {
+                            player.addUnlockedTurningRadius(currentTurningRadiusDouble);
+                        }
+
+                        player.setCurrentCarColor(currentColorImageFileName);
+                        player.setCurrentCarWeapon(currentWeaponImageFileName);
+                        player.setCurrentCarTurningRadius(currentTurningRadiusDouble);
+
+                        localDataManager.savePlayerStats(player);
+
+                        Object[] ucc = player.getUnlockedCarColors().toArray();
+                        Object[] ucw = player.getUnlockedCarWeapons().toArray();
+
+
+                        String[] uctrStrArr = new String[player.getUnlockedCarTurningRadiuses().size()];
+                        for (int i = 0; i < player.getUnlockedCarTurningRadiuses().size(); i++)
+                            uctrStrArr[i] = Double.toString(player.getUnlockedCarTurningRadiuses().get(i));
+
+
+                        //Second Step: convert Object array to String array
+                        String[] uccStrArr = Arrays.copyOf(ucc, ucc.length, String[].class);
+                        String[] ucwStrArr = Arrays.copyOf(ucw, ucw.length, String[].class);
+
+                        Unlockables playersNewUnlocks = new Unlockables(uccStrArr, ucwStrArr, uctrStrArr);
+                        localDataManager.saveUnlockables(playersNewUnlocks);
+                    }
                 }
+                else
+                    JOptionPane.showMessageDialog(null, "Go earn some more stars kiddo.");
             } else if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();
             }
