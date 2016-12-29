@@ -77,7 +77,11 @@ public class MainMenu extends OtoParkerMenu {
 
         Image img1 = Toolkit.getDefaultToolkit().getImage("images/star.png");
 
+        Image cvr = Toolkit.getDefaultToolkit().getImage("images/cover.png");
+
         g2d.drawImage(img1, 405, 470, 10, 10, this);
+
+        g2d.drawImage(cvr,351,36, 399, 419,this);
 
         g2d.drawString(p.getNumberOfStars() + "   's available", 395, 480);
     }
