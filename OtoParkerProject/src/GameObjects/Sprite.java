@@ -3,9 +3,9 @@ package GameObjects;
 /**
  * Created by HÜSEYİN on 11.12.2016.
  */
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import java.awt.Rectangle;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class Sprite {
 

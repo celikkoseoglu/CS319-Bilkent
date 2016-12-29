@@ -35,7 +35,7 @@ public class Player {
         return numberOfStars;
     }
 
-    public void addNumberOfStars(double val){
+    public void addNumberOfStars(double val) {
         numberOfStars += val;
     }
 
@@ -43,20 +43,24 @@ public class Player {
         return currentCarColor;
     }
 
-    public void setCurrentCarColor(String nc){currentCarColor = nc;}
+    public void setCurrentCarColor(String nc) {
+        currentCarColor = nc;
+    }
 
     public String getCurrentCarWeapon() {
         return currentCarWeapon;
     }
 
-    public void setCurrentCarWeapon(String nw){currentCarWeapon = nw;}
-
-    public void setCurrentCarTurningRadius(double d) {
-        currentCarTurningRadius = d;
+    public void setCurrentCarWeapon(String nw) {
+        currentCarWeapon = nw;
     }
 
     public double getCurrentCarTurningRadius() {
         return currentCarTurningRadius;
+    }
+
+    public void setCurrentCarTurningRadius(double d) {
+        currentCarTurningRadius = d;
     }
 
     public ArrayList<String> getUnlockedCarColors() {

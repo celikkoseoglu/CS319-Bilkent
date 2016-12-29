@@ -1,11 +1,11 @@
 package ViewManagement;
 
+import GameManagement.SoundManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.TextAttribute;
-import java.text.AttributedString;
 
 public class InstructionsMenu extends OtoParkerMenu {
 
@@ -30,13 +30,13 @@ public class InstructionsMenu extends OtoParkerMenu {
 
         ImageIcon icon = new ImageIcon("images/instructions.jpg");
         Image image = icon.getImage();
-        g.drawImage(image, 0, 50, (int)800, (int)500, null);
+        g.drawImage(image, 0, 50, (int) 800, (int) 500, null);
 
     }
 
     class ButtonListener implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             SoundManager.playSound(SoundManager.CLICK);
             if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();

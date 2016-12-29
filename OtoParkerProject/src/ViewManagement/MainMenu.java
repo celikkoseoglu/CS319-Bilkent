@@ -1,6 +1,7 @@
 package ViewManagement;
 
 import GameManagement.Player;
+import GameManagement.SoundManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,29 +82,25 @@ public class MainMenu extends OtoParkerMenu {
 
         g2d.drawImage(img1, 405, 470, 10, 10, this);
 
-        g2d.drawImage(cvr,351,36, 399, 419,this);
+        g2d.drawImage(cvr, 351, 36, 399, 419, this);
 
         g2d.drawString(p.getNumberOfStars() + "   's available", 395, 480);
     }
 
     class ButtonListener implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             SoundManager.playSound(SoundManager.CLICK);
             if (e.getSource() == playButton) {
                 manager.showLevelScreen();
-            }
-            else if (e.getSource() == upgradeCarButton) {
+            } else if (e.getSource() == upgradeCarButton) {
                 manager.showUpgradeCar();
-            }
-            else if (e.getSource() == instructionsButton) {
+            } else if (e.getSource() == instructionsButton) {
                 manager.showInstructions();
-            }
-            else if (e.getSource() == creditsButton) {
+            } else if (e.getSource() == creditsButton) {
                 manager.showCredits();
-            }
-            else if (e.getSource() == soundButton) {
-                if(SoundManager.isSoundEnable()){
+            } else if (e.getSource() == soundButton) {
+                if (SoundManager.isSoundEnable()) {
                     SoundManager.disableSound();
                 } else {
                     SoundManager.enableSound();

@@ -230,8 +230,7 @@ public class UpgradeCarMenu extends OtoParkerMenu {
                         Unlockables playersNewUnlocks = new Unlockables(uccStrArr, ucwStrArr, uctrStrArr);
                         localDataManager.saveUnlockables(playersNewUnlocks);
                     }
-                }
-                else
+                } else
                     JOptionPane.showMessageDialog(null, "Go earn some more stars kiddo.");
             } else if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();

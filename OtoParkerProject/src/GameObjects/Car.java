@@ -1,48 +1,41 @@
-
 package GameObjects;
 
-import ViewManagement.SoundManager;
+import GameManagement.InputManager;
+import GameManagement.SoundManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.*;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Car {
 
+    public static double tyreCons = 0.6;
+    public static String carImageDir;
+    public static String weaponImageDir;
+    private final double HEIGHT = 80;
+    private final double WIDTH = 50;
+    public boolean drifts;
+    public boolean visible = true;
+    int period = 30;
     private double weight = 1800;
     private CarPhysics position = new CarPhysics();
     private CarPhysics direction = new CarPhysics(0, 1, 0);
     private CarPhysics velocity = new CarPhysics();
     private CarPhysics acceleration = new CarPhysics();
-
-    private final double HEIGHT = 80;
-    private final double WIDTH = 50;
-
     private double brakeCons = 500;
     private CarPhysics brakeForce = new CarPhysics();
-
     private double power = 0;
     private CarPhysics tractionForce = new CarPhysics();
-
     private double dragCons = 1.4257;
     private CarPhysics dragForce = new CarPhysics();
-
     private CarPhysics rresistanceForce = new CarPhysics();
     private double rresistanceCons = 12.8;
-
     private CarPhysics longForce = new CarPhysics();
     private ArrayList<Cannonball> weapons = new ArrayList<Cannonball>();
-
-    public boolean drifts;
-    public boolean visible=true;
-    private boolean isBackward=false;
-    public static double tyreCons = 0.6;
-    int period=30;
-
-    public static String carImageDir;
-    public static String weaponImageDir;
+    private boolean isBackward = false;
+    private Point2D dp1;
+    private Point2D dp2;
 
     public Car(double tyreC) {
         tyreCons = tyreC;
@@ -53,8 +46,7 @@ public class Car {
 
         if (InputManager.keydown[37]) {
             direction.gyroZ(Math.toRadians((tyreCons) * velocity.getMagnitude()));
-        }
-        else if (InputManager.keydown[39]) {
+        } else if (InputManager.keydown[39]) {
             direction.gyroZ(Math.toRadians((-tyreCons) * velocity.getMagnitude()));
         }
 
@@ -62,17 +54,15 @@ public class Car {
 //        System.out.println("dif="+dif);
         if (!Double.isNaN(dangle)) {
             double rand = Math.random() * 50;
-            velocity.gyroZ(dangle/((50+rand)*(5*dif)));
+            velocity.gyroZ(dangle / ((50 + rand) * (5 * dif)));
             drifts = Math.abs(Math.toDegrees(dangle)) > 30;
         }
 
         if (InputManager.keydown[38]) {
             power = 300;
-        }
-        else if (InputManager.keydown[40]) {
+        } else if (InputManager.keydown[40]) {
             power = -300;
-        }
-        else  {
+        } else {
             power = 0;
         }
 
@@ -81,7 +71,7 @@ public class Car {
         }
 
         boolean brakes = InputManager.keydown[66];
-        isBackward= InputManager.keydown[40];
+        isBackward = InputManager.keydown[40];
 
         changeBrakeForce();
         changeTraction();
@@ -95,9 +85,6 @@ public class Car {
         updateWeapons();
     }
 
-    private Point2D dp1;
-    private Point2D dp2;
-
     public void draw(Graphics2D g, Graphics2D background) {
         background.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         double angle = -Math.atan2(direction.x, direction.y);
@@ -108,7 +95,7 @@ public class Car {
         ImageIcon icon = new ImageIcon(carImageDir);
 
         Image image = icon.getImage();
-        g.drawImage(image, (int) (position.x-WIDTH/2), (int) (position.y-HEIGHT/2), (int)WIDTH, (int)HEIGHT, null);
+        g.drawImage(image, (int) (position.x - WIDTH / 2), (int) (position.y - HEIGHT / 2), (int) WIDTH, (int) HEIGHT, null);
 
 
         if (drifts && !isBackward) {
@@ -119,9 +106,9 @@ public class Car {
             BasicStroke basicStroke = new BasicStroke(10);
             background.setStroke(basicStroke);
 
-            if (dp1!=null && dp2!=null) {
-                Point2D p1 = new Point2D.Double((int) (position.x-17), (int) (position.y-30));
-                Point2D p2 = new Point2D.Double((int) (position.x+17), (int) (position.y-30));
+            if (dp1 != null && dp2 != null) {
+                Point2D p1 = new Point2D.Double((int) (position.x - 17), (int) (position.y - 30));
+                Point2D p2 = new Point2D.Double((int) (position.x + 17), (int) (position.y - 30));
 
                 transf.transform(p1, p1);
                 transf.transform(p2, p2);
@@ -130,12 +117,11 @@ public class Car {
                 background.drawLine((int) p2.getX(), (int) p2.getY(), (int) dp2.getX(), (int) dp2.getY());
             }
 
-            dp1 = new Point2D.Double((int) (position.x-17), (int) (position.y-30));
-            dp2 = new Point2D.Double((int) (position.x+17), (int) (position.y-30));
+            dp1 = new Point2D.Double((int) (position.x - 17), (int) (position.y - 30));
+            dp2 = new Point2D.Double((int) (position.x + 17), (int) (position.y - 30));
             transf.transform(dp1, dp1);
             transf.transform(dp2, dp2);
-        }
-        else {
+        } else {
             dp1 = null;
             dp2 = null;
         }
@@ -164,13 +150,11 @@ public class Car {
         if (brakes) {
             dragCons = 1.4257;
             longForce.set(brakeForce);
-        }
-        else if (isBackward){
+        } else if (isBackward) {
             dragCons = 10;
             brakeForce.multiply(4);
             longForce.set(brakeForce);
-        }
-        else {
+        } else {
             longForce.set(tractionForce);
         }
         longForce.add(dragForce);
@@ -179,7 +163,7 @@ public class Car {
 
     private void changeAcceleration() {
         acceleration.set(longForce);
-        acceleration.multiply(1/weight);
+        acceleration.multiply(1 / weight);
     }
 
     private void changeVelocity(double deltaTime) {
@@ -200,17 +184,17 @@ public class Car {
     }
 
     public void fire() {
-        double angle =Math.atan2(direction.x, direction.y);
+        double angle = Math.atan2(direction.x, direction.y);
 
-        weapons.add(new Cannonball((int)(position.x+400+35*Math.sin(angle)), (int)(-position.y + 300- 35*Math.cos(angle)),angle, weaponImageDir));
+        weapons.add(new Cannonball((int) (position.x + 400 + 35 * Math.sin(angle)), (int) (-position.y + 300 - 35 * Math.cos(angle)), angle, weaponImageDir));
         SoundManager.playSound(SoundManager.WEAPON);
     }
 
-    public ArrayList<Cannonball> getWeapons(){
+    public ArrayList<Cannonball> getWeapons() {
         return weapons;
     }
 
-    private void updateWeapons(){
+    private void updateWeapons() {
         ArrayList<Cannonball> cs = getWeapons();
 
         for (int i = 0; i < cs.size(); i++) {
@@ -225,105 +209,104 @@ public class Car {
         }
     }
 
-    public boolean checkCollision(Rectangle2D rand){
+    public boolean checkCollision(Rectangle2D rand) {
 
-        double angle =Math.atan2(direction.x, direction.y);
+        double angle = Math.atan2(direction.x, direction.y);
 
         Line2D[] lines = new Line2D[4];
-        Point2D leftup = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
-        Point2D rightup = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
-        Point2D leftdown = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
-        Point2D rightdown = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
+        Point2D leftup = new Point2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle));
+        Point2D rightup = new Point2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle));
+        Point2D leftdown = new Point2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle));
+        Point2D rightdown = new Point2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle));
 
 
-        lines[0]=new Line2D.Double(leftup,rightup);
-        lines[1]=new Line2D.Double(leftup,leftdown);
-        lines[2]=new Line2D.Double(rightup,rightdown);
-        lines[3]=new Line2D.Double(leftdown,rightdown);
+        lines[0] = new Line2D.Double(leftup, rightup);
+        lines[1] = new Line2D.Double(leftup, leftdown);
+        lines[2] = new Line2D.Double(rightup, rightdown);
+        lines[3] = new Line2D.Double(leftdown, rightdown);
 
         QuadCurve2D[] curves = new QuadCurve2D[4];
 
-        curves[0] = new QuadCurve2D.Double(position.x+400+WIDTH/2*Math.cos(angle),-position.y+300+WIDTH/2*Math.sin(angle),
-                position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle),
-                position.x+400+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle));
+        curves[0] = new QuadCurve2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle), -position.y + 300 + WIDTH / 2 * Math.sin(angle),
+                position.x + 400 + WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle),
+                position.x + 400 + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle));
 
-        curves[1] = new QuadCurve2D.Double(position.x+400-WIDTH/2*Math.cos(angle),-position.y+300-WIDTH/2*Math.sin(angle),
-                position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle),
-                position.x+400+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle));
+        curves[1] = new QuadCurve2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle), -position.y + 300 - WIDTH / 2 * Math.sin(angle),
+                position.x + 400 - WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle),
+                position.x + 400 + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle));
 
-        curves[2] = new QuadCurve2D.Double(position.x+400+WIDTH/2*Math.cos(angle)-2/3*HEIGHT/2*Math.sin(angle),-position.y+300+WIDTH/2*Math.sin(angle)+2/3*HEIGHT/2*Math.cos(angle),
-                position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle),
-                position.x+400-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle));
+        curves[2] = new QuadCurve2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle) - 2 / 3 * HEIGHT / 2 * Math.sin(angle), -position.y + 300 + WIDTH / 2 * Math.sin(angle) + 2 / 3 * HEIGHT / 2 * Math.cos(angle),
+                position.x + 400 + WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle),
+                position.x + 400 - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle));
 
-        curves[3] = new QuadCurve2D.Double(position.x+400-WIDTH/2*Math.cos(angle)-2/3*HEIGHT/2*Math.sin(angle),-position.y+300-WIDTH/2*Math.sin(angle)-2/3*HEIGHT/2*Math.cos(angle),
-                position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle),
-                position.x+400-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle));
+        curves[3] = new QuadCurve2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle) - 2 / 3 * HEIGHT / 2 * Math.sin(angle), -position.y + 300 - WIDTH / 2 * Math.sin(angle) - 2 / 3 * HEIGHT / 2 * Math.cos(angle),
+                position.x + 400 - WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle),
+                position.x + 400 - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle));
 
 
+        boolean x = false;
 
-        boolean x= false;
-
-        for(int i=0; i < lines.length; i++)
-            if(curves[i].intersects(rand)) {
+        for (int i = 0; i < lines.length; i++)
+            if (curves[i].intersects(rand)) {
                 x = true;
             }
         return x;
     }
 
-    public boolean checkFrame(){
+    public boolean checkFrame() {
 
-        double angle =Math.atan2(direction.x, direction.y);
+        double angle = Math.atan2(direction.x, direction.y);
 
-        Point2D leftup = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
-        Point2D rightup = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
-        Point2D leftdown = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
-        Point2D rightdown = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
+        Point2D leftup = new Point2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle));
+        Point2D rightup = new Point2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle));
+        Point2D leftdown = new Point2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle));
+        Point2D rightdown = new Point2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle));
 
         Line2D[] frames = new Line2D[4];
-        frames[0]=new Line2D.Double(16,18,768,18);
-        frames[1]=new Line2D.Double(16,18,16,522);
-        frames[2]=new Line2D.Double(16,522,768,522);
-        frames[3]=new Line2D.Double(768,18,768,522);
+        frames[0] = new Line2D.Double(16, 18, 768, 18);
+        frames[1] = new Line2D.Double(16, 18, 16, 522);
+        frames[2] = new Line2D.Double(16, 522, 768, 522);
+        frames[3] = new Line2D.Double(768, 18, 768, 522);
 
-        Rectangle2D frame = new Rectangle2D.Double(16,18,768,522);
+        Rectangle2D frame = new Rectangle2D.Double(16, 18, 768, 522);
 
         QuadCurve2D[] curves = new QuadCurve2D[4];
 
-        curves[0] = new QuadCurve2D.Double(position.x+400+WIDTH/2*Math.cos(angle),-position.y+300+WIDTH/2*Math.sin(angle),
-                position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle),
-                position.x+400+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle));
+        curves[0] = new QuadCurve2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle), -position.y + 300 + WIDTH / 2 * Math.sin(angle),
+                position.x + 400 + WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle),
+                position.x + 400 + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle));
 
-        curves[1] = new QuadCurve2D.Double(position.x+400-WIDTH/2*Math.cos(angle),-position.y+300-WIDTH/2*Math.sin(angle),
-                position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle),
-                position.x+400+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle));
+        curves[1] = new QuadCurve2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle), -position.y + 300 - WIDTH / 2 * Math.sin(angle),
+                position.x + 400 - WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle),
+                position.x + 400 + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle));
 
-        curves[2] = new QuadCurve2D.Double(position.x+400+WIDTH/2*Math.cos(angle)-2/3*HEIGHT/2*Math.sin(angle),-position.y+300+WIDTH/2*Math.sin(angle)+2/3*HEIGHT/2*Math.cos(angle),
-                position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle),
-                position.x+400-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle));
+        curves[2] = new QuadCurve2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle) - 2 / 3 * HEIGHT / 2 * Math.sin(angle), -position.y + 300 + WIDTH / 2 * Math.sin(angle) + 2 / 3 * HEIGHT / 2 * Math.cos(angle),
+                position.x + 400 + WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle),
+                position.x + 400 - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle));
 
-        curves[3] = new QuadCurve2D.Double(position.x+400-WIDTH/2*Math.cos(angle)-2/3*HEIGHT/2*Math.sin(angle),-position.y+300-WIDTH/2*Math.sin(angle)-2/3*HEIGHT/2*Math.cos(angle),
-                position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle),
-                position.x+400-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle));
+        curves[3] = new QuadCurve2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle) - 2 / 3 * HEIGHT / 2 * Math.sin(angle), -position.y + 300 - WIDTH / 2 * Math.sin(angle) - 2 / 3 * HEIGHT / 2 * Math.cos(angle),
+                position.x + 400 - WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle),
+                position.x + 400 - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle));
 
-        boolean x= false;
+        boolean x = false;
 
-        if( !frame.contains(leftup) || !frame.contains(rightup) || !frame.contains(rightdown) || !frame.contains(leftdown)) {
+        if (!frame.contains(leftup) || !frame.contains(rightup) || !frame.contains(rightdown) || !frame.contains(leftdown)) {
             x = true;
         }
 
         return x;
     }
 
-    public boolean checkParking(Rectangle2D rand){
+    public boolean checkParking(Rectangle2D rand) {
 
-        double angle =Math.atan2(direction.x, direction.y);
+        double angle = Math.atan2(direction.x, direction.y);
 
-        Point2D leftup = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
-        Point2D rightup = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)-HEIGHT/2*Math.sin(angle),-position.y+300+HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
-        Point2D leftdown = new Point2D.Double( position.x+400+WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)+WIDTH/2*Math.sin(angle));
-        Point2D rightdown = new Point2D.Double( position.x+400-WIDTH/2*Math.cos(angle)+HEIGHT/2*Math.sin(angle),-position.y+300-HEIGHT/2*Math.cos(angle)-WIDTH/2*Math.sin(angle));
+        Point2D leftup = new Point2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle));
+        Point2D rightup = new Point2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle) - HEIGHT / 2 * Math.sin(angle), -position.y + 300 + HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle));
+        Point2D leftdown = new Point2D.Double(position.x + 400 + WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) + WIDTH / 2 * Math.sin(angle));
+        Point2D rightdown = new Point2D.Double(position.x + 400 - WIDTH / 2 * Math.cos(angle) + HEIGHT / 2 * Math.sin(angle), -position.y + 300 - HEIGHT / 2 * Math.cos(angle) - WIDTH / 2 * Math.sin(angle));
 
-        if(rand.contains(leftup) && rand.contains(rightdown) && rand.contains(leftdown) && rand.contains(rightup)) {
+        if (rand.contains(leftup) && rand.contains(rightdown) && rand.contains(leftdown) && rand.contains(rightup)) {
             return true;
         }
 
@@ -331,16 +314,15 @@ public class Car {
         return false;
     }
 
-    public int getPeriod(){
-        if(isBackward)
+    public int getPeriod() {
+        if (isBackward)
             return 5;
         return period;
     }
 
-    public void setPeriod(int x){
-        period=x;
+    public void setPeriod(int x) {
+        period = x;
     }
-
 
 
 }

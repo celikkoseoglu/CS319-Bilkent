@@ -9,11 +9,11 @@ public class Target {
     private int x;
     private int y;
 
-    public Target(int a,int b,int w,int h) {
+    public Target(int a, int b, int w, int h) {
         x = a;
         y = b;
-        width=w;
-        height=h;
+        width = w;
+        height = h;
     }
 
     public int getX() {

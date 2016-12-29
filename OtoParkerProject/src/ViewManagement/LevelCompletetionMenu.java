@@ -68,7 +68,7 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
 
     class ButtonListener implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if (e.getSource() == retryLevelButton)
                 manager.showLevel(currentLevel);
             else if (e.getSource() == upgradesButton)

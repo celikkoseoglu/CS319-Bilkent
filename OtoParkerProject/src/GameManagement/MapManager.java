@@ -1,6 +1,6 @@
-package GameObjects;
+package GameManagement;
 
-import GameManagement.Player;
+import GameObjects.*;
 import ViewManagement.*;
 
 import javax.imageio.ImageIO;
@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Map extends OtoParkerMenu implements ActionListener {
+public class MapManager extends OtoParkerMenu implements ActionListener {
     private Timer tick;
     private Timer countdown;
     private ArrayList<Obstacle> obstacles;
@@ -47,7 +47,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
     private Player player;
 
-    public Map(MenuManager mgr, LocalDataManager localDataManager, int currentLevel, Player player) {
+    public MapManager(MenuManager mgr, LocalDataManager localDataManager, int currentLevel, Player player) {
 
         super(mgr);
 
@@ -84,7 +84,8 @@ public class Map extends OtoParkerMenu implements ActionListener {
 
         try {
             backImage1 = ImageIO.read(new File("images/asphalt_lane.jpg"));
-        } catch (Exception ex) { }
+        } catch (Exception ex) {
+        }
 
         backImage2 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
         backImage3 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
@@ -126,7 +127,7 @@ public class Map extends OtoParkerMenu implements ActionListener {
     }
 
     private void doDrawing(Graphics g) {
-        Graphics2D g2d = (Graphics2D)g;
+        Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         carg.setBackground(new Color(255, 255, 255, 0));

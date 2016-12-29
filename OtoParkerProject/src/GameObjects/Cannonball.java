@@ -1,7 +1,6 @@
 package GameObjects;
 
 import javax.swing.*;
-import java.awt.*;
 
 
 public class Cannonball extends Sprite {
@@ -10,9 +9,9 @@ public class Cannonball extends Sprite {
     private double angle;
     private String im;
 
-    public Cannonball(int x, int y,double an, String weaponImageDir) {
+    public Cannonball(int x, int y, double an, String weaponImageDir) {
         super(x, y);
-        angle=an;
+        angle = an;
         this.im = weaponImageDir;
         initCannonball();
     }
@@ -30,6 +29,7 @@ public class Cannonball extends Sprite {
         if (x > BOARD_WIDTH)
             vis = false;
     }
+
     public void loadImage(String imageName) {
 
         ImageIcon icon = new ImageIcon(imageName);

@@ -1,5 +1,7 @@
 package ViewManagement;
 
+import GameManagement.SoundManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -63,7 +65,7 @@ public class CreditsMenu extends OtoParkerMenu {
 
     class ButtonListener implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             SoundManager.playSound(SoundManager.CLICK);
             if (e.getSource() == backToMainMenuButton) {
                 manager.showMainMenu();

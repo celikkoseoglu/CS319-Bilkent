@@ -53,7 +53,7 @@ public class PauseMenu extends OtoParkerMenu {
 
     class ButtonListener implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if (e.getSource() == upgradesButton)
                 manager.showUpgradeCar();
             else if (e.getSource() == mainMenuButton)

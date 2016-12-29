@@ -16,6 +16,25 @@ public class CarPhysics {
         this.z = z;
     }
 
+    public static double calculateAngleInBetween(CarPhysics a, CarPhysics b) {
+        double am = a.getMagnitude();
+        double bm = b.getMagnitude();
+        return Math.acos(a.dProduct(b) / (am * bm));
+    }
+
+    public static void sub(CarPhysics r, CarPhysics a, CarPhysics b) {
+        r.x = a.x - b.x;
+        r.y = a.y - b.y;
+        r.z = a.z - b.z;
+    }
+
+    public static void cProduct(CarPhysics res, CarPhysics left, CarPhysics right) {
+        double x = left.y * right.z - left.z * right.y;
+        double y = right.x * left.z - right.z * left.x;
+        double z = left.x * right.y - left.y * right.x;
+        res.set(x, y, z);
+    }
+
     //    methods
     public void set(CarPhysics newd) {
         this.x = newd.x;
@@ -90,25 +109,6 @@ public class CarPhysics {
 
     public double dProduct(CarPhysics v) {
         return x * v.x + y * v.y + z * v.z;
-    }
-
-    public static double calculateAngleInBetween(CarPhysics a, CarPhysics b) {
-        double am = a.getMagnitude();
-        double bm = b.getMagnitude();
-        return Math.acos(a.dProduct(b) / (am * bm));
-    }
-
-    public static void sub(CarPhysics r, CarPhysics a, CarPhysics b) {
-        r.x = a.x - b.x;
-        r.y = a.y - b.y;
-        r.z = a.z - b.z;
-    }
-
-    public static void cProduct(CarPhysics res, CarPhysics left, CarPhysics right) {
-        double x = left.y * right.z - left.z * right.y;
-        double y = right.x * left.z - right.z * left.x;
-        double z = left.x * right.y - left.y * right.x;
-        res.set(x, y, z);
     }
 
     public double calculateRelative(CarPhysics v) {

@@ -1,5 +1,7 @@
 package ViewManagement;
 
+import GameManagement.SoundManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -42,7 +44,7 @@ public class LevelsMenu extends OtoParkerMenu {
             JButton button = new OtoParkerJButton(Integer.toString(i));
             button.setEnabled(previousUnlocked);
             button.addActionListener(buttonListener);
-            button.setBounds(100 + (i - 1) * 128,160, 88, 88);
+            button.setBounds(100 + (i - 1) * 128, 160, 88, 88);
             add(button);
         }
 
@@ -53,7 +55,7 @@ public class LevelsMenu extends OtoParkerMenu {
             JButton button = new OtoParkerJButton(Integer.toString(i + 5));
             button.setEnabled(previousUnlocked);
             button.addActionListener(buttonListener);
-            button.setBounds(100 + (i - 1) * 128,  360, 88, 88);
+            button.setBounds(100 + (i - 1) * 128, 360, 88, 88);
             add(button);
         }
     }
@@ -71,16 +73,16 @@ public class LevelsMenu extends OtoParkerMenu {
 
             switch (stars) {
                 case 3:
-                    g2d.drawImage(img1,  110 + (i - 1) * 128,260, 10, 10, this);
-                    g2d.drawImage(img1,  139 + (i - 1) * 128,260, 10, 10, this);
-                    g2d.drawImage(img1,  168 + (i - 1) * 128,260, 10, 10, this);
+                    g2d.drawImage(img1, 110 + (i - 1) * 128, 260, 10, 10, this);
+                    g2d.drawImage(img1, 139 + (i - 1) * 128, 260, 10, 10, this);
+                    g2d.drawImage(img1, 168 + (i - 1) * 128, 260, 10, 10, this);
                     break;
                 case 2:
-                    g2d.drawImage(img1,  130 + (i - 1) * 128,260, 10, 10, this);
-                    g2d.drawImage(img1,  154 + (i - 1) * 128,260, 10, 10, this);
+                    g2d.drawImage(img1, 130 + (i - 1) * 128, 260, 10, 10, this);
+                    g2d.drawImage(img1, 154 + (i - 1) * 128, 260, 10, 10, this);
                     break;
                 case 1:
-                    g2d.drawImage(img1,  140 + (i - 1) * 128,260, 10, 10, this);
+                    g2d.drawImage(img1, 140 + (i - 1) * 128, 260, 10, 10, this);
                     break;
             }
         }
@@ -90,16 +92,16 @@ public class LevelsMenu extends OtoParkerMenu {
 
             switch (stars) {
                 case 3:
-                    g2d.drawImage(img1,  110 + (i - 1) * 128,460, 10, 10, this);
-                    g2d.drawImage(img1,  139 + (i - 1) * 128,460, 10, 10, this);
-                    g2d.drawImage(img1,  168 + (i - 1) * 128,460, 10, 10, this);
+                    g2d.drawImage(img1, 110 + (i - 1) * 128, 460, 10, 10, this);
+                    g2d.drawImage(img1, 139 + (i - 1) * 128, 460, 10, 10, this);
+                    g2d.drawImage(img1, 168 + (i - 1) * 128, 460, 10, 10, this);
                     break;
                 case 2:
-                    g2d.drawImage(img1,  130 + (i - 1) * 128,460, 10, 10, this);
-                    g2d.drawImage(img1,  154 + (i - 1) * 128,460, 10, 10, this);
+                    g2d.drawImage(img1, 130 + (i - 1) * 128, 460, 10, 10, this);
+                    g2d.drawImage(img1, 154 + (i - 1) * 128, 460, 10, 10, this);
                     break;
                 case 1:
-                    g2d.drawImage(img1,  140 + (i - 1) * 128,460, 10, 10, this);
+                    g2d.drawImage(img1, 140 + (i - 1) * 128, 460, 10, 10, this);
                     break;
             }
         }
@@ -107,7 +109,7 @@ public class LevelsMenu extends OtoParkerMenu {
 
     class ButtonListener implements ActionListener {
         @Override
-        public void actionPerformed (ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             SoundManager.playSound(SoundManager.CLICK);
             if (e.getSource() == backToMainMenuButton)
                 manager.showMainMenu();

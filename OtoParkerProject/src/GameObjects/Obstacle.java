@@ -2,7 +2,6 @@ package GameObjects;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -20,7 +19,7 @@ public class Obstacle {
         image = icon.getImage();
         x = 200;
         y = 200;
-        vis=true;
+        vis = true;
     }
 
     public Obstacle(int a, int b) {
@@ -28,7 +27,7 @@ public class Obstacle {
         image = icon.getImage();
         x = a;
         y = b;
-        vis=true;
+        vis = true;
     }
 
 
@@ -38,16 +37,16 @@ public class Obstacle {
         image = icon.getImage();
         x = 200;
         y = 200;
-        vis=true;
+        vis = true;
     }
 
     public Obstacle(int a, int b, String source) {
-        loc = "images/"+source;
+        loc = "images/" + source;
         ImageIcon icon = new ImageIcon(loc);
         image = icon.getImage();
         x = a;
         y = b;
-        vis=true;
+        vis = true;
     }
 
     public int getX() {
@@ -73,8 +72,6 @@ public class Obstacle {
     public Rectangle2D getBorders() {
         return new Rectangle2D.Double(x, y, image.getWidth(null), image.getHeight(null));
     }
-
-
 
 
 }

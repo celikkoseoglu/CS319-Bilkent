@@ -1,9 +1,9 @@
 package ViewManagement;
 
+import GameManagement.MapManager;
 import GameManagement.Player;
 
 import javax.swing.*;
-import java.util.logging.Level;
 
 public class MenuManager {
 
@@ -57,7 +57,7 @@ public class MenuManager {
     }
 
     public void showLevel(int levelNo) {
-        GameObjects.Map map = new GameObjects.Map(this, mgr, levelNo, player);
+        MapManager map = new MapManager(this, mgr, levelNo, player);
         showMenu(map);
     }
 

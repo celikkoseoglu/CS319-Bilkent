@@ -25,7 +25,7 @@ public class OtoParkerJButton extends JButton {
 
 
         public Insets getBorderInsets(Component c) {
-            return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
         }
 
 
@@ -39,7 +39,7 @@ public class OtoParkerJButton extends JButton {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            g2d.drawRoundRect(x, y, width-1, height-1, radius, radius);
+            g2d.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         }
     }
 }

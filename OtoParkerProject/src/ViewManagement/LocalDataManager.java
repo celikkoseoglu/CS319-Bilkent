@@ -5,10 +5,8 @@ import GameManagement.Unlockables;
 import GameObjects.Obstacle;
 import GameObjects.Target;
 
-import javax.lang.model.type.ArrayType;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * the Local Data Manager class for OtoParker. Manages Local Data
