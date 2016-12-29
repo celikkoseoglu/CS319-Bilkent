@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 
 public class PauseMenu extends OtoParkerMenu {
 
+    private JButton retryButton;
     private JButton upgradesButton;
     private JButton mainMenuButton;
     private JButton exitGameButton;
-    private JButton resumeButton;
 
     private int currentLevel;
 
@@ -25,30 +25,30 @@ public class PauseMenu extends OtoParkerMenu {
 
         setOpaque(false);
 
+        retryButton = new OtoParkerJButton("Retry Level");
         upgradesButton = new OtoParkerJButton("Upgrades");
         mainMenuButton = new OtoParkerJButton("Main Menu");
         exitGameButton = new OtoParkerJButton("Exit Game");
-        resumeButton = new OtoParkerJButton("Resume");
 
+        retryButton.setForeground(Color.white);
         upgradesButton.setForeground(Color.white);
         mainMenuButton.setForeground(Color.white);
         exitGameButton.setForeground(Color.white);
-        resumeButton.setForeground(Color.white);
 
-        upgradesButton.setBounds(350, 150, 150, 40);
-        mainMenuButton.setBounds(350, 220, 150, 40);
-        exitGameButton.setBounds(350, 290, 150, 40);
-        resumeButton.setBounds(350, 360, 150, 40);
+        retryButton.setBounds(350, 150, 150, 40);
+        upgradesButton.setBounds(350, 220, 150, 40);
+        mainMenuButton.setBounds(350, 290, 150, 40);
+        exitGameButton.setBounds(350, 360, 150, 40);
 
+        retryButton.addActionListener(buttonListener);
         upgradesButton.addActionListener(buttonListener);
         mainMenuButton.addActionListener(buttonListener);
         exitGameButton.addActionListener(buttonListener);
-        resumeButton.addActionListener(buttonListener);
 
+        add(retryButton);
         add(upgradesButton);
         add(mainMenuButton);
         add(exitGameButton);
-        add(resumeButton);
     }
 
     class ButtonListener implements ActionListener {
@@ -60,6 +60,8 @@ public class PauseMenu extends OtoParkerMenu {
                 manager.showMainMenu();
             else if (e.getSource() == exitGameButton)
                 System.exit(1);
+            else if (e.getSource() == retryButton)
+                manager.showLevel(currentLevel);
         }
     }
 }

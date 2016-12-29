@@ -16,8 +16,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
-
 public class MapManager extends OtoParkerMenu implements ActionListener {
     private Timer tick;
     private Timer countdown;
@@ -75,17 +73,12 @@ public class MapManager extends OtoParkerMenu implements ActionListener {
         car.weaponImageDir = "images/" + player.getCurrentCarWeapon();
         car.tyreCons = player.getCurrentCarTurningRadius();
 
-        initBoard();
-    }
-
-    private void initBoard() {
         obstacles = localDataManager.getObstacles(currentLevel);
         target = localDataManager.getTarget(currentLevel);
 
         try {
             backImage1 = ImageIO.read(new File("images/asphalt_lane.jpg"));
-        } catch (Exception ex) {
-        }
+        } catch (Exception ex) {}
 
         backImage2 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
         backImage3 = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
@@ -113,6 +106,7 @@ public class MapManager extends OtoParkerMenu implements ActionListener {
             grabFocus();
             requestFocus();
         });
+
         tick = new Timer();
         tick.schedule(new MainLoop(), 0, 30);
 
@@ -276,15 +270,12 @@ public class MapManager extends OtoParkerMenu implements ActionListener {
         @Override
         public void run() {
             elapsedTime++;
-            elapsedTimeLabel.setText("Time Elapsed: " + Integer.toString(levelTime - elapsedTime));
 
-            if (elapsedTime == levelTime) {
-                countdown.cancel();
-                countdown.purge();
-                elapsedTimeLabel.setText(" JUST DO IT! :)");
-            }
+            if (elapsedTime >= levelTime)
+                elapsedTimeLabel.setText("Overtime: " + elapsedTime);
+            else
+                elapsedTimeLabel.setText("Time Remaining for Stars: " + Integer.toString(levelTime - elapsedTime));
 
-            repaint();
         }
     }
 }
