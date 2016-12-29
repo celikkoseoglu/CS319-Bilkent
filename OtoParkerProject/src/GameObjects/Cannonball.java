@@ -3,14 +3,12 @@ package GameObjects;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by HÜSEYİN on 11.12.2016.
- */
+
 public class Cannonball extends Sprite {
 
     private final int BOARD_WIDTH = 800;
-    double angle;
-    public static String im = System.getProperty("os.name").contains("Mac") ? "images/daringfireball.png" : "images/daringfireball.png";
+    private double angle;
+    private String im = "images/daringfireball.png";
 
     public Cannonball(int x, int y,double an) {
         super(x, y);
@@ -19,7 +17,6 @@ public class Cannonball extends Sprite {
     }
 
     private void initCannonball() {
-
         loadImage(im);
         System.out.println(im);
         getImageDimensions();

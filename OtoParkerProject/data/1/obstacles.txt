@@ -1,2 +1,2 @@
 0:tree.png:300:200|
-1:car.png:410:23
+1:white_lexus.png:410:23

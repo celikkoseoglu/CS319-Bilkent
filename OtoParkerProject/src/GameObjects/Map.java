@@ -125,8 +125,6 @@ public class Map extends OtoParkerMenu implements ActionListener {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int starsToEarn = 4;
-
         carg.setBackground(new Color(255, 255, 255, 0));
         carg.clearRect(-800 / 2, -600 / 2, 800, 600);
         AffineTransform at = background.getTransform();

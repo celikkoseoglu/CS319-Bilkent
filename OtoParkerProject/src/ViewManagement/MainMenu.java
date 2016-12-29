@@ -1,5 +1,7 @@
 package ViewManagement;
 
+import GameManagement.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,9 +18,14 @@ public class MainMenu extends OtoParkerMenu {
     private JButton creditsButton;
     private JButton soundButton;
 
+    private Player p;
+
     public MainMenu(MenuManager manager) {
 
         super(manager);
+
+        LocalDataManager tempManager = new LocalDataManager();
+        p = tempManager.getPlayer();
 
         ButtonListener buttonListener = new ButtonListener();
 
@@ -72,7 +79,7 @@ public class MainMenu extends OtoParkerMenu {
 
         g2d.drawImage(img1, 405, 470, 10, 10, this);
 
-        g2d.drawString("5   's available", 395, 480);
+        g2d.drawString(p.getNumberOfStars() + "   's available", 395, 480);
     }
 
     class ButtonListener implements ActionListener {

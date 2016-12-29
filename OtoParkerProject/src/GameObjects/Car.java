@@ -41,7 +41,7 @@ public class Car {
     double tyreCons = 0.6;
     int period=30;
 
-    public static String carImageDir= System.getProperty("os.name").contains("Mac") ? "images/porsche_turuncu.png" : "images/porsche_turuncu.png";
+    public static String carImageDir= "images/porsche_turuncu.png";
 
     public Car(double tyreC) {
         tyreCons = tyreC;

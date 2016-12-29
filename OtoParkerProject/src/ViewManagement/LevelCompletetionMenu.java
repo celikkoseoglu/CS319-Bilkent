@@ -5,9 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by celikkoseoglu on 28/12/2016.
- */
 public class LevelCompletetionMenu extends OtoParkerMenu {
 
     private JLabel statusLabel;
@@ -18,8 +15,6 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
     private JButton nextLevelButton;
 
     private int currentLevel;
-
-    private boolean successful;
 
     public LevelCompletetionMenu(MenuManager manager, int currentLevel) {
         super(manager);
@@ -67,16 +62,15 @@ public class LevelCompletetionMenu extends OtoParkerMenu {
     }
 
     public void setSuccessful(boolean successful) {
-        this.successful = successful;
         statusLabel.setText(successful ? "Level Completed!" : "You Crashed!");
-        nextLevelButton.setEnabled(successful ? true : false);
+        nextLevelButton.setEnabled(successful);
     }
 
     class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed (ActionEvent e) {
             if (e.getSource() == retryLevelButton)
-                manager.showLevel(currentLevel); // buna basınca hala 1. level'a gidiyo amaaa...
+                manager.showLevel(currentLevel);
             else if (e.getSource() == upgradesButton)
                 manager.showUpgradeCar();
             else if (e.getSource() == mainMenuButton)

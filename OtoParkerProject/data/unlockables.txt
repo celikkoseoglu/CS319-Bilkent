@@ -1,3 +1,3 @@
-black.png-car.png-porsche.png-porsche_turuncu.png|
-1.png-daringfireball.png|
+black.png-white_lexus.png-porsche.png-porsche_turuncu.png|
+bombik.png-daringfireball.png|
 0.6-1.0-2.0-3.0

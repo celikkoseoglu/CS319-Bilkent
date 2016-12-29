@@ -34,10 +34,12 @@ public class MenuManager {
     }
 
     public void showMainMenu() {
+        mainMenu = new MainMenu(this);
         showMenu(mainMenu);
     }
 
     public void showUpgradeCar() {
+        upgradeCar = new UpgradeCarMenu(this, player, mgr);
         showMenu(upgradeCar);
     }
 

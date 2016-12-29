@@ -1,12 +1,12 @@
 0:tree.png:600:400|
-1:car.png:410:23|
+1:white_lexus.png:410:23|
 2:tree.png:300:460|
-3:car_horiz.png:18:245|
-4:car.png:250:25|
+3:white_lexus_horiz.png:18:245|
+4:white_lexus.png:250:25|
 5:tree.png:650:50|
 6:tree.png:175:155|
 7:cone.png:600:260|
-8:car_horiz.png:96:320|
+8:white_lexus_horiz.png:96:320|
 9:cone.png:230:245|
 10:cone.png:430:390|
 11:cone.png:450:480|

@@ -4,10 +4,6 @@
  */
 package GameObjects;
 
-/**
- *
- * @author leo
- */
 public class InputManager {
     
     public static boolean[] keydown = new boolean[255];

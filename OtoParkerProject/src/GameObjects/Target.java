@@ -1,26 +1,19 @@
 package GameObjects;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-/**
- * Created by HÜSEYİN on 24.12.2016.
- */
 public class Target {
 
     private int width = 75;
     private int height = 100;
     private int x;
     private int y;
-    private boolean vis;
 
     public Target(int a,int b,int w,int h) {
         x = a;
         y = b;
         width=w;
         height=h;
-        vis=true;
     }
 
     public int getX() {
@@ -37,14 +30,6 @@ public class Target {
 
     public int getHeight() {
         return height;
-    }
-
-    public boolean isVisible() {
-        return vis;
-    }
-
-    public void setVisible(Boolean visible) {
-        vis = visible;
     }
 
     public Rectangle2D getBorders() {

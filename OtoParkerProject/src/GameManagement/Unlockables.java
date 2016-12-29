@@ -2,9 +2,6 @@ package GameManagement;
 
 import java.util.ArrayList;
 
-/**
- * Created by celikkoseoglu on 28/12/2016.
- */
 public class Unlockables {
 
     private ArrayList<String> unlockableCarColors;

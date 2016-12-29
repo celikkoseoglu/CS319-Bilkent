@@ -194,13 +194,28 @@ public class LocalDataManager {
         return levelTimes.get(level - 1);
     }
 
+    public void saveUnlockables(Unlockables unlockables) {
+        StringBuilder unlockableStuff = new StringBuilder();
+
+        for (String s : unlockables.getUnlockableCarColors())
+            unlockableStuff.append(s + "-");
+        unlockableStuff.append("|\n");
+
+        for (String s : unlockables.getUnlockableCarWeapons())
+            unlockableStuff.append(s + "-");
+        unlockableStuff.append("|\n");
+
+        for (int i = 0; i < unlockables.getUnlockableTurningRadiuses().size(); i++)
+            unlockableStuff.append(unlockables.getUnlockableTurningRadiuses().get(i) + "-");
+
+        saveText(OS_FILE_PATH, "unlocks.txt", unlockableStuff.toString());
+    }
+
     public Unlockables getUnlockables() {
         String[] unlocks = readText("unlockables.txt", true).split("\\|");
-
         String[] unlockedCarColorStringArray = unlocks[0].split("-");
         String[] unlockedCarWeaponsStringArray = unlocks[1].split("-");
         String[] unlockedCarTurningRadiusesStringArray = unlocks[2].split("-");
-
 
         return new Unlockables(unlockedCarColorStringArray, unlockedCarWeaponsStringArray, unlockedCarTurningRadiusesStringArray);
     }
